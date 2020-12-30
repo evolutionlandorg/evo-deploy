@@ -7,3 +7,6 @@
 [submodule "lib/common-contracts"]
 	path = lib/common-contracts
 	url = https://github.com/evolutionlandorg/common-contracts
+[submodule "lib/token-contracts"]
+	path = lib/token-contracts
+	url = https://github.com/evolutionlandorg/token-contracts
