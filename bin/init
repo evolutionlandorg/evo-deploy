@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+config-init() {
+  path=$1
+  if [[ ! -e "$path" ]]; then
+    echo "Config file not found: $path not found"
+    exit 1
+  fi
+  export ADDRESSES_FILE=$path
+  local exports
+  exports=$(cat $path | jq -r ".deploy_data // . | \
+    to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]")
+  for e in $exports; do export "$e"; done
+}
+
+loadAddresses() {
+  local exports
+  exports=$(cat $ADDRESSES_FILE | jq -r ".deploy_data // . | \
+    to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]")
+  for e in $exports; do export "$e"; done
+}
+
+config-init "${PWD}/bin/conf/pangolin.json";

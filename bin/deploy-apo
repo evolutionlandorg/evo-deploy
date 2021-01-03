@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+apoBase=$(dapp create ApostleBaseV3)
+cat $ADDRESSES_FILE | jq --arg key "APOSTLEBASEV3" --arg value "$apoBase" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+apoAuction=$(dapp create ApostleClockAuction)
+cat $ADDRESSES_FILE | jq --arg key "APOSTLECLOCKAUCTION" --arg value "$apoAuction" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+gen0Apo=$(dapp create Gen0ApostleV2)
+cat $ADDRESSES_FILE | jq --arg key "GEN0APOSTLEV2" --arg value "$gen0Apo" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+sirAuction=$(dapp create SiringClockAuctionV2)
+cat $ADDRESSES_FILE | jq --arg key "SIRINGCLOCKAUCTIONV2" --arg value "$sirAuction" '.[$key] = $value' | sponge $ADDRESSES_FILE

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO" "RING" "KTON")
+
+for token in "${tokens[@]}"; do
+    address=$(dapp create $token)
+    cat $ADDRESSES_FILE | jq --arg key "TOKEN_ERC20_$token" --arg value "$address" '.[$key] = $value' | sponge $ADDRESSES_FILE
+done

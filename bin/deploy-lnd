@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+landbase=$(dapp create LandBase)
+cat $ADDRESSES_FILE | jq --arg key "LANDBASE" --arg value "$landbase" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+landrs=$(dapp create LandResourceV5)
+cat $ADDRESSES_FILE | jq --arg key "LANDRESOURCEV5" --arg value "$landrs" '.[$key] = $value' | sponge $ADDRESSES_FILE

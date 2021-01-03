@@ -1,0 +1,1 @@
+/Users/echo/workspace/contract/evolutionlandorg/evo-deploy/lib/token-contracts/flat/GOLD.f.sol
