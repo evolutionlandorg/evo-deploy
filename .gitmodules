@@ -10,3 +10,6 @@
 [submodule "lib/token-contracts"]
 	path = lib/token-contracts
 	url = https://github.com/evolutionlandorg/token-contracts
+[submodule "lib/upgradeability-using-unstructured-storage"]
+	path = lib/upgradeability-using-unstructured-storage
+	url = https://github.com/evolutionlandorg/upgradeability-using-unstructured-storage
