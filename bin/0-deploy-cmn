@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+SETTINGSREGISTRY=$(dapp create SettingsRegistry)
+cat $ADDRESSES_FILE | jq --arg key "SETTINGSREGISTRY" --arg value "$SETTINGSREGISTRY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+# INTERSTELLARENCODERV3 
+INTERSTELLARENCODERV3=$(dapp create InterstellarEncoderV3)
+cat $ADDRESSES_FILE | jq --arg key "INTERSTELLARENCODERV3" --arg value "$INTERSTELLARENCODERV3" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+interstellarEncoderId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_INTERSTELLAR_ENCODER")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $interstellarEncoderId $INTERSTELLARENCODERV3 
+
+# OBJECTOWNERSHIPV2 
+OBJECTOWNERSHIPV2=$(dapp create ObjectOwnershipV2)
+cat $ADDRESSES_FILE | jq --arg key "OBJECTOWNERSHIPV2" --arg value "$OBJECTOWNERSHIPV2" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+OBJECTOWNERSHIPV2_PROXY=$(dapp create ObjectOwnerShipV2Proxy)
+cat $ADDRESSES_FILE | jq --arg key "OBJECTOWNERSHIPV2_PROXY" --arg value "$OBJECTOWNERSHIPV2_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $OBJECTOWNERSHIPV2_PROXY "upgradeToAndCall(address,bytes)" $OBJECTOWNERSHIPV2 $calldata 
+echo >&2 "${0##*/}: info: ObjectOwnerShipV2Proxy inited."
+
+objectOwnershipId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_OBJECT_OWNERSHIP")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $objectOwnershipId $OBJECTOWNERSHIPV2 
+
+seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIPV2_PROXY $(seth --to-hex 3) 
+
+# TokenLocation
+TOKENLOCATION=$(dapp create TokenLocation)
+cat $ADDRESSES_FILE | jq --arg key "TOKENLOCATION" --arg value "$TOKENLOCATION" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+TOKENLOCATION_PROXY=$(dapp create TokenLocationProxy)
+cat $ADDRESSES_FILE | jq --arg key "TOKENLOCATION_PROXY" --arg value "$TOKENLOCATION_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+calldata=$(seth calldata "initializeContract()")
+seth send $TOKENLOCATION_PROXY "upgradeToAndCall(address,bytes)" $TOKENLOCATION $calldata 
+echo >&2 "${0##*/}: info: TokenLocationProxy inited."
+
+tokenLocationId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_TOKEN_LOCATION")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $tokenLocationId $TOKENLOCATION_PROXY 
+
+# TokenUse
+TOKENUSE=$(dapp create TokenUse)
+cat $ADDRESSES_FILE | jq --arg key "TOKENUSE" --arg value "$TOKENUSE" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+TOKENUSE_PROXY=$(dapp create TokenUseProxy)
+cat $ADDRESSES_FILE | jq --arg key "TOKENUSE_PROXY" --arg value "$TOKENUSE_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $TOKENUSE_PROXY "upgradeToAndCall(address,bytes)" $TOKENUSE $calldata 
+echo >&2 "${0##*/}: info: TokenUseProxy inited."
+
+tokenUseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_TOKEN_USE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $tokenUseId $TOKENUSE_PROXY 
+
+# # ERC721Bridge
+# ERC721BRIDGE=$(dapp create ERC721Bridge)
+# cat $ADDRESSES_FILE | jq --arg key "ERC721BRIDGE" --arg value "$ERC721BRIDGE" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+# ERC721BRIDGE_PROXY=$(dapp create ERC721BridgeProxy)
+# cat $ADDRESSES_FILE | jq --arg key "ERC721BRIDGE_PROXY" --arg value "$ERC721BRIDGE_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+# calldata=$(seth calldata "initializeContract()")
+# seth send $TOKENLOCATION_PROXY "upgradeToAndCall(address,bytes)" $TOKENLOCATION $calldata 
+# echo >&2 "${0##*/}: info: ERC721BridgeProxy inited."
+
+# bridgeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_ERC721_BRIDGE")))
+# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $bridgeId $ERC721BRIDGE_PROXY 
+
+# # ERC721Adaptor
+# ERC721ADAPTOR=$(dapp create ERC721Adaptor)
+# cat $ADDRESSES_FILE | jq --arg key "ERC721ADAPTOR" --arg value "$ERC721ADAPTOR" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+# ERC721ADAPTOR_PROXY=$(dapp create ERC721AdaptorProxy)
+# cat $ADDRESSES_FILE | jq --arg key "ERC721ADAPTOR_PROXY" --arg value "$ERC721ADAPTOR_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+# originNFT=$(seth --to-uint256 0)
+# productId=$(seth --to-uint16 0)
+# calldata=$(seth calldata "initializeContract(address,address,uint16)" $SETTINGSREGISTRY $originNFT $productId)
+# seth send $TOKENLOCATION_PROXY "upgradeToAndCall(address,bytes)" $TOKENLOCATION $calldata 
+# echo >&2 "${0##*/}: info: ERC721AdaptorProxy inited."
+

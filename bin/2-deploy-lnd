@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+LANDBASE=$(dapp create LandBase)
+cat $ADDRESSES_FILE | jq --arg key "LANDBASE" --arg value "$LANDBASE" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: LandBase created."
+
+LANDBASE_PROXY=$(dapp create LandBaseProxy)
+cat $ADDRESSES_FILE | jq --arg key "LANDBASE_PROXY" --arg value "$LANDBASE_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: LandBaseProxy created."
+
+# 1
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $LANDBASE_PROXY "upgradeToAndCall(address,bytes)" $LANDBASE $calldata 
+
+# 2
+# seth send $LANDBASE_PROXY "upgradeTo(address)" $LANDBASE  
+# echo >&2 "${0##*/}: info: LandBaseProxy updated."
+# seth send $LANDBASE_PROXY "initializeContract(address)" $SETTINGSREGISTRY
+echo >&2 "${0##*/}: info: LandBaseProxy inited."
+
+seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" $LANDBASE_PROXY $(seth --to-hex 1) 
+
+LANDRESOURCEV5=$(dapp create LandResourceV5)
+cat $ADDRESSES_FILE | jq --arg key "LANDRESOURCEV5" --arg value "$LANDRESOURCEV5" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: LandResourceV5 created."
+
+LANDRESOURCEV5_PROXY=$(dapp create LandResourceV5Proxy)
+cat $ADDRESSES_FILE | jq --arg key "LANDRESOURCEV5_PROXY" --arg value "$LANDRESOURCEV5_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: LandResourceV5Proxy created."
+
+# resource release start time 1544083267
+starttime=$(seth --to-uint256 $(date +%s))
+maxminers=$(seth --to-uint256 5)
+calldata=$(seth calldata "initializeContract(address,uint256,uint256)" $SETTINGSREGISTRY $starttime $maxminers)
+seth send $LANDRESOURCEV5_PROXY "upgradeToAndCall(address,bytes)" $LANDRESOURCEV5 $calldata 
+echo >&2 "${0##*/}: info: LandResourceV5Proxy inited."

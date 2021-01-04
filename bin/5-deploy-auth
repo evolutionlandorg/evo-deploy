@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# TokenLocationAuthority
+TOKENLOCATION_AUTHORITY=$(dapp create TokenLocationAuthority [$LANDBASE_PROXY])
+cat $ADDRESSES_FILE | jq --arg key "TOKENLOCATION_AUTHORITY" --arg value "$TOKENLOCATION_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+seth send $TOKENLOCATION_PROXY "setAuthority(address)" $TOKENLOCATION_AUTHORITY
+
+# TokenUseAuthority
+TOKENUSE_AUTHORITY=$(dapp create TokenUseAuthority [$LANDBASE_PROXY $APOSTLEBASEV3_PROXY])
+cat $ADDRESSES_FILE | jq --arg key "TOKENUSE_AUTHORITY" --arg value "$TOKENUSE_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+seth send $TOKENUSE_PROXY "setAuthority(address)" $TOKENUSE_AUTHORITY
+
+# MintAndBurnAuthority
+MINTANDBURN_AUTHORITY=$(dapp create MintAndBurnAuthority [$LANDRESOURCEV5_PROXY])
+cat $ADDRESSES_FILE | jq --arg key "MINTANDBURN_AUTHORITY" --arg value "$MINTANDBURN_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+seth send $TOKEN_ERC20_GOLD "setAuthority(address)" MINTANDBURN_AUTHORITY$
+seth send $TOKEN_ERC20_WOOD "setAuthority(address)" MINTANDBURN_AUTHORITY$
+seth send $TOKEN_ERC20_WATER "setAuthority(address)" MINTANDBURN_AUTHORITY$
+seth send $TOKEN_ERC20_FIRE "setAuthority(address)" MINTANDBURN_AUTHORITY$
+seth send $TOKEN_ERC20_SOIL "setAuthority(address)" MINTANDBURN_AUTHORITY$
+
+# ClockAuctionAuthority
+CLOCKAUCTION_AUTHORITY=$(dapp create ClockAuctionAuthority [$GEN0APOSTLEV2_PROXY])
+cat $ADDRESSES_FILE | jq --arg key "CLOCKAUCTION_AUTHORITY" --arg value "$CLOCKAUCTION_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+seth send $APOSTLECLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY
+
+# ApostleBaseAuthorityV2
+APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLEV2_PROXY $SIRINGCLOCKAUCTIONV2_PROXY $PETBASE_PROXY $TOKENUSE_PROXY])
+cat $ADDRESSES_FILE | jq --arg key "APOSTLEBASEV2_AUTHORITY" --arg value "$APOSTLEBASEV2_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+seth send $APOSTLEBASEV3_PROXY "setAuthority(address)" $APOSTLEBASEV2_AUTHORITY

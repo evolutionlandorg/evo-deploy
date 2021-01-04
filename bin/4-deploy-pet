@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# PetBase
+PETBASE=$(dapp create PetBase)
+cat $ADDRESSES_FILE | jq --arg key "PETBASE" --arg value "$PETBASE" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+PETBASE_PROXY=$(dapp create ApostleBaseV3Proxy)
+cat $ADDRESSES_FILE | jq --arg key "PETBASE_PROXY" --arg value "$PETBASE_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: PetBaseProxy created."
+
+calldata=$(seth calldata "initializeContract(address,uint128)" $SETTINGSREGISTRY $(seth --to-uint128 1))
+seth send $PETBASE_PROXY "upgradeToAndCall(address,bytes)" $PETBASE $calldata 
+
+echo >&2 "${0##*/}: info: PetBaseProxy inited."
+
+petBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_PET_BASE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $petBaseId $PETBASE_PROXY 
+seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" $PETBASE_PROXY $(seth --to-hex 3) 
+

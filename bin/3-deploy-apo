@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# ApostleBaseV3
+APOSTLEBASEV3=$(dapp create ApostleBaseV3)
+cat $ADDRESSES_FILE | jq --arg key "APOSTLEBASEV3" --arg value "$APOSTLEBASEV3" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+APOSTLEBASEV3_PROXY=$(dapp create ApostleBaseV3Proxy)
+cat $ADDRESSES_FILE | jq --arg key "LANDBASE_PROXY" --arg value "$APOSTLEBASEV3_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: ApostleBaseV3Proxy created."
+
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $APOSTLEBASEV3_PROXY "upgradeToAndCall(address,bytes)" $APOSTLEBASEV3 $calldata 
+
+echo >&2 "${0##*/}: info: ApostleBaseV3Proxy inited."
+
+apostleBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_APOSTLE_BASE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $apostleBaseId $APOSTLEBASEV3_PROXY 
+seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" $APOSTLEBASEV3_PROXY $(seth --to-hex 2) 
+
+# ApostleClockAuction
+APOSTLECLOCKAUCTION=$(dapp create ApostleClockAuction)
+cat $ADDRESSES_FILE | jq --arg key "APOSTLECLOCKAUCTION" --arg value "$APOSTLECLOCKAUCTION" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+APOSTLECLOCKAUCTION_PROXY=$(dapp create ApostleClockAuctionProxy)
+cat $ADDRESSES_FILE | jq --arg key "APOSTLECLOCKAUCTION_PROXY" --arg value "$APOSTLECLOCKAUCTION_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $APOSTLECLOCKAUCTION_PROXY "upgradeToAndCall(address,bytes)" $APOSTLECLOCKAUCTION $calldata 
+clockAuctionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_APOSTLE_AUCTION")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $clockAuctionId $APOSTLECLOCKAUCTION_PROXY 
+
+# Gen0ApostleV2
+GEN0APOSTLEV2=$(dapp create Gen0ApostleV2)
+cat $ADDRESSES_FILE | jq --arg key "GEN0APOSTLEV2" --arg value "$GEN0APOSTLEV2" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+GEN0APOSTLEV2_PROXY=$(dapp create Gen0ApostleV2Proxy)
+cat $ADDRESSES_FILE | jq --arg key "GEN0APOSTLEV2_PROXY" --arg value "$GEN0APOSTLEV2_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+gen0Limit=$(seth --to-uint256 2000)
+calldata=$(seth calldata "initializeContract(address,uint256)" $SETTINGSREGISTRY $gen0Limit)
+seth send $GEN0APOSTLEV2_PROXY "upgradeToAndCall(address,bytes)" $GEN0APOSTLEV2 $calldata 
+
+# SiringClockAuctionV2
+SIRINGCLOCKAUCTIONV2=$(dapp create SiringClockAuctionV2)
+cat $ADDRESSES_FILE | jq --arg key "SIRINGCLOCKAUCTIONV2" --arg value "$SIRINGCLOCKAUCTIONV2" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+SIRINGCLOCKAUCTIONV2_PROXY=$(dapp create SiringClockAuctionV2Proxy)
+cat $ADDRESSES_FILE | jq --arg key "SIRINGCLOCKAUCTIONV2_PROXY" --arg value "$SIRINGCLOCKAUCTIONV2_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $SIRINGCLOCKAUCTIONV2_PROXY "upgradeToAndCall(address,bytes)" $SIRINGCLOCKAUCTIONV2 $calldata 
+
+siringAuctionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_SIRING_AUCTION")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $siringAuctionId $SIRINGCLOCKAUCTIONV2_PROXY 
+
+# ApostelSettingIds
+birthfeeid=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUTOBIRTH_FEE")))
+autoBirthFee=$(seth --to-uint256 $(seth --to-wei 500 ether))
+seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $birthfeeid $autoBirthFee 
+
+mixTalentId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_MIX_TALENT")))
+resourceNeededPerLevel=$(seth --to-uint256 $(seth --to-wei 5 ether))
+seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $mixTalentId $resourceNeededPerLevel 
+
+bidWaitingTimeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_APOSTLE_BID_WAITING_TIME")))
+bidWaitingTime=$(seth --to-uint256 600)
+seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $bidWaitingTimeId $bidWaitingTime 
