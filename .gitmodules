@@ -22,3 +22,6 @@
 [submodule "lib/bank"]
 	path = lib/bank
 	url = https://github.com/evolutionlandorg/bank
+[submodule "lib/bancor-contracts"]
+	path = lib/bancor-contracts
+	url = https://github.com/evolutionlandorg/bancor-contracts
