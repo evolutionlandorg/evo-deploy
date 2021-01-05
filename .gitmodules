@@ -13,3 +13,6 @@
 [submodule "lib/upgradeability-using-unstructured-storage"]
 	path = lib/upgradeability-using-unstructured-storage
 	url = https://github.com/evolutionlandorg/upgradeability-using-unstructured-storage
+[submodule "lib/market-contracts"]
+	path = lib/market-contracts
+	url = https://github.com/evolutionlandorg/market-contracts
