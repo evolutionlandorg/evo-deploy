@@ -28,13 +28,32 @@ LANDRESOURCEV5=$(dapp create LandResourceV5)
 cat $ADDRESSES_FILE | jq --arg key "LANDRESOURCEV5" --arg value "$LANDRESOURCEV5" '.[$key] = $value' | sponge $ADDRESSES_FILE
 echo >&2 "${0##*/}: info: LandResourceV5 created."
 
-LANDRESOURCEV5_PROXY=$(dapp create LandResourceV5Proxy)
-cat $ADDRESSES_FILE | jq --arg key "LANDRESOURCEV5_PROXY" --arg value "$LANDRESOURCEV5_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+LANDRESOURCE_PROXY=$(dapp create LandResourceV5Proxy)
+cat $ADDRESSES_FILE | jq --arg key "LANDRESOURCE_PROXY" --arg value "$LANDRESOURCE_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
 echo >&2 "${0##*/}: info: LandResourceV5Proxy created."
 
 # resource release start time 1544083267
 starttime=$(seth --to-uint256 $(date +%s))
 maxminers=$(seth --to-uint256 5)
 calldata=$(seth calldata "initializeContract(address,uint256,uint256)" $SETTINGSREGISTRY $starttime $maxminers)
-seth send $LANDRESOURCEV5_PROXY "upgradeToAndCall(address,bytes)" $LANDRESOURCEV5 $calldata 
+seth send $LANDRESOURCE_PROXY "upgradeToAndCall(address,bytes)" $LANDRESOURCEV5 $calldata 
 echo >&2 "${0##*/}: info: LandResourceV5Proxy inited."
+
+# mysteriousTreasure
+MYSTERIOUSTREASURE=$(dapp create MysteriousTreasure)
+cat $ADDRESSES_FILE | jq --arg key "MYSTERIOUSTREASURE" --arg value "$MYSTERIOUSTREASURE" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: MysteriousTreasure created."
+
+MYSTERIOUSTREASURE_PROXY=$(dapp create MysteriousTreasureProxy)
+cat $ADDRESSES_FILE | jq --arg key "MYSTERIOUSTREASURE_PROXY" --arg value "$MYSTERIOUSTREASURE_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: MysteriousTreasureProxy created."
+
+# 10439, 419, 5258, 12200, 12200
+calldata=$(seth calldata "initializeContract(address,uint256[5])" $SETTINGSREGISTRY [
+$(seth --to-uint256 10429)
+$(seth --to-uint256 419)
+$(seth --to-uint256 5258)
+$(seth --to-uint256 12200)
+$(seth --to-uint256 12200)
+])
+seth send $MYSTERIOUSTREASURE_PROXY "upgradeToAndCall(address,bytes)" $MYSTERIOUSTREASURE $calldata 

@@ -10,7 +10,7 @@ cat $ADDRESSES_FILE | jq --arg key "TOKENLOCATION_AUTHORITY" --arg value "$TOKEN
 seth send $TOKENLOCATION_PROXY "setAuthority(address)" $TOKENLOCATION_AUTHORITY
 
 # TokenUseAuthority
-TOKENUSE_AUTHORITY=$(dapp create TokenUseAuthority [$LANDBASE_PROXY $APOSTLEBASEV3_PROXY])
+TOKENUSE_AUTHORITY=$(dapp create TokenUseAuthority [$LANDBASE_PROXY $APOSTLEBASE_PROXY])
 cat $ADDRESSES_FILE | jq --arg key "TOKENUSE_AUTHORITY" --arg value "$TOKENUSE_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
 seth send $TOKENUSE_PROXY "setAuthority(address)" $TOKENUSE_AUTHORITY
 
@@ -25,11 +25,11 @@ seth send $TOKEN_ERC20_FIRE "setAuthority(address)" MINTANDBURN_AUTHORITY$
 seth send $TOKEN_ERC20_SOIL "setAuthority(address)" MINTANDBURN_AUTHORITY$
 
 # ClockAuctionAuthority
-CLOCKAUCTION_AUTHORITY=$(dapp create ClockAuctionAuthority [$GEN0APOSTLEV2_PROXY])
+CLOCKAUCTION_AUTHORITY=$(dapp create ClockAuctionAuthority [$GEN0APOSTLE_PROXY])
 cat $ADDRESSES_FILE | jq --arg key "CLOCKAUCTION_AUTHORITY" --arg value "$CLOCKAUCTION_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
 seth send $APOSTLECLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY
 
 # ApostleBaseAuthorityV2
-APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLEV2_PROXY $SIRINGCLOCKAUCTIONV2_PROXY $PETBASE_PROXY $TOKENUSE_PROXY])
+APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLEV2_PROXY $SIRINGCLOCKAUCTION_PROXY $PETBASE_PROXY $TOKENUSE_PROXY])
 cat $ADDRESSES_FILE | jq --arg key "APOSTLEBASEV2_AUTHORITY" --arg value "$APOSTLEBASEV2_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
-seth send $APOSTLEBASEV3_PROXY "setAuthority(address)" $APOSTLEBASEV2_AUTHORITY
+seth send $APOSTLEBASE_PROXY "setAuthority(address)" $APOSTLEBASEV2_AUTHORITY

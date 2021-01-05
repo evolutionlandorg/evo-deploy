@@ -37,6 +37,8 @@ link-lnd:;
 	ln -s $(PWD)/lib/land/flat/LandBase.sol $(PWD)/src/land/LandBase.f.sol
 	ln -s $(PWD)/lib/land/flat/LandResourceV5.sol $(PWD)/src/land/LandResourceV5.f.sol
 	ln -s $(PWD)/lib/land/flat/LandBaseAuthority.sol $(PWD)/src/land/LandBaseAuthority.f.sol
+	ln -s $(PWD)/lib/land/flat/MysteriousTreasure.sol $(PWD)/src/land/MysteriousTreasure.f.sol
+	ln -s $(PWD)/lib/land/flat/MysteriousTreasureAuthority.sol $(PWD)/src/land/MysteriousTreasureAuthority.f.sol
 
 link-apo:;
 	rm -rf 'src/apostle'
@@ -50,5 +52,15 @@ link-apo:;
 	ln -s $(PWD)/lib/apostle/flat/PetBase.sol $(PWD)/src/apostle/PetBase.f.sol
 	ln -s $(PWD)/lib/apostle/flat/PetBaseAuthority.sol $(PWD)/src/apostle/PetBaseAuthority.f.sol
 	ln -s $(PWD)/lib/apostle/flat/ERC721BridgeAuthority.sol $(PWD)/src/apostle/ERC721BridgeAuthority.f.sol
+
+link-mkt:;
+	rm -rf 'src/market-contracts'
+	mkdir -p 'src/market-contracts'
+	ln -s $(PWD)/lib/market-contracts/flat/ClockAuctionV2.sol $(PWD)/src/market-contracts/ClockAuctionV2.f.sol
+	ln -s $(PWD)/lib/market-contracts/flat/ClockAuctionAuthority.sol $(PWD)/src/market-contracts/ClockAuctionAuthority.f.sol
+	ln -s $(PWD)/lib/market-contracts/flat/GenesisHolder.sol $(PWD)/src/market-contracts/GenesisHolder.f.sol
+	ln -s $(PWD)/lib/market-contracts/flat/PointsRewardPool.sol $(PWD)/src/market-contracts/PointsRewardPool.f.sol
+	ln -s $(PWD)/lib/market-contracts/flat/RevenuePoolV2.sol $(PWD)/src/market-contracts/RevenuePoolV2.f.sol
+	ln -s $(PWD)/lib/market-contracts/flat/LuckyBox.sol $(PWD)/src/market-contracts/LuckyBox.f.sol
 
 .PHONY: all clean test deploy link-tkn link-cmn
