@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# ClockAuctionV2
+CLOCKAUCTIONV2=$(dapp create ClockAuctionV2)
+cat $ADDRESSES_FILE | jq --arg key "CLOCKAUCTIONV2" --arg value "$CLOCKAUCTIONV2" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+CLOCKAUCTION_PROXY=$(dapp create ClockAuctionProxy)
+cat $ADDRESSES_FILE | jq --arg key "CLOCKAUCTION_PROXY" --arg value "$CLOCKAUCTION_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: ClockAuctionProxy created."
+
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $CLOCKAUCTION_PROXY "upgradeToAndCall(address,bytes)" $CLOCKAUCTIONV2 $calldata 
+
+echo >&2 "${0##*/}: info: ClockAuctionProxy inited."
+
+auctionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_CLOCK_AUCTION")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $auctionId $CLOCKAUCTION_PROXY 
+
+# GenesisHolder
+GENESISHOLDER=$(dapp create GenesisHolder)
+cat $ADDRESSES_FILE | jq --arg key "GENESISHOLDER" --arg value "$GENESISHOLDER" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+GENESISHOLDER_PROXY=$(dapp create GenesisHolderProxy)
+cat $ADDRESSES_FILE | jq --arg key "GENESISHOLDER_PROXY" --arg value "$GENESISHOLDER_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: GenesisHolderProxy created."
+
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $GENESISHOLDER_PROXY "upgradeToAndCall(address,bytes)" $GENESISHOLDER $calldata 
+
+echo >&2 "${0##*/}: info: GenesisHolderProxy inited."
+
+# RevenuePoolV2
+REVENUEPOOLV2=$(dapp create RevenuePoolV2)
+cat $ADDRESSES_FILE | jq --arg key "REVENUEPOOLV2" --arg value "$REVENUEPOOLV2" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+REVENUEPOOL_PROXY=$(dapp create RevenuePoolProxy)
+cat $ADDRESSES_FILE | jq --arg key "REVENUEPOOL_PROXY" --arg value "$REVENUEPOOL_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: RevenuePoolProxy created."
+
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $REVENUEPOOL_PROXY "upgradeToAndCall(address,bytes)" $REVENUEPOOLV2 $calldata 
+
+echo >&2 "${0##*/}: info: RevenuePoolProxy inited."
+
+# PointsRewardPool
+POINTSREWARDPOOL=$(dapp create PointsRewardPool)
+cat $ADDRESSES_FILE | jq --arg key "POINTSREWARDPOOL" --arg value "$POINTSREWARDPOOL" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+POINTSREWARDPOOL_PROXY=$(dapp create PointsRewardPoolProxy)
+cat $ADDRESSES_FILE | jq --arg key "POINTSREWARDPOOL_PROXY" --arg value "$POINTSREWARDPOOL_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+echo >&2 "${0##*/}: info: PointsRewardPoolProxy created."
+
+calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
+seth send $POINTSREWARDPOOL_PROXY "upgradeToAndCall(address,bytes)" $POINTSREWARDPOOL $calldata 
+
+echo >&2 "${0##*/}: info: PointsRewardPoolProxy inited."
+
+# SettingIds
+auctionCutId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUCTION_CUT")))
+# 4%
+uint_auction_cut=$(seth --to-uint256 400)
+seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $auctionCutId $uint_auction_cut 
+
+waitingTimeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUCTION_BID_WAITING_TIME")))
+# 30 minutes
+uint_bid_waiting_time=$(seth --to-uint256 1800)
+seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $waitingTimeId $uint_bid_waiting_time 
+refererCutId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_REFERER_CUT")))
+# 20%
+uint_referer_cut=$(seth --to-uint256 2000)
+seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $refererCutId $uint_referer_cut 
+
+errorSpaceId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_EXCHANGE_ERROR_SPACE")))
+uint_error_space=$(seth --to-uint256 0)
+seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $errorSpaceId $uint_error_space 
+
+# set owner
+seth send $MYSTERIOUSTREASURE_PROXY "setOwner(address)" $CLOCKAUCTION_PROXY

@@ -24,6 +24,9 @@ echo >&2 "${0##*/}: info: LandBaseProxy inited."
 
 seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" $LANDBASE_PROXY $(seth --to-hex 1) 
 
+landBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_BASE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landBaseId $LANDBASE_PROXY 
+
 LANDRESOURCEV5=$(dapp create LandResourceV5)
 cat $ADDRESSES_FILE | jq --arg key "LANDRESOURCEV5" --arg value "$LANDRESOURCEV5" '.[$key] = $value' | sponge $ADDRESSES_FILE
 echo >&2 "${0##*/}: info: LandResourceV5 created."
@@ -38,6 +41,9 @@ maxminers=$(seth --to-uint256 5)
 calldata=$(seth calldata "initializeContract(address,uint256,uint256)" $SETTINGSREGISTRY $starttime $maxminers)
 seth send $LANDRESOURCE_PROXY "upgradeToAndCall(address,bytes)" $LANDRESOURCEV5 $calldata 
 echo >&2 "${0##*/}: info: LandResourceV5Proxy inited."
+
+landBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_BASE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landBaseId $LANDBASE_PROXY 
 
 # mysteriousTreasure
 MYSTERIOUSTREASURE=$(dapp create MysteriousTreasure)
@@ -57,3 +63,5 @@ $(seth --to-uint256 12200)
 $(seth --to-uint256 12200)
 ])
 seth send $MYSTERIOUSTREASURE_PROXY "upgradeToAndCall(address,bytes)" $MYSTERIOUSTREASURE $calldata 
+treasureId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_MYSTERIOUS_TREASURE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $treasureId $MYSTERIOUSTREASURE_PROXY 

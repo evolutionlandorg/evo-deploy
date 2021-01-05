@@ -30,6 +30,8 @@ link-cmn:;
 	ln -s $(PWD)/lib/common-contracts/flat/ERC721Bridge.sol $(PWD)/src/common-contracts/ERC721Bridge.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/ERC721Adaptor.sol $(PWD)/src/common-contracts/ERC721Adaptor.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/MintAndBurnAuthority.sol $(PWD)/src/common-contracts/MintAndBurnAuthority.f.sol
+	ln -s $(PWD)/lib/common-contracts/flat/UserPoints.sol $(PWD)/src/common-contracts/UserPoints.f.sol
+	ln -s $(PWD)/lib/common-contracts/flat/UserPointsAuthority.sol $(PWD)/src/common-contracts/UserPointsAuthority.f.sol
 
 link-lnd:;
 	rm -rf 'src/land'
@@ -62,5 +64,23 @@ link-mkt:;
 	ln -s $(PWD)/lib/market-contracts/flat/PointsRewardPool.sol $(PWD)/src/market-contracts/PointsRewardPool.f.sol
 	ln -s $(PWD)/lib/market-contracts/flat/RevenuePoolV2.sol $(PWD)/src/market-contracts/RevenuePoolV2.f.sol
 	ln -s $(PWD)/lib/market-contracts/flat/LuckyBox.sol $(PWD)/src/market-contracts/LuckyBox.f.sol
+
+link-bnc:;
+	rm -rf 'src/bancor-contracts'
+	mkdir -p 'src/bancor-contracts'
+	ln -s $(PWD)/lib/bancor-contracts/flat/BancorExchangeV2.sol $(PWD)/src/bancor-contracts/BancorExchangeV2.f.sol
+	ln -s $(PWD)/lib/bancor-contracts/flat/BancorExchangeAuthority.sol $(PWD)/src/bancor-contracts/BancorExchangeAuthority.f.sol
+
+link-id :;
+	rm -rf 'src/id'
+	mkdir -p 'src/id'
+	ln -s $(PWD)/lib/id/flat/DividendPool.sol $(PWD)/src/id/DividendPool.f.sol
+	ln -s $(PWD)/lib/id/flat/FrozenDividend.sol $(PWD)/src/id/FrozenDividend.f.sol
+	ln -s $(PWD)/lib/id/flat/RolesUpdater.sol $(PWD)/src/id/RolesUpdater.f.sol
+	ln -s $(PWD)/lib/id/flat/UserRoles.sol $(PWD)/src/id/UserRoles.f.sol
+	ln -s $(PWD)/lib/id/flat/UserRolesAuthority.sol $(PWD)/src/id/UserRolesAuthority.f.sol
+	ln -s $(PWD)/lib/id/flat/RedBag.sol $(PWD)/src/id/RedBag.f.sol
+	ln -s $(PWD)/lib/id/flat/TakeBack.sol $(PWD)/src/id/TakeBack.f.sol
+	ln -s $(PWD)/lib/id/flat/TakeBackNFT.sol $(PWD)/src/id/TakeBackNFT.f.sol
 
 .PHONY: all clean test deploy link-tkn link-cmn

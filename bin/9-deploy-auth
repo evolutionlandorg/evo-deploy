@@ -18,11 +18,11 @@ seth send $TOKENUSE_PROXY "setAuthority(address)" $TOKENUSE_AUTHORITY
 MINTANDBURN_AUTHORITY=$(dapp create MintAndBurnAuthority [$LANDRESOURCEV5_PROXY])
 cat $ADDRESSES_FILE | jq --arg key "MINTANDBURN_AUTHORITY" --arg value "$MINTANDBURN_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
 
-seth send $TOKEN_ERC20_GOLD "setAuthority(address)" MINTANDBURN_AUTHORITY$
-seth send $TOKEN_ERC20_WOOD "setAuthority(address)" MINTANDBURN_AUTHORITY$
-seth send $TOKEN_ERC20_WATER "setAuthority(address)" MINTANDBURN_AUTHORITY$
-seth send $TOKEN_ERC20_FIRE "setAuthority(address)" MINTANDBURN_AUTHORITY$
-seth send $TOKEN_ERC20_SOIL "setAuthority(address)" MINTANDBURN_AUTHORITY$
+seth send $TOKEN_ERC20_GOLD "setAuthority(address)" $MINTANDBURN_AUTHORITY
+seth send $TOKEN_ERC20_WOOD "setAuthority(address)" $MINTANDBURN_AUTHORITY
+seth send $TOKEN_ERC20_WATER "setAuthority(address)" $MINTANDBURN_AUTHORITY
+seth send $TOKEN_ERC20_FIRE "setAuthority(address)" $MINTANDBURN_AUTHORITY
+seth send $TOKEN_ERC20_SOIL "setAuthority(address)" $MINTANDBURN_AUTHORITY
 
 # ClockAuctionAuthority
 CLOCKAUCTION_AUTHORITY=$(dapp create ClockAuctionAuthority [$GEN0APOSTLE_PROXY])
@@ -33,3 +33,37 @@ seth send $APOSTLECLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHO
 APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLEV2_PROXY $SIRINGCLOCKAUCTION_PROXY $PETBASE_PROXY $TOKENUSE_PROXY])
 cat $ADDRESSES_FILE | jq --arg key "APOSTLEBASEV2_AUTHORITY" --arg value "$APOSTLEBASEV2_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
 seth send $APOSTLEBASE_PROXY "setAuthority(address)" $APOSTLEBASEV2_AUTHORITY
+
+# UserPointsAuthority
+USERPOINTS_AUTHORITY=$(dapp create UserPointsAuthority [$REVENUEPOOL_PROXY $POINTSREWARDPOOL_PROXY])
+cat $ADDRESSES_FILE | jq --arg key "USERPOINTS_AUTHORITY" --arg value "$USERPOINTS_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+seth send $USERPOINTS_PROXY "setAuthority(address)" $USERPOINTS_AUTHORITY
+
+# LandBaseAuthority
+LANDBASE_AUTHORITY=$(dapp create LandBaseAuthority [$MYSTERIOUSTREASURE_PROXY])
+cat $ADDRESSES_FILE | jq --arg key "LANDBASE_AUTHORITY" --arg value "$LANDBASE_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+seth send $LANDBASE_PROXY "setAuthority(address)" $LANDBASE_AUTHORITY
+
+# BancorExchangeAuthority
+# BANCOREXCHANGE_AUTHORITY=$(dapp create BancorExchangeAuthority [$CLOCKAUCTION_PROXY])
+# cat $ADDRESSES_FILE | jq --arg key "BANCOREXCHANGE_AUTHORITY" --arg value "$BANCOREXCHANGE_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+# seth send $BANCOREXCHANGE "setAuthority(address)" $BANCOREXCHANGE_AUTHORITY
+
+# ClockAuctionAuthority
+CLOCKAUCTION_AUTHORITY=$(dapp create ClockAuctionAuthority [$GENESISHOLDER_PROXY])
+cat $ADDRESSES_FILE | jq --arg key "CLOCKAUCTION_AUTHORITY" --arg value "$CLOCKAUCTION_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+seth send $CLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY
+
+# MysteriousTreasure
+seth send $MYSTERIOUSTREASURE_PROXY "setOwner(address)" $CLOCKAUCTION_PROXY
+
+# UserRolesAuthority
+USERROLES_AUTHORITY=$(dapp create UserRolesAuthority [$ROLESUPDATER])
+cat $ADDRESSES_FILE | jq --arg key "USERROLES_AUTHORITY" --arg value "$USERROLES_AUTHORITY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+seth send $USERROLES_PROXY "setAuthority(address)" $USERROLES_AUTHORITY
+
+# MintAndBurnAuthority-kton
+MINTANDBURN_AUTHORITY_KTON=$(dapp create MintAndBurnAuthority [$GRINGOTTSBANK_PROXY $DIVIDENDPOOL_PROXY])
+cat $ADDRESSES_FILE | jq --arg key "MINTANDBURN_AUTHORITY_KTON" --arg value "$MINTANDBURN_AUTHORITY_KTON" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+seth send $TOKEN_ERC20_KTON "setAuthority(address)" $MINTANDBURN_AUTHORITY_KTON

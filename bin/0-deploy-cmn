@@ -59,6 +59,20 @@ echo >&2 "${0##*/}: info: TokenUseProxy inited."
 tokenUseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_TOKEN_USE")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $tokenUseId $TOKENUSE_PROXY 
 
+# UserPoints 
+USERPOINTS=$(dapp create UserPoints)
+cat $ADDRESSES_FILE | jq --arg key "USERPOINTS" --arg value "$USERPOINTS" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+USERPOINTS_PROXY=$(dapp create UserPointsProxy)
+cat $ADDRESSES_FILE | jq --arg key "USERPOINTS_PROXY" --arg value "$USERPOINTS_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+
+calldata=$(seth calldata "initializeContract()")
+seth send $USERPOINTS_PROXY "upgradeToAndCall(address,bytes)" $USERPOINTS $calldata 
+echo >&2 "${0##*/}: info: UserPointsProxy inited."
+
+userPointsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_USER_POINTS")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $userPointsId $USERPOINTS_PROXY 
+
 # # ERC721Bridge
 # ERC721BRIDGE=$(dapp create ERC721Bridge)
 # cat $ADDRESSES_FILE | jq --arg key "ERC721BRIDGE" --arg value "$ERC721BRIDGE" '.[$key] = $value' | sponge $ADDRESSES_FILE
