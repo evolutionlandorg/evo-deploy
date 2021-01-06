@@ -6,14 +6,14 @@ set -e
 
 # PetBase
 PETBASE=$(dapp create PetBase)
-cat $ADDRESSES_FILE | jq --arg key "PETBASE" --arg value "$PETBASE" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "PETBASE" "$PETBASE"
 
-PETBASE_PROXY=$(dapp create ApostleBaseV3Proxy)
-cat $ADDRESSES_FILE | jq --arg key "PETBASE_PROXY" --arg value "$PETBASE_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+PETBASE_PROXY=$(dapp create PetBaseProxy)
+addAddress "PETBASE_PROXY" "$PETBASE_PROXY"
 echo >&2 "${0##*/}: info: PetBaseProxy created."
 
-calldata=$(seth calldata "initializeContract(address,uint128)" $SETTINGSREGISTRY $(seth --to-uint128 1))
-seth send $PETBASE_PROXY "upgradeToAndCall(address,bytes)" $PETBASE $calldata 
+seth send $PETBASE_PROXY "upgradeTo(address)" $PETBASE  
+seth send $PETBASE_PROXY "initializeContract(address,uint128)" $SETTINGSREGISTRY $(seth --to-uint128 1) 
 
 echo >&2 "${0##*/}: info: PetBaseProxy inited."
 

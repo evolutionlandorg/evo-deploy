@@ -6,16 +6,15 @@ set -e
 
 # ApostleBaseV3
 APOSTLEBASEV3=$(dapp create ApostleBaseV3)
-cat $ADDRESSES_FILE | jq --arg key "APOSTLEBASEV3" --arg value "$APOSTLEBASEV3" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "APOSTLEBASEV3" "$APOSTLEBASEV3"
 
-APOSTLEBASE_PROXY=$(dapp create ApostleBaseV3Proxy)
-cat $ADDRESSES_FILE | jq --arg key "LANDBASE_PROXY" --arg value "$APOSTLEBASE_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
-echo >&2 "${0##*/}: info: ApostleBaseV3Proxy created."
+APOSTLEBASE_PROXY=$(dapp create ApostleBaseProxy)
+addAddress "APOSTLEBASE_PROXY" "$APOSTLEBASE_PROXY"
+echo >&2 "${0##*/}: info: ApostleBaseProxy created."
 
-calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
-seth send $APOSTLEBASE_PROXY "upgradeToAndCall(address,bytes)" $APOSTLEBASEV3 $calldata 
-
-echo >&2 "${0##*/}: info: ApostleBaseV3Proxy inited."
+seth send $APOSTLEBASE_PROXY "upgradeTo(address)" $APOSTLEBASEV3  
+seth send $APOSTLEBASE_PROXY "initializeContract(address)" $SETTINGSREGISTRY 
+echo >&2 "${0##*/}: info: ApostleBaseProxy inited."
 
 apostleBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_APOSTLE_BASE")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $apostleBaseId $APOSTLEBASE_PROXY 
@@ -23,22 +22,22 @@ seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" $APOSTL
 
 # ApostleClockAuction
 APOSTLECLOCKAUCTION=$(dapp create ApostleClockAuction)
-cat $ADDRESSES_FILE | jq --arg key "APOSTLECLOCKAUCTION" --arg value "$APOSTLECLOCKAUCTION" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "APOSTLECLOCKAUCTION" "$APOSTLECLOCKAUCTION"
 
 APOSTLECLOCKAUCTION_PROXY=$(dapp create ApostleClockAuctionProxy)
-cat $ADDRESSES_FILE | jq --arg key "APOSTLECLOCKAUCTION_PROXY" --arg value "$APOSTLECLOCKAUCTION_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "APOSTLECLOCKAUCTION_PROXY" "$APOSTLECLOCKAUCTION_PROXY"
 
-calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
-seth send $APOSTLECLOCKAUCTION_PROXY "upgradeToAndCall(address,bytes)" $APOSTLECLOCKAUCTION $calldata 
+seth send $APOSTLECLOCKAUCTION_PROXY "upgradeTo(address)" $APOSTLECLOCKAUCTION  
+seth send $APOSTLECLOCKAUCTION_PROXY "initializeContract(address)" $SETTINGSREGISTRY 
 clockAuctionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_APOSTLE_AUCTION")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $clockAuctionId $APOSTLECLOCKAUCTION_PROXY 
 
 # Gen0ApostleV2
 GEN0APOSTLEV2=$(dapp create Gen0ApostleV2)
-cat $ADDRESSES_FILE | jq --arg key "GEN0APOSTLEV2" --arg value "$GEN0APOSTLEV2" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "GEN0APOSTLEV2" "$GEN0APOSTLEV2"
 
-GEN0APOSTLE_PROXY=$(dapp create Gen0ApostleV2Proxy)
-cat $ADDRESSES_FILE | jq --arg key "GEN0APOSTLE_PROXY" --arg value "$GEN0APOSTLE_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+GEN0APOSTLE_PROXY=$(dapp create Gen0ApostleProxy)
+addAddress "GEN0APOSTLE_PROXY" "$GEN0APOSTLE_PROXY"
 
 gen0Limit=$(seth --to-uint256 2000)
 calldata=$(seth calldata "initializeContract(address,uint256)" $SETTINGSREGISTRY $gen0Limit)
@@ -46,13 +45,13 @@ seth send $GEN0APOSTLE_PROXY "upgradeToAndCall(address,bytes)" $GEN0APOSTLEV2 $c
 
 # SiringClockAuctionV2
 SIRINGCLOCKAUCTIONV2=$(dapp create SiringClockAuctionV2)
-cat $ADDRESSES_FILE | jq --arg key "SIRINGCLOCKAUCTIONV2" --arg value "$SIRINGCLOCKAUCTIONV2" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "SIRINGCLOCKAUCTIONV2" "$SIRINGCLOCKAUCTIONV2"
 
-SIRINGCLOCKAUCTION_PROXY=$(dapp create SiringClockAuctionV2Proxy)
-cat $ADDRESSES_FILE | jq --arg key "SIRINGCLOCKAUCTION_PROXY" --arg value "$SIRINGCLOCKAUCTION_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+SIRINGCLOCKAUCTION_PROXY=$(dapp create SiringClockAuctionProxy)
+addAddress "SIRINGCLOCKAUCTION_PROXY" "$SIRINGCLOCKAUCTION_PROXY"
 
-calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
-seth send $SIRINGCLOCKAUCTION_PROXY "upgradeToAndCall(address,bytes)" $SIRINGCLOCKAUCTIONV2 $calldata 
+seth send $SIRINGCLOCKAUCTION_PROXY "upgradeTo(address)" $SIRINGCLOCKAUCTIONV2  
+seth send $SIRINGCLOCKAUCTION_PROXY "initializeContract(address)" $SETTINGSREGISTRY 
 
 siringAuctionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_SIRING_AUCTION")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $siringAuctionId $SIRINGCLOCKAUCTION_PROXY 

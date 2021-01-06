@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -eo pipefail
 
 config-init() {
   path=$1
@@ -15,11 +15,37 @@ config-init() {
   for e in $exports; do export "$e"; done
 }
 
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+log() {
+    printf '%b\n' "${GREEN}${1}${NC}"
+    echo ""
+}
+
+toUpper() {
+    echo "$1" | tr '[:lower:]' '[:upper:]'
+}
+
+toLower() {
+    echo "$1" | tr '[:upper:]' '[:lower:]'
+}
+
+addAddress() {
+    if [ -z "$1" ] || [ -z "$2" ] 
+      then
+        echo "addAddress: No argument supplied"
+        exit 1
+    fi
+    cat "$ADDRESSES_FILE" | jq --arg key "$1" --arg value "$2" '.[$key] = $value' | sponge "$ADDRESSES_FILE"
+    log "$1=$2"
+}
+
 loadAddresses() {
-  local exports
-  exports=$(cat $ADDRESSES_FILE | jq -r ".deploy_data // . | \
-    to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]")
-  for e in $exports; do export "$e"; done
+    local exports
+    exports=$(cat $ADDRESSES_FILE | jq -r ".deploy_data // . | \
+        to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]")
+    for e in $exports; do export "$e"; done
 }
 
 config-init "${PWD}/bin/conf/pangolin.json";

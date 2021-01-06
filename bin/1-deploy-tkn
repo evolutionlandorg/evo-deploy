@@ -8,7 +8,6 @@ tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO" "RING" "KTON")
 
 for token in "${tokens[@]}"; do
     address=$(dapp create $token)
-    cat $ADDRESSES_FILE | jq --arg key "TOKEN_ERC20_$token" --arg value "$address" '.[$key] = $value' | sponge $ADDRESSES_FILE
     setting=$token
     if [[ "$setting" = "HHO" ]]; then
 	setting="WATER"
@@ -16,6 +15,7 @@ for token in "${tokens[@]}"; do
     if [[ "$setting" = "SIOO" ]]; then
 	setting="SOIL"
     fi
+    addAddress "TOKEN_ERC20_$setting" "$address"
     id="CONTRACT_${setting}_ERC20_TOKEN"
     echo $id
     id=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii $id)))

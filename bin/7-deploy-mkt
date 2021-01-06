@@ -6,14 +6,14 @@ set -e
 
 # ClockAuctionV2
 CLOCKAUCTIONV2=$(dapp create ClockAuctionV2)
-cat $ADDRESSES_FILE | jq --arg key "CLOCKAUCTIONV2" --arg value "$CLOCKAUCTIONV2" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "CLOCKAUCTIONV2" "$CLOCKAUCTIONV2"
 
 CLOCKAUCTION_PROXY=$(dapp create ClockAuctionProxy)
-cat $ADDRESSES_FILE | jq --arg key "CLOCKAUCTION_PROXY" --arg value "$CLOCKAUCTION_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "CLOCKAUCTION_PROXY" "$CLOCKAUCTION_PROXY"
 echo >&2 "${0##*/}: info: ClockAuctionProxy created."
 
-calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
-seth send $CLOCKAUCTION_PROXY "upgradeToAndCall(address,bytes)" $CLOCKAUCTIONV2 $calldata 
+seth send $CLOCKAUCTION_PROXY "upgradeTo(address)" $CLOCKAUCTIONV2  
+seth send $CLOCKAUCTION_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
 
 echo >&2 "${0##*/}: info: ClockAuctionProxy inited."
 
@@ -22,40 +22,40 @@ seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $auctionId $CL
 
 # GenesisHolder
 GENESISHOLDER=$(dapp create GenesisHolder)
-cat $ADDRESSES_FILE | jq --arg key "GENESISHOLDER" --arg value "$GENESISHOLDER" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "GENESISHOLDER" "$GENESISHOLDER"
 
 GENESISHOLDER_PROXY=$(dapp create GenesisHolderProxy)
-cat $ADDRESSES_FILE | jq --arg key "GENESISHOLDER_PROXY" --arg value "$GENESISHOLDER_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "GENESISHOLDER_PROXY" "$GENESISHOLDER_PROXY"
 echo >&2 "${0##*/}: info: GenesisHolderProxy created."
 
-calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
-seth send $GENESISHOLDER_PROXY "upgradeToAndCall(address,bytes)" $GENESISHOLDER $calldata 
+seth send $GENESISHOLDER_PROXY "upgradeTo(address)" $GENESISHOLDER  
+seth send $GENESISHOLDER_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
 
 echo >&2 "${0##*/}: info: GenesisHolderProxy inited."
 
 # RevenuePoolV2
 REVENUEPOOLV2=$(dapp create RevenuePoolV2)
-cat $ADDRESSES_FILE | jq --arg key "REVENUEPOOLV2" --arg value "$REVENUEPOOLV2" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "REVENUEPOOLV2" "$REVENUEPOOLV2"
 
 REVENUEPOOL_PROXY=$(dapp create RevenuePoolProxy)
-cat $ADDRESSES_FILE | jq --arg key "REVENUEPOOL_PROXY" --arg value "$REVENUEPOOL_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "REVENUEPOOL_PROXY" "$REVENUEPOOL_PROXY"
 echo >&2 "${0##*/}: info: RevenuePoolProxy created."
 
-calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
-seth send $REVENUEPOOL_PROXY "upgradeToAndCall(address,bytes)" $REVENUEPOOLV2 $calldata 
+seth send $REVENUEPOOL_PROXY "upgradeTo(address)" $REVENUEPOOLV2  
+seth send $REVENUEPOOL_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
 
 echo >&2 "${0##*/}: info: RevenuePoolProxy inited."
 
 # PointsRewardPool
 POINTSREWARDPOOL=$(dapp create PointsRewardPool)
-cat $ADDRESSES_FILE | jq --arg key "POINTSREWARDPOOL" --arg value "$POINTSREWARDPOOL" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "POINTSREWARDPOOL" "$POINTSREWARDPOOL"
 
 POINTSREWARDPOOL_PROXY=$(dapp create PointsRewardPoolProxy)
-cat $ADDRESSES_FILE | jq --arg key "POINTSREWARDPOOL_PROXY" --arg value "$POINTSREWARDPOOL_PROXY" '.[$key] = $value' | sponge $ADDRESSES_FILE
+addAddress "POINTSREWARDPOOL_PROXY" "$POINTSREWARDPOOL_PROXY"
 echo >&2 "${0##*/}: info: PointsRewardPoolProxy created."
 
-calldata=$(seth calldata "initializeContract(address)" $SETTINGSREGISTRY)
-seth send $POINTSREWARDPOOL_PROXY "upgradeToAndCall(address,bytes)" $POINTSREWARDPOOL $calldata 
+seth send $POINTSREWARDPOOL_PROXY "upgradeTo(address)" $POINTSREWARDPOOL  
+seth send $POINTSREWARDPOOL_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
 
 echo >&2 "${0##*/}: info: PointsRewardPoolProxy inited."
 
@@ -77,6 +77,3 @@ seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $refererCutId $ui
 errorSpaceId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_EXCHANGE_ERROR_SPACE")))
 uint_error_space=$(seth --to-uint256 0)
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $errorSpaceId $uint_error_space 
-
-# set owner
-seth send $MYSTERIOUSTREASURE_PROXY "setOwner(address)" $CLOCKAUCTION_PROXY

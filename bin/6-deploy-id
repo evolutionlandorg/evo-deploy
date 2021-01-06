@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# DividendPool 
+DIVIDENDPOOL=$(dapp create DividendPool)
+addAddress "DIVIDENDPOOL" "$DIVIDENDPOOL"
+
+DIVIDENDPOOL_PROXY=$(dapp create DividendPoolProxy)
+addAddress "DIVIDENDPOOL_PROXY" "$DIVIDENDPOOL_PROXY"
+echo >&2 "${0##*/}: info: DividendPoolProxy created."
+
+seth send $DIVIDENDPOOL_PROXY "upgradeTo(address)" $DIVIDENDPOOL  
+seth send $DIVIDENDPOOL_PROXY "initializeContract(address)" $SETTINGSREGISTRY  
+
+echo >&2 "${0##*/}: info: DividendPoolProxy inited."
+
+dividendPoolId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_DIVIDENDS_POOL")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $dividendPoolId $DIVIDENDPOOL_PROXY 
+
+# FrozenDividend
+FROZENDIVIDEND=$(dapp create FrozenDividend)
+addAddress "FROZENDIVIDEND" "$FROZENDIVIDEND"
+
+FROZENDIVIDEND_PROXY=$(dapp create FrozenDividendProxy)
+addAddress "FROZENDIVIDEND_PROXY" "$FROZENDIVIDEND_PROXY"
+echo >&2 "${0##*/}: info: FrozenDividendProxy created."
+
+seth send $FROZENDIVIDEND_PROXY "upgradeTo(address)" $FROZENDIVIDEND  
+seth send $FROZENDIVIDEND_PROXY "initializeContract(address)" $SETTINGSREGISTRY  
+
+echo >&2 "${0##*/}: info: FrozenDividendProxy inited."
+
+frozenDivId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_FROZEN_DIVIDEND")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $frozenDivId $FROZENDIVIDEND_PROXY 
+# UserRoles
+USERROLES=$(dapp create UserRoles)
+addAddress "USERROLES" "$USERROLES"
+
+USERROLES_PROXY=$(dapp create UserRolesProxy)
+addAddress "USERROLES_PROXY" "$USERROLES_PROXY"
+echo >&2 "${0##*/}: info: UserRolesProxy created."
+
+seth send $USERROLES_PROXY "upgradeTo(address)" $USERROLES  
+seth send $USERROLES_PROXY "initializeContract()"   
+echo >&2 "${0##*/}: info: UserRolesProxy inited."
+
+frozenDivId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_FROZEN_DIVIDEND")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $frozenDivId $FROZENDIVIDEND_PROXY 
+# RolesUpdater
+networkId=$(seth --to-uint256 $(seth rpc net_version))
+supervisor='0x00a1537d251a6a4c4effAb76948899061FeA47b9'
+ROLESUPDATER=$(dapp create RolesUpdater $USERROLES_PROXY $networkId $supervisor)
+addAddress "ROLESUPDATER" "$ROLESUPDATER"
+
+# TakeBack-ring
+TAKEBACK_RING=$(dapp create TakeBack $TOKEN_ERC20_RING $supervisor $networkId)
+addAddress "TAKEBACK_RING" "$TAKEBACK_RING"
+
+# TakeBack-kton
+TAKEBACK_KTON=$(dapp create TakeBack $TOKEN_ERC20_KTON $supervisor $networkId)
+addAddress "TAKEBACK_KTON" "$TAKEBACK_KTON"
+

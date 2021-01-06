@@ -83,4 +83,9 @@ link-id :;
 	ln -s $(PWD)/lib/id/flat/TakeBack.sol $(PWD)/src/id/TakeBack.f.sol
 	ln -s $(PWD)/lib/id/flat/TakeBackNFT.sol $(PWD)/src/id/TakeBackNFT.f.sol
 
-.PHONY: all clean test deploy link-tkn link-cmn
+link-bnk:;
+	rm -rf 'src/bank'
+	mkdir -p 'src/bank'
+	ln -s $(PWD)/lib/bank/flat/GringottsBankV2.sol $(PWD)/src/bank/GringottsBankV2.f.sol
+
+.PHONY: all clean test deploy link-tkn link-cmn link-id link-mkt link-bnc link-bnk
