@@ -63,3 +63,4 @@ addAddress "TAKEBACK_RING" "$TAKEBACK_RING"
 TAKEBACK_KTON=$(dapp create TakeBack $TOKEN_ERC20_KTON $supervisor $networkId)
 addAddress "TAKEBACK_KTON" "$TAKEBACK_KTON"
 
+# RedBag

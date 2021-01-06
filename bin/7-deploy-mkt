@@ -59,6 +59,8 @@ seth send $POINTSREWARDPOOL_PROXY "initializeContract(address)" $SETTINGSREGISTR
 
 echo >&2 "${0##*/}: info: PointsRewardPoolProxy inited."
 
+# LuckyBox
+
 # SettingIds
 auctionCutId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUCTION_CUT")))
 # 4%

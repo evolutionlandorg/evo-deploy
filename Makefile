@@ -37,7 +37,7 @@ link-lnd:;
 	rm -rf 'src/land'
 	mkdir -p 'src/land'
 	ln -s $(PWD)/lib/land/flat/LandBase.sol $(PWD)/src/land/LandBase.f.sol
-	ln -s $(PWD)/lib/land/flat/LandResourceV5.sol $(PWD)/src/land/LandResourceV5.f.sol
+	ln -s $(PWD)/lib/land/flat/LandResourceV4.sol $(PWD)/src/land/LandResourceV4.f.sol
 	ln -s $(PWD)/lib/land/flat/LandBaseAuthority.sol $(PWD)/src/land/LandBaseAuthority.f.sol
 	ln -s $(PWD)/lib/land/flat/MysteriousTreasure.sol $(PWD)/src/land/MysteriousTreasure.f.sol
 	ln -s $(PWD)/lib/land/flat/MysteriousTreasureAuthority.sol $(PWD)/src/land/MysteriousTreasureAuthority.f.sol
@@ -64,12 +64,6 @@ link-mkt:;
 	ln -s $(PWD)/lib/market-contracts/flat/PointsRewardPool.sol $(PWD)/src/market-contracts/PointsRewardPool.f.sol
 	ln -s $(PWD)/lib/market-contracts/flat/RevenuePoolV2.sol $(PWD)/src/market-contracts/RevenuePoolV2.f.sol
 	ln -s $(PWD)/lib/market-contracts/flat/LuckyBox.sol $(PWD)/src/market-contracts/LuckyBox.f.sol
-
-link-bnc:;
-	rm -rf 'src/bancor-contracts'
-	mkdir -p 'src/bancor-contracts'
-	ln -s $(PWD)/lib/bancor-contracts/flat/BancorExchangeV2.sol $(PWD)/src/bancor-contracts/BancorExchangeV2.f.sol
-	ln -s $(PWD)/lib/bancor-contracts/flat/BancorExchangeAuthority.sol $(PWD)/src/bancor-contracts/BancorExchangeAuthority.f.sol
 
 link-id :;
 	rm -rf 'src/id'

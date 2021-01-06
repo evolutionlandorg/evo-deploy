@@ -21,9 +21,13 @@ seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" $LANDBA
 landBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_BASE")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landBaseId $LANDBASE_PROXY 
 
-LANDRESOURCEV5=$(dapp create LandResourceV5)
-addAddress "LANDRESOURCEV5" "$LANDRESOURCEV5"
-echo >&2 "${0##*/}: info: LandResourceV5 created."
+# LANDRESOURCEV5=$(dapp create LandResourceV5)
+# addAddress "LANDRESOURCEV5" "$LANDRESOURCEV5"
+# echo >&2 "${0##*/}: info: LandResourceV5 created."
+
+LANDRESOURCEV4=$(dapp create LandResourceV4)
+addAddress "LANDRESOURCEV4" "$LANDRESOURCEV4"
+echo >&2 "${0##*/}: info: LandResourceV4 created."
 
 LANDRESOURCE_PROXY=$(dapp create LandResourceProxy)
 addAddress "LANDRESOURCE_PROXY" "$LANDRESOURCE_PROXY"
@@ -31,9 +35,9 @@ echo >&2 "${0##*/}: info: LandResourceProxy created."
 
 # resource release start time 1544083267
 starttime=$(seth --to-uint256 $(date +%s))
-maxminers=$(seth --to-uint256 5)
-seth send $LANDRESOURCE_PROXY "upgradeTo(address)" $LANDRESOURCEV5  
-seth send $LANDRESOURCE_PROXY "initializeContract(address,uint256,uint256)" $SETTINGSREGISTRY $starttime $maxminers 
+# maxminers=$(seth --to-uint256 5)
+seth send $LANDRESOURCE_PROXY "upgradeTo(address)" $LANDRESOURCEV4  
+seth send $LANDRESOURCE_PROXY "initializeContract(address,uint256)" $SETTINGSREGISTRY $starttime  
 echo >&2 "${0##*/}: info: LandResourceProxy inited."
 
 landBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_BASE")))
