@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+owner=0x6E40A3621614B12821A0F184A03798ad505E4758
+apostlebase="$APOSTLEBASE_PROXY"
+seth send -F $OWNER $apostle "createApostle(uint256,uint256,uint256,uint256,uint256,address)(uint256)" $(seth --to-uint256 0)  $(seth --to-uint256 0) $(seth --to-uint256 0) $(seth --to-uint256 511454053041611982708864420168291763551500459624059621882020887047539874) $(seth --to-uint256 5832929390214414995996) $AUTH
+;;
+at)
+seth call $apostle "tokenId2Apostle(uint256)(uint256,uint256,uint256,uint256,uint256,uint16,uint16,uint48,uint48,uint48,uint48)" $2
