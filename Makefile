@@ -27,6 +27,7 @@ link-cmn:;
 	ln -s $(PWD)/lib/common-contracts/flat/InterstellarEncoderV3.sol $(PWD)/src/common-contracts/InterstellarEncoderV3.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/SettingsRegistry.sol $(PWD)/src/common-contracts/SettingsRegistry.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/ObjectOwnershipV2.sol $(PWD)/src/common-contracts/ObjectOwnershipV2.f.sol
+	ln -s $(PWD)/lib/common-contracts/flat/ObjectOwnershipAuthorityV2.sol $(PWD)/src/common-contracts/ObjectOwnershipAuthorityV2.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/ERC721Bridge.sol $(PWD)/src/common-contracts/ERC721Bridge.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/ERC721Adaptor.sol $(PWD)/src/common-contracts/ERC721Adaptor.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/MintAndBurnAuthority.sol $(PWD)/src/common-contracts/MintAndBurnAuthority.f.sol

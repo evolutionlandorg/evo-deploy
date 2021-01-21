@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+LANDBASE=$(dapp create LandBase)
+echo >&2 "${0##*/}: info: LandBase created."
+seth send $LANDBASE_PROXY "upgradeTo(address)" $LANDBASE
+if test $(seth call $LANDBASE_PROXY "implementation()(address)") != $LANDBASE; then
+  (echo "check migration failed."; exit 1;)
+fi
+addAddress "LANDBASE" "$LANDBASE"
+echo >&2 "${0##*/}: info: migration finished." 

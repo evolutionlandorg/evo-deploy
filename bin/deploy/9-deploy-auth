@@ -65,3 +65,9 @@ seth send $TOKEN_ERC20_KTON "setAuthority(address)" $MINTANDBURN_AUTHORITY_KTON
 
 # MysteriousTreasure
 seth send $MYSTERIOUSTREASURE_PROXY "setOwner(address)" $CLOCKAUCTION_PROXY
+
+# ObjectOwnershipAuthorityV2
+OBJECTOWNERSHIPV2_AUTHORITY=$(dapp create src/common-contracts/ObjectOwnershipAuthorityV2.f.sol:ObjectOwnershipAuthorityV2 [$LANDBASE_PROXY,$APOSTLEBASE_PROXY])
+addAddress "OBJECTOWNERSHIPV2_AUTHORITY" "$OBJECTOWNERSHIPV2_AUTHORITY"
+seth send $OBJECTOWNERSHIP_PROXY "setAuthority(address)" $OBJECTOWNERSHIPV2_AUTHORITY 
+
