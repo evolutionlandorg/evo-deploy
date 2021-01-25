@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+bank=$GRINGOTTSBANK_PROXY
+amount=$(seth --to-uint256 $(seth --to-wei 10 ether))
+month=$(seth --to-uint256 1)
+seth send "$TOKEN_ERC20_RING" "transfer(address,uint256,bytes)" "$bank" "$amount" "$month"
