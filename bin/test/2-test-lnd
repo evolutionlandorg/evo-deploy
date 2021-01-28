@@ -12,3 +12,7 @@ attr=0x0000000000000000000000000000000000000000000000010f0400850102005f
 mask=0x0000000000000000000000000000000000000000000000000000000000000000
 seth estimate "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask
 # seth send "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask
+
+# seth send "$landbase" "setOwner(address)" 0x6540CE4d6F6D5F49AeE3F5F97feB6B13CfEAeA40
+
+# seth call "$landbase" "owner()(address)"
