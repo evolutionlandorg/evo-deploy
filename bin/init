@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -eox pipefail
 
 config-init() {
-  path=$1
+  path=${DEPLOY_CONFIG:-$1}
   if [[ ! -e "$path" ]]; then
     echo "Config file not found: $path not found"
     exit 1
@@ -48,22 +48,23 @@ loadAddresses() {
     for e in $exports; do export "$e"; done
 }
 
-# config-init "${PWD}/bin/conf/pangolin.json";
-config-init "${PWD}/bin/conf/heco-test.json";
-# config-init "${PWD}/bin/conf/bsc-test.json";
+if  [[ -e .env ]]; then
+  . .env
+fi
 
-# if [[ "$CHAIN" ]]; then  
-#   case "$CHAIN" in
-#     pangolin)
-#       config-init "${PWD}/bin/conf/pangolin.json";
-#       ;;
-#     heco-test)
-#       config-init "${PWD}/bin/conf/heco-test.json";
-#       ;;
-#     bsc-test)
-#       config-init "${PWD}/bin/conf/bsc-test.json";
-#       ;;
-#     *)
-#       exit 1
-#   esac
-# fi
+if [[ "$DEPLOY_CHAIN?" ]]; then  
+  case "$DEPLOY_CHAIN" in
+    pangolin)
+      config-init "${PWD}/bin/conf/pangolin.json";
+      ;;
+    heco-test)
+      config-init "${PWD}/bin/conf/heco-test.json";
+      ;;
+    bsc-test)
+      config-init "${PWD}/bin/conf/bsc-test.json";
+      ;;
+    *)
+      exit 1
+  esac
+fi
+
