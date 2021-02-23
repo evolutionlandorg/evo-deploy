@@ -19,29 +19,29 @@ contract WKTON {
     string  public name            = "Wrapped KTON";
     string  public symbol          = "WKTON";
     uint8   public decimals        = 18;
-	address public KTON_PRECOMPILE = 0x0000000000000000000000000000000000000016;
+    address public KTON_PRECOMPILE = 0x0000000000000000000000000000000000000016;
 
     event  Approval(address indexed src, address indexed guy, uint wad);
     event  Transfer(address indexed src, address indexed dst, uint wad);
     event  Deposit(address indexed dst, uint wad);
     event  Withdrawal(bytes32 indexed src, uint wad);
 
-	uint                                           public totalSupply;
+    uint                                           public totalSupply;
     mapping (address => uint)                      public balanceOf;
     mapping (address => mapping (address => uint)) public allowance;
 
     function deposit(address from, uint256 value) public {
-		require(msg.sender == KTON_PRECOMPILE, "WKTON: PERMISSION");
-		totalSupply += value;
+	require(msg.sender == KTON_PRECOMPILE, "WKTON: PERMISSION");
+	totalSupply += value;
         balanceOf[from] += value;
         Deposit(from, value);
     }
     function withdraw(bytes32 to, uint wad) public {
         require(balanceOf[msg.sender] >= wad);
-		totalSupply -= wad;
+	totalSupply -= wad;
         balanceOf[msg.sender] -= wad;
-		bool success = KTON_PRECOMPILE.call(bytes4(keccak256("withdraw(bytes32,uint256)")), to, wad);
-		require(success, "WKTON: WITHDRAW_FAILED");
+	bool success = KTON_PRECOMPILE.call(bytes4(keccak256("withdraw(bytes32,uint256)")), to, wad);
+	require(success, "WKTON: WITHDRAW_FAILED");
         Withdrawal(to, wad);
     }
 
