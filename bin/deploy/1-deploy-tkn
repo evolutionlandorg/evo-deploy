@@ -26,8 +26,8 @@ for token in "${tokens[@]}"; do
     fi
 done
 
-ring=$(dapp create WRING)
-addAddress "TOKEN_ERC20_RING" $ring
+# ring=$(dapp create WRING)
+# addAddress "TOKEN_ERC20_RING" $ring
 
-kton=$(dapp create WKTON)
-addAddress "TOKEN_ERC20_KTON" $kton
+# kton=$(dapp create WKTON)
+# addAddress "TOKEN_ERC20_KTON" $kton

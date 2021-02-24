@@ -28,8 +28,10 @@ link-cmn:;
 	ln -s $(PWD)/lib/common-contracts/flat/SettingsRegistry.sol $(PWD)/src/common-contracts/SettingsRegistry.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/ObjectOwnershipV2.sol $(PWD)/src/common-contracts/ObjectOwnershipV2.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/ObjectOwnershipAuthorityV2.sol $(PWD)/src/common-contracts/ObjectOwnershipAuthorityV2.f.sol
-	ln -s $(PWD)/lib/common-contracts/flat/ERC721Bridge.sol $(PWD)/src/common-contracts/ERC721Bridge.f.sol
+	ln -s $(PWD)/lib/common-contracts/flat/ERC721Bridge.sol $(PWD)/src/common-contracts/ERC721BridgeV2.f.sol
+	ln -s $(PWD)/lib/common-contracts/flat/ERC721BridgeV2.sol $(PWD)/src/common-contracts/ERC721Bridge.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/ERC721Adaptor.sol $(PWD)/src/common-contracts/ERC721Adaptor.f.sol
+	ln -s $(PWD)/lib/common-contracts/flat/PolkaPetAdaptor.sol $(PWD)/src/common-contracts/PolkaPetAdaptor.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/MintAndBurnAuthority.sol $(PWD)/src/common-contracts/MintAndBurnAuthority.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/UserPoints.sol $(PWD)/src/common-contracts/UserPoints.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/UserPointsAuthority.sol $(PWD)/src/common-contracts/UserPointsAuthority.f.sol

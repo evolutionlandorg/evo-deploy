@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+ERC721BRIDGEV2=$(dapp create ERC721BridgeV2)
+echo >&2 "${0##*/}: info: ERC721BridgeV2 created."
+seth send -F $OWNER $ERC721BRIDGE_PROXY "upgradeTo(address)" $ERC721BRIDGEV2
+if test $(seth call $ERC721BRIDGE_PROXY "implementation()(address)") != $ERC721BRIDGEV2; then
+  (echo "check migration failed."; exit 1;)
+fi
+addAddress "ERC721BRIDGEV2" "$ERC721BRIDGEV2"
+
+productId=$(seth --to-uint16 259)
+POLKAPETADAPTOR=$(dapp create PolkaPetAdaptor ${SETTINGSREGISTRY?} ${POLKAPET?} $productId)
+echo >&2 "${0##*/}: info: PolkaPetAdaptor created."
+
+addAddress "POLKAPETADAPTOR" "$POLKAPETADAPTOR"
+
+seth send -F $OWNER $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $POLKAPET $POLKAPETADAPTOR
+
+seth send -F $OWNER $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $POLKAPET $(seth --to-hex 5) 
+echo >&2 "${0##*/}: info: migration finished." 

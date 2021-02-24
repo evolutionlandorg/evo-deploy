@@ -54,6 +54,9 @@ fi
 
 if [[ "$DEPLOY_CHAIN?" ]]; then  
   case "$DEPLOY_CHAIN" in
+    ropsten)
+      config-init "${PWD}/bin/conf/ropsten.json";
+      ;;
     pangolin)
       config-init "${PWD}/bin/conf/pangolin.json";
       ;;

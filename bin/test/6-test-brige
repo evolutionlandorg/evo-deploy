@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+## bridge in
+
+# id=$(seth --to-uint256 2)
+# value=$(seth --to-uint256 2)
+# seth send "$POLKAPET" "safeTransferFrom(address,address,uint256,uint256,bytes)" "$AUTH" "$ERC721BRIDGE_PROXY" "$id" "$value" "0x0"
+
+## bridge out
+
+# seth send $ERC721BRIDGE_PROXY "swapOut1155(uint256)" 0x2a01000101000503800000000000010300000000000000000000000000000065
+
+## tie pet
+ppet=0x2a01000101000503800000000000010300000000000000000000000000000067
+apostle1=0x2a0100010100010200000000000000010000000000000000000000000000006b
+seth send $PETBASE_PROXY "tiePetTokenToApostle(uint256,uint256)" "$ppet" "$apostle1"
