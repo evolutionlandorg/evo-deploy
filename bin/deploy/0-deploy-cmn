@@ -29,7 +29,7 @@ echo >&2 "${0##*/}: info: ObjectOwnerShipV2Proxy inited."
 objectOwnershipId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_OBJECT_OWNERSHIP")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $objectOwnershipId $OBJECTOWNERSHIP_PROXY 
 
-seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
+seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 3) 
 
 # TokenLocation
 TOKENLOCATION=$(dapp create TokenLocation)
