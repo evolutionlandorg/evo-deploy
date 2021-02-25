@@ -9,9 +9,9 @@ set -e
 
 # test mint
 amount=$(seth --to-uint256 $(seth --to-wei 10 ether))
-# tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
-# for token in "${tokens[@]}"; do
-#   seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(uint256)" "$amount"
-# done
+tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
+for token in "${tokens[@]}"; do
+  seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(uint256)" "$amount"
+done
 
 seth send -V "$(seth --to-wei 1 ether)"  "$TOKEN_ERC20_RING" "deposit()" 
