@@ -18,7 +18,7 @@ pragma solidity ^0.4.18;
 contract WKTON {
     string  public name            = "Wrapped KTON";
     string  public symbol          = "WKTON";
-    uint8   public decimals        = 18;
+    uint8   public decimals        = 9;
     address public KTON_PRECOMPILE = 0x0000000000000000000000000000000000000016;
 
     event  Approval(address indexed src, address indexed guy, uint wad);
