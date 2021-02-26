@@ -15,7 +15,11 @@
 
 pragma solidity ^0.4.18;
 
-contract WRING {
+import "../interfaces/ApproveAndCallFallBack.sol";
+import "../interfaces/ERC223ReceivingContract.sol";
+import "../interfaces/ERC223.sol";
+
+contract WRING is ERC223 {
     string public name     = "Wrapped RING";
     string public symbol   = "WRING";
     uint8  public decimals = 18;
@@ -74,4 +78,52 @@ contract WRING {
 
         return true;
     }
+
+    function approveAndCall(address _spender, uint256 _amount, bytes _extraData)
+		returns (bool success)
+	{
+        if (!approve(_spender, _amount)) revert();
+
+        ApproveAndCallFallBack(_spender).receiveApproval(
+            msg.sender,
+            _amount,
+            this,
+            _extraData
+        );
+
+        return true;
+    }
+
+    function transfer(
+        address _to,
+        uint256 _amount,
+        bytes _data)
+        public
+        returns (bool success)
+    {
+        return transferFrom(msg.sender, _to, _amount, _data);
+    }
+
+    function transferFrom(address _from, address _to, uint256 _amount, bytes _data)
+        public 
+        returns (bool success)
+    {
+        require(transferFrom(_from, _to, _amount));
+        if (isContract(_to)) {
+            ERC223ReceivingContract receiver = ERC223ReceivingContract(_to);
+            receiver.tokenFallback(_from, _amount, _data);
+        }
+        emit ERC223Transfer(_from, _to, _amount, _data);
+        return true;
+    }
+
+    function isContract(address _addr) constant internal returns(bool) {
+        uint size;
+        if (_addr == 0) return false;
+        assembly {
+            size := extcodesize(_addr)
+        }
+        return size>0;
+    }
+	
 }
