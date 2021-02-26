@@ -13,3 +13,6 @@ set -e
 # seth send $APOSTLEBASE_PROXY "setAuthority(address)" $APOSTLEBASEV2_AUTHORITY
 
 # seth estimate $GEN0APOSTLE_PROXY "createGen0Apostle(uint256,uint256,address)" 1 1 0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
+
+# seth call $GENESISHOLDER_PROXY "owner()(address)" 
+# seth send $GENESISHOLDER_PROXY "setOperator(address)" $AUTH

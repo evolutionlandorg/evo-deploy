@@ -31,6 +31,8 @@ echo >&2 "${0##*/}: info: GenesisHolderProxy created."
 seth send $GENESISHOLDER_PROXY "upgradeTo(address)" $GENESISHOLDER  
 seth send $GENESISHOLDER_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
 
+seth send $GENESISHOLDER_PROXY "setOperator(address)" $AUTH
+
 echo >&2 "${0##*/}: info: GenesisHolderProxy inited."
 
 # RevenuePoolV2
