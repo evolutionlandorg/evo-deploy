@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+
+# seth call $GEN0APOSTLE_PROXY "owner()(address)" 
+# seth send $GEN0APOSTLE_PROXY "setOperator(address)" 0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
+
+# APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLE_PROXY,$SIRINGCLOCKAUCTION_PROXY,$PETBASE_PROXY,$TOKENUSE_PROXY])
+# addAddress "APOSTLEBASEV2_AUTHORITY" "$APOSTLEBASEV2_AUTHORITY"
+# seth send $APOSTLEBASE_PROXY "setAuthority(address)" $APOSTLEBASEV2_AUTHORITY
+
+# seth estimate $GEN0APOSTLE_PROXY "createGen0Apostle(uint256,uint256,address)" 1 1 0x0f14341A7f464320319025540E8Fe48Ad0fe5aec

@@ -40,8 +40,8 @@ GEN0APOSTLE_PROXY=$(dapp create Gen0ApostleProxy)
 addAddress "GEN0APOSTLE_PROXY" "$GEN0APOSTLE_PROXY"
 
 gen0Limit=$(seth --to-uint256 2000)
-calldata=$(seth calldata "initializeContract(address,uint256)" $SETTINGSREGISTRY $gen0Limit)
-seth send $GEN0APOSTLE_PROXY "upgradeToAndCall(address,bytes)" $GEN0APOSTLEV2 $calldata 
+seth send $GEN0APOSTLE_PROXY "upgradeTo(address)" $GEN0APOSTLEV2  
+seth send $GEN0APOSTLE_PROXY initializeContract(address,uint256) $SETTINGSREGISTRY $gen0Limit 
 
 # SiringClockAuctionV2
 SIRINGCLOCKAUCTIONV2=$(dapp create SiringClockAuctionV2)
