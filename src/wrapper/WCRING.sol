@@ -113,7 +113,7 @@ contract WCRING is ERC223 {
             ERC223ReceivingContract receiver = ERC223ReceivingContract(_to);
             receiver.tokenFallback(_from, _amount, _data);
         }
-        emit ERC223Transfer(_from, _to, _amount, _data);
+        ERC223Transfer(_from, _to, _amount, _data);
         return true;
     }
 
