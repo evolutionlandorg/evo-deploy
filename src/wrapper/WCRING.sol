@@ -19,9 +19,9 @@ import "../interfaces/ApproveAndCallFallBack.sol";
 import "../interfaces/ERC223ReceivingContract.sol";
 import "../interfaces/ERC223.sol";
 
-contract WRING is ERC223 {
-    string public name     = "Wrapped RING";
-    string public symbol   = "WRING";
+contract WCRING is ERC223 {
+    string public name     = "Wrapped CRING";
+    string public symbol   = "WCRING";
     uint8  public decimals = 18;
 
     event  Approval(address indexed src, address indexed guy, uint wad);

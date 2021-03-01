@@ -15,9 +15,9 @@
 
 pragma solidity ^0.4.18;
 
-contract WKTON {
-    string  public name            = "Wrapped KTON";
-    string  public symbol          = "WKTON";
+contract WCKTON {
+    string  public name            = "Wrapped CKTON";
+    string  public symbol          = "WCKTON";
     uint8   public decimals        = 9;
     address public KTON_PRECOMPILE = 0x0000000000000000000000000000000000000016;
 
