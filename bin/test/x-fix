@@ -6,6 +6,7 @@ set -e
 
 
 # seth call $GEN0APOSTLE_PROXY "owner()(address)" 
+# seth call $GEN0APOSTLE_PROXY "operator()(address)" 
 # seth send $GEN0APOSTLE_PROXY "setOperator(address)" 0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
 
 # APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLE_PROXY,$SIRINGCLOCKAUCTION_PROXY,$PETBASE_PROXY,$TOKENUSE_PROXY])
@@ -14,5 +15,28 @@ set -e
 
 # seth estimate $GEN0APOSTLE_PROXY "createGen0Apostle(uint256,uint256,address)" 1 1 0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
 
+# seth call $OBJECTOWNERSHIPV2_AUTHORITY "ownerOf(uint256)(address)" 0x2a2b00032b0003010000000000000003000000000000000000000000000007e9
+# seth estimate $GEN0APOSTLE_PROXY "createGen0Auction(uint256,uint256,uint256,uint256,uint256,address)" 19073114149690932214419911180275513984393112248062184811971884229801912827905 5000000000000000000000 1000000000000000000000 21600 1614201600 0xd74B642b4d3AFbA64075079D4522EB65Aaf6f3A2
+
+
 # seth call $GENESISHOLDER_PROXY "owner()(address)" 
+# seth call $GENESISHOLDER_PROXY "operator()(address)" 
 # seth send $GENESISHOLDER_PROXY "setOperator(address)" $AUTH
+
+land1=0x2a2b00032b0003010000000000000003000000000000000000000000000007e9
+# encoder=$INTERSTELLARENCODERV3
+# seth call $encoder "getObjectAddress(uint256)(address)" $land1
+# seth call $encoder "getObjectClass(uint256)(uint8)" $land1
+# seth call $encoder "getProducerId(uint256)(uint16)" $land1
+# seth call $encoder "getContractAddress(uint256)(address)" $land1
+# seth call $encoder "getOriginAddress(uint256)(address)" $land1
+# seth call $encoder "getproducerid(uint256)(uint16)" $land1
+
+seth call $OBJECTOWNERSHIP_PROXY "ownerOf(uint256)(address)" $land1
+seth call $CLOCKAUCTION_PROXY "getAuction(uint256)(address,uint256,uint256,uint256,uint256,address,uint128,address,uint256,address)" $land1
+        
+
+
+# seth estimate $GENESISHOLDER_PROXY "createAuction(uint256,uint256,uint256,uint256,uint256,address)" 19073114149690932208142809444888833220557322824854518395869528785337878317033 5000000000000000000000 1000000000000000000000 21600 1613941200 0xd74B642b4d3AFbA64075079D4522EB65Aaf6f3A2
+
+
