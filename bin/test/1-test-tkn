@@ -8,10 +8,14 @@ set -e
 # seth send "$TOKEN_ERC20_RING" "changeCap(uint256)" "$cap"
 
 # test mint
-amount=$(seth --to-uint256 $(seth --to-wei 10 ether))
-tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
-for token in "${tokens[@]}"; do
-  seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(uint256)" "$amount"
-done
+# amount=$(seth --to-uint256 $(seth --to-wei 10 ether))
+# tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
+# for token in "${tokens[@]}"; do
+#   seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(uint256)" "$amount"
+# done
 
-seth send -V "$(seth --to-wei 1 ether)"  "$TOKEN_ERC20_RING" "deposit()" 
+# seth send -V "$(seth --to-wei 1 ether)"  "$TOKEN_ERC20_RING" "deposit()" 
+
+# seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $AUTH
+# seth send "$TOKEN_ERC20_RING" "transfer(address dst, uint wad)" 0x0000000000000000000000000000000000000000 $(seth --to-wei 1 ether)
+# seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $AUTH

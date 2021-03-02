@@ -4,27 +4,27 @@ set -e
 
 . $(PWD)/bin/init
 
-tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO")
+# tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO")
 
-for token in "${tokens[@]}"; do
-    address=$(dapp create $token)
-    setting=$token
-    if [[ "$setting" = "HHO" ]]; then
-	setting="WATER"
-    fi
-    if [[ "$setting" = "SIOO" ]]; then
-	setting="SOIL"
-    fi
-    addAddress "TOKEN_ERC20_$setting" "$address"
-    id="CONTRACT_${setting}_ERC20_TOKEN"
-    echo $id
-    id=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii $id)))
-    echo $id
-    seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $id $address 
-    if test $(seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $id) != $address; then
-      (echo "check register ${registry} failed."; exit 1;)
-    fi
-done
+# for token in "${tokens[@]}"; do
+#     address=$(dapp create $token)
+#     setting=$token
+#     if [[ "$setting" = "HHO" ]]; then
+# 	setting="WATER"
+#     fi
+#     if [[ "$setting" = "SIOO" ]]; then
+# 	setting="SOIL"
+#     fi
+#     addAddress "TOKEN_ERC20_$setting" "$address"
+#     id="CONTRACT_${setting}_ERC20_TOKEN"
+#     echo $id
+#     id=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii $id)))
+#     echo $id
+#     seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $id $address 
+#     if test $(seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $id) != $address; then
+#       (echo "check register ${registry} failed."; exit 1;)
+#     fi
+# done
 
 ring=$(dapp create WCRING)
 addAddress "TOKEN_ERC20_RING" $ring
