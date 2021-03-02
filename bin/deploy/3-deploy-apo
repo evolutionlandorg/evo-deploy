@@ -4,15 +4,15 @@ set -e
 
 . $(PWD)/bin/init
 
-# ApostleBaseV3
-APOSTLEBASEV3=$(dapp create ApostleBaseV3)
-addAddress "APOSTLEBASEV3" "$APOSTLEBASEV3"
+# ApostleBaseV2
+APOSTLEBASEV2=$(dapp create ApostleBaseV2)
+addAddress "APOSTLEBASEV2" "$APOSTLEBASEV2"
 
 APOSTLEBASE_PROXY=$(dapp create ApostleBaseProxy)
 addAddress "APOSTLEBASE_PROXY" "$APOSTLEBASE_PROXY"
 echo >&2 "${0##*/}: info: ApostleBaseProxy created."
 
-seth send $APOSTLEBASE_PROXY "upgradeTo(address)" $APOSTLEBASEV3  
+seth send $APOSTLEBASE_PROXY "upgradeTo(address)" $APOSTLEBASEV2  
 seth send $APOSTLEBASE_PROXY "initializeContract(address)" $SETTINGSREGISTRY 
 echo >&2 "${0##*/}: info: ApostleBaseProxy inited."
 

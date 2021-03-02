@@ -48,7 +48,7 @@ link-lnd:;
 link-apo:;
 	rm -rf 'src/apostle'
 	mkdir -p 'src/apostle'
-	ln -s $(PWD)/lib/apostle/flat/ApostleBaseV3.sol $(PWD)/src/apostle/ApostleBaseV3.f.sol
+	ln -s $(PWD)/lib/apostle/flat/ApostleBaseV2.sol $(PWD)/src/apostle/ApostleBaseV2.f.sol
 	ln -s $(PWD)/lib/apostle/flat/ApostleBaseAuthorityV2.sol $(PWD)/src/apostle/ApostleBaseAuthorityV2.f.sol
 	ln -s $(PWD)/lib/apostle/flat/ApostleClockAuction.sol $(PWD)/src/apostle/ApostleClockAuction.f.sol
 	ln -s $(PWD)/lib/apostle/flat/ClockAuctionAuthority.sol $(PWD)/src/apostle/ClockAuctionAuthority.f.sol
