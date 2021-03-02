@@ -48,6 +48,9 @@ seth send $REVENUEPOOL_PROXY "initializeContract(address)" $SETTINGSREGISTRY
 
 echo >&2 "${0##*/}: info: RevenuePoolProxy inited."
 
+revenueId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_REVENUE_POOL")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $revenueId $REVENUEPOOL_PROXY
+
 # PointsRewardPool
 POINTSREWARDPOOL=$(dapp create PointsRewardPool)
 addAddress "POINTSREWARDPOOL" "$POINTSREWARDPOOL"
