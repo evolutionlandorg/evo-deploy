@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+APOSTLEBASEV2=$(dapp create ApostleBaseV2)
+seth send $APOSTLEBASE_PROXY "upgradeTo(address)" $APOSTLEBASEV2
+if test $(seth call $APOSTLEBASE_PROXY "implementation()(address)") != $APOSTLEBASEV2; then
+  (echo "check migration failed."; exit 1;)
+fi
+addAddress "APOSTLEBASEV2" "$APOSTLEBASEV2"
+echo >&2 "${0##*/}: info: migration finished." 

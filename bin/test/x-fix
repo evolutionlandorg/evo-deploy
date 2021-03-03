@@ -35,7 +35,18 @@ set -e
 # revenueId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_REVENUE_POOL")))
 # seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $revenueId $REVENUEPOOL_PROXY
 
-# seth call $OBJECTOWNERSHIP_PROXY "ownerOf(uint256)(address)" $land1
+# seth call $OBJECTOWNERSHIP_PROXY "ownerOf(uint256)(address)" 0x2a2b00032b000302000000000000000300000000000000000000000000000003
+
+land1=0x2a2b00032b0003010000000000000003000000000000000000000000000007e7
+apostle1=0x2a2b00032b000302000000000000000300000000000000000000000000000003
+
+geneId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_GENE_SCIENCE"))
+seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $geneId 
+seth estimate $LANDRESOURCE_PROXY "startMining(uint256,uint256,address)" $apostle1 $land1 $TOKEN_ERC20_GOLD
+# seth call $OBJECTOWNERSHIP_PROXY "balanceOf(address)(uint256)" $AUTH
+# seth call $OBJECTOWNERSHIP_PROXY "tokenOfOwnerByIndex(address,uint256)" $AUTH 0
+# seth call $OBJECTOWNERSHIP_PROXY "tokenOfOwnerByIndex(address,uint256)" $AUTH 1
+
 # seth call $CLOCKAUCTION_PROXY "getAuction(uint256)(address,uint256,uint256,uint256,uint256,address,uint128,address,uint256,address)" 0x2a2b00032b0003010000000000000003000000000000000000000000000007e8
         
 # seth estimate $GENESISHOLDER_PROXY "createAuction(uint256,uint256,uint256,uint256,uint256,address)" 19073114149690932208142809444888833220557322824854518395869528785337878317033 5000000000000000000000 1000000000000000000000 21600 1613941200 0xd74B642b4d3AFbA64075079D4522EB65Aaf6f3A2
