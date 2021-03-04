@@ -31,6 +31,7 @@ link-cmn:;
 	ln -s $(PWD)/lib/common-contracts/flat/ERC721Bridge.sol $(PWD)/src/common-contracts/ERC721BridgeV2.f.sol
 	# ln -s $(PWD)/lib/common-contracts/flat/ERC721BridgeV2.sol $(PWD)/src/common-contracts/ERC721Bridge.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/ERC721Adaptor.sol $(PWD)/src/common-contracts/ERC721Adaptor.f.sol
+	ln -s $(PWD)/lib/common-contracts/flat/ERC721AdaptorAuthority.sol $(PWD)/src/common-contracts/ERC721AdaptorAuthority.f.sol
 	# ln -s $(PWD)/lib/common-contracts/flat/PolkaPetAdaptor.sol $(PWD)/src/common-contracts/PolkaPetAdaptor.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/MintAndBurnAuthority.sol $(PWD)/src/common-contracts/MintAndBurnAuthority.f.sol
 	ln -s $(PWD)/lib/common-contracts/flat/UserPoints.sol $(PWD)/src/common-contracts/UserPoints.f.sol

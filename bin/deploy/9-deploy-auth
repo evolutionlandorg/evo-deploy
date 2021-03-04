@@ -71,3 +71,8 @@ OBJECTOWNERSHIPV2_AUTHORITY=$(dapp create src/common-contracts/ObjectOwnershipAu
 addAddress "OBJECTOWNERSHIPV2_AUTHORITY" "$OBJECTOWNERSHIPV2_AUTHORITY"
 seth send $OBJECTOWNERSHIP_PROXY "setAuthority(address)" $OBJECTOWNERSHIPV2_AUTHORITY 
 
+# ERC721AdaptorAuthority
+ERC721ADAPTOR_AUTHORITY=$(dapp create src/common-contracts/ERC721AdaptorAuthority.f.sol:ERC721AdaptorAuthority [$ERC721BRIDGE_PROXY])
+addAddress "ERC721ADAPTOR_AUTHORITY" "$ERC721ADAPTOR_AUTHORITY"
+seth send $ERC721ADAPTOR_PROXY "setAuthority(address)" $ERC721ADAPTOR_AUTHORITY 
+

@@ -29,6 +29,8 @@ echo >&2 "${0##*/}: info: ObjectOwnerShipV2Proxy inited."
 objectOwnershipId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_OBJECT_OWNERSHIP")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $objectOwnershipId $OBJECTOWNERSHIP_PROXY 
 
+## TODO::CHECK
+# seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
 seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 3) 
 
 # TokenLocation
@@ -73,14 +75,33 @@ echo >&2 "${0##*/}: info: UserPointsProxy inited."
 userPointsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_USER_POINTS")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $userPointsId $USERPOINTS_PROXY 
 
-# # ERC721Bridge
-# bridgeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_ERC721_BRIDGE")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $bridgeId $ERC721BRIDGE_PROXY 
+# ERC721Bridge
+ERC721BRIDGE=$(dapp create ERC721Bridge)
+addAddress "ERC721BRIDGE" "$ERC721BRIDGE"
 
-# # ERC721Adaptor
+ERC721BRIDGE_PROXY=$(dapp create ERC721BridgeProxy)
+addAddress "ERC721BRIDGE_PROXY" "$ERC721BRIDGE_PROXY"
 
-# originNFT=$(seth --to-uint256 0)
-# productId=$(seth --to-uint16 0)
-# calldata=$(seth calldata "initializeContract(address,address,uint16)" $SETTINGSREGISTRY $originNFT $productId)
-# echo >&2 "${0##*/}: info: ERC721AdaptorProxy inited."
+seth send $ERC721BRIDGE_PROXY "upgradeTo(address)" $ERC721BRIDGE  
+seth send $ERC721BRIDGE_PROXY "initializeContract(address)" $SETTINGSREGISTRY
+bridgeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_ERC721_BRIDGE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $bridgeId $ERC721BRIDGE_PROXY 
+echo >&2 "${0##*/}: info: ERC721BridgeProxy inited."
+
+# ERC721Adaptor
+ERC721ADAPTOR=$(dapp create ERC721Adaptor)
+addAddress "ERC721ADAPTOR" "$ERC721ADAPTOR"
+
+ERC721ADAPTOR_PROXY=$(dapp create ERC721AdaptorProxy)
+addAddress "ERC721ADAPTOR_PROXY" "$ERC721ADAPTOR_PROXY"
+
+originNFT=$CK
+productId=$(seth --to-uint16 256)
+seth send $ERC721ADAPTOR_PROXY "upgradeTo(address)" $ERC721ADAPTOR  
+seth send $ERC721ADAPTOR_PROXY "initializeContract(address,address,uint16)" $SETTINGSREGISTRY $originNFT $productId
+echo >&2 "${0##*/}: info: ERC721AdaptorProxy inited."
+
+seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $originNFT $(seth --to-hex 2) 
+seth send -F $OWNER $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $CK $ERC721AdaptorProxy
+echo >&2 "${0##*/}: info: CK registry finished."
 
