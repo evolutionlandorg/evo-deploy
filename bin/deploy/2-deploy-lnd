@@ -43,6 +43,9 @@ echo >&2 "${0##*/}: info: LandResourceProxy inited."
 landBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_BASE")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landBaseId $LANDBASE_PROXY 
 
+landrsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_RESOURCE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landrsId $LANDRESOURCE_PROXY 
+
 # mysteriousTreasure
 MYSTERIOUSTREASURE=$(dapp create MysteriousTreasure)
 addAddress "MYSTERIOUSTREASURE" "$MYSTERIOUSTREASURE"

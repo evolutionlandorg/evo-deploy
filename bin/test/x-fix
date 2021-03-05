@@ -40,6 +40,8 @@ set -e
 # land1=0x2a2b00032b0003010000000000000003000000000000000000000000000007e7
 # apostle1=0x2a2b00032b000302000000000000000300000000000000000000000000000003
 
+# apostleBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_APOSTLE_BASE")))
+# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $apostleBaseId $APOSTLEBASE_PROXY 
 # geneId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_GENE_SCIENCE"))
 # seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $geneId 
 # seth estimate $LANDRESOURCE_PROXY "startMining(uint256,uint256,address)" $apostle1 $land1 $TOKEN_ERC20_GOLD
@@ -64,3 +66,5 @@ set -e
 
 # seth estimate $TOKEN_ERC20_RING "transfer(address,uint256,bytes)" 0x2fd6Eff8b45fDb585119A431C24E87af898A7219 50000000000000000000 0x2a2b00032b0003020000000000000003000000000000000000000000000000182a2b00032b000302000000000000000300000000000000000000000000000006
 
+# landrsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_RESOURCE")))
+# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landrsId $LANDRESOURCE_PROXY 

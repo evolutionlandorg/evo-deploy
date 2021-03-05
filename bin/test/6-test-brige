@@ -4,7 +4,7 @@ set -e
 
 . $(PWD)/bin/init
 
-## bridge in
+# bridge in
 
 # id=$(seth --to-uint256 2)
 # value=$(seth --to-uint256 2)
@@ -17,9 +17,15 @@ set -e
 
 # seth send $ERC721BRIDGE_PROXY "swapOut1155(uint256)" 0x2a01000101000503800000000000010300000000000000000000000000000065
 
-## tie pet
+# tie pet
 # ppet=0x2a0100010100050380000000000001030000000000000000000000000000006a
 # apostle1=0x2a01000101000102000000000000000100000000000000000000000000000077
 # seth send $PETBASE_PROXY "tiePetTokenToApostle(uint256,uint256)" "$ppet" "$apostle1"
 
 # seth send $PETBASE_PROXY "untiePetToken(uint256)" "$ppet"
+
+# tie ck pet
+# ckpet=$(seth --to-uint256 1)
+# apostle1=0x2a2b00032b000302000000000000000300000000000000000000000000000003
+# seth estimate $PETBASE_PROXY "bridgeInAndTie(address,uint256,uint256)" $CK $ckpet $apostle1
+
