@@ -2,13 +2,15 @@
 
 set -e
 
+. $(PWD)/test/x-ck
+. $(PWD)/test/x-gene
 . $(PWD)/bin/deploy/0-deploy-cmn
 . $(PWD)/bin/deploy/1-deploy-tkn
 . $(PWD)/bin/deploy/2-deploy-lnd
 . $(PWD)/bin/deploy/3-deploy-apo
 . $(PWD)/bin/deploy/4-deploy-pet
-. $(PWD)/bin/deploy/5-deploy-bnk
+# . $(PWD)/bin/deploy/5-deploy-bnk
 . $(PWD)/bin/deploy/6-deploy-id
 . $(PWD)/bin/deploy/7-deploy-mkt
 . $(PWD)/bin/deploy/9-deploy-auth
-
+# . $(PWD)/bin/deploy/10-deploy-registry

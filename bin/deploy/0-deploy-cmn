@@ -30,8 +30,8 @@ objectOwnershipId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTR
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $objectOwnershipId $OBJECTOWNERSHIP_PROXY 
 
 ## TODO::CHECK
-# seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
-seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 3) 
+seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
+# seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 3) 
 
 # TokenLocation
 TOKENLOCATION=$(dapp create TokenLocation)
@@ -102,6 +102,6 @@ seth send $ERC721ADAPTOR_PROXY "initializeContract(address,address,uint16)" $SET
 echo >&2 "${0##*/}: info: ERC721AdaptorProxy inited."
 
 seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $originNFT $(seth --to-hex 2) 
-seth send -F $OWNER $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $CK $ERC721AdaptorProxy
+seth send $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $CK $ERC721ADAPTOR_PROXY
 echo >&2 "${0##*/}: info: CK registry finished."
 

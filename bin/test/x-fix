@@ -68,3 +68,22 @@ set -e
 
 # landrsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_RESOURCE")))
 # seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landrsId $LANDRESOURCE_PROXY 
+
+# seth call $REVENUEPOOL_PROXY "registry()(address)"
+
+# pointsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_POINTS_REWARD_POOL")))
+# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $pointsId $POINTSREWARDPOOL_PROXY
+
+# contributionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_CONTRIBUTION_POOL")))
+# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $contributionId $AUTH
+
+# devpoolId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_DEV_POOL")))
+# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $devpoolId $AUTH
+
+# diviendsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_DIVIDENDS_POOL")))
+# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $diviendsId $SNAPSHOT_PROXY
+
+# seth estimate $POINTSREWARDPOOL_PROXY "playWithSmallTicket()"
+
+# seth estimate $REVENUEPOOL_PROXY "settleToken(address)" $TOKEN_ERC20_RING
+
