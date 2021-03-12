@@ -60,7 +60,7 @@ seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $siringAuction
 
 # ApostelSettingIds
 birthfeeid=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUTOBIRTH_FEE")))
-autoBirthFee=$(seth --to-uint256 $(seth --to-wei 500 ether))
+autoBirthFee=$(seth --to-uint256 $(seth --to-wei 50 ether))
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $birthfeeid $autoBirthFee 
 
 mixTalentId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_MIX_TALENT")))
