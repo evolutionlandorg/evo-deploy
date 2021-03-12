@@ -9,7 +9,8 @@ seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $diviendsId $S
 if test $(seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $diviendsId) != $SNAPSHOT_PROXY; then
   (echo "check register ${registry} failed."; exit 1;)
 fi
-addAddress "TOKEN_ERC20_$setting" "$address"
+addAddress "DIVIDENDPOOL_PROXY" "$SNAPSHOT_PROXY"
+addAddress "DIVIDENDPOOL" "$EVOLUTIONTELLER"
 
 seth send $SNAPSHOT_PROXY "addRewardDistribution(address)" $REVENUEPOOL_PROXY
 

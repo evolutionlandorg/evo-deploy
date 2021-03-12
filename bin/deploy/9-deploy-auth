@@ -53,21 +53,18 @@ CLOCKAUCTION_AUTHORITY_MARKET=$(dapp create src/market-contracts/ClockAuctionAut
 addAddress "CLOCKAUCTION_AUTHORITY_MARKET" "$CLOCKAUCTION_AUTHORITY_MARKET"
 seth send $CLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY_MARKET
 
-# UserRolesAuthority
-USERROLES_AUTHORITY=$(dapp create UserRolesAuthority [$ROLESUPDATER])
-addAddress "USERROLES_AUTHORITY" "$USERROLES_AUTHORITY"
-seth send $USERROLES_PROXY "setAuthority(address)" $USERROLES_AUTHORITY
+# # UserRolesAuthority
+# USERROLES_AUTHORITY=$(dapp create UserRolesAuthority [$ROLESUPDATER])
+# addAddress "USERROLES_AUTHORITY" "$USERROLES_AUTHORITY"
+# seth send $USERROLES_PROXY "setAuthority(address)" $USERROLES_AUTHORITY
 
 # MintAndBurnAuthority-kton
 # MINTANDBURN_AUTHORITY_KTON=$(dapp create MintAndBurnAuthority [$GRINGOTTSBANK_PROXY,$DIVIDENDPOOL_PROXY])
 # addAddress "MINTANDBURN_AUTHORITY_KTON" "$MINTANDBURN_AUTHORITY_KTON"
 # seth send $TOKEN_ERC20_KTON "setAuthority(address)" $MINTANDBURN_AUTHORITY_KTON
 
-# MysteriousTreasure
-seth send $MYSTERIOUSTREASURE_PROXY "setOwner(address)" $CLOCKAUCTION_PROXY
-
 # ObjectOwnershipAuthorityV2
-OBJECTOWNERSHIPV2_AUTHORITY=$(dapp create src/common-contracts/ObjectOwnershipAuthorityV2.f.sol:ObjectOwnershipAuthorityV2 [$LANDBASE_PROXY,$APOSTLEBASE_PROXY])
+OBJECTOWNERSHIPV2_AUTHORITY=$(dapp create src/common-contracts/ObjectOwnershipAuthorityV2.f.sol:ObjectOwnershipAuthorityV2 [$LANDBASE_PROXY,$APOSTLEBASE_PROXY,$ERC721BRIDGE_PROXY])
 addAddress "OBJECTOWNERSHIPV2_AUTHORITY" "$OBJECTOWNERSHIPV2_AUTHORITY"
 seth send $OBJECTOWNERSHIP_PROXY "setAuthority(address)" $OBJECTOWNERSHIPV2_AUTHORITY 
 
@@ -80,4 +77,8 @@ seth send $ERC721ADAPTOR_PROXY "setAuthority(address)" $ERC721ADAPTOR_AUTHORITY
 ERC721BRIDGE_AUTHORITY=$(dapp create src/apostle/ERC721BridgeAuthority.f.sol:ERC721BridgeAuthority [$PETBASE_PROXY])
 addAddress "ERC721BRIDGE_AUTHORITY" "$ERC721BRIDGE_AUTHORITY"
 seth send $ERC721BRIDGE_PROXY "setAuthority(address)" $ERC721BRIDGE_AUTHORITY 
+
+
+# MysteriousTreasure
+seth send $MYSTERIOUSTREASURE_PROXY "setOwner(address)" $CLOCKAUCTION_PROXY
 
