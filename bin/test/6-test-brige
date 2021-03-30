@@ -26,7 +26,8 @@ set -e
 
 # tie ck pet
 # seth send $CK "createPromoKitty(uint256,address)" 1 $AUTH
-# ckpet=$(seth --to-uint256 3)
-# apostle1=0x2a03000103000102000000000000000300000000000000000000000000000021
+ckpet=$(seth --to-uint256 3)
+apostle1=0x2a03000103000102000000000000000300000000000000000000000000000021
+seth estimate $PETBASE_PROXY "bridgeInAndTie(address,uint256,uint256)" $CK $ckpet $apostle1
 # seth send $PETBASE_PROXY "bridgeInAndTie(address,uint256,uint256)" $CK $ckpet $apostle1
 

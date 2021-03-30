@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eox pipefail
+set -eo pipefail
 
 config-init() {
   path=${DEPLOY_CONFIG:-$1}

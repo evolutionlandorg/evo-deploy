@@ -87,3 +87,6 @@ set -e
 
 # seth estimate $REVENUEPOOL_PROXY "settleToken(address)" $TOKEN_ERC20_RING
 
+
+# geneId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_GENE_SCIENCE")))
+# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $geneId $GENESCIENCEV8
