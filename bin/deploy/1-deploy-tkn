@@ -4,7 +4,7 @@ set -e
 
 . $(PWD)/bin/init
 
-tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO")
+tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO" "RING" "KTON")
 
 for token in "${tokens[@]}"; do
     address=$(dapp create $token)
@@ -25,21 +25,3 @@ for token in "${tokens[@]}"; do
       (echo "check register ${registry} failed."; exit 1;)
     fi
 done
-
-ring=$(dapp create WCRING)
-addAddress "TOKEN_ERC20_RING" $ring
-id=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_RING_ERC20_TOKEN"))
-echo $id
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $id $ring 
-if test $(seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $id) != $ring; then
-  (echo "check register ${registry} failed."; exit 1;)
-fi
-
-kton=$(dapp create WCKTON)
-addAddress "TOKEN_ERC20_KTON" $kton
-id=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_KTON_ERC20_TOKEN"))
-echo $id
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $id $kton
-if test $(seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $id) != $kton; then
-  (echo "check register ${registry} failed."; exit 1;)
-fi
