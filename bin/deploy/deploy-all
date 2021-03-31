@@ -3,8 +3,8 @@
 set -e
 
 # . $(PWD)/bin/test/x-ck
-. $(PWD)/bin/test/x-gene
 . $(PWD)/bin/deploy/0-deploy-cmn
+. $(PWD)/bin/test/x-gene
 . $(PWD)/bin/deploy/1-deploy-tkn
 . $(PWD)/bin/deploy/2-deploy-lnd
 . $(PWD)/bin/deploy/3-deploy-apo
