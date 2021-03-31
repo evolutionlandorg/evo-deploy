@@ -4,6 +4,36 @@ set -e
 
 . $(PWD)/bin/init
 
+# ERC721Bridge
+ERC721BRIDGE=$(dapp create ERC721Bridge)
+addAddress "ERC721BRIDGE" "$ERC721BRIDGE"
+
+ERC721BRIDGE_PROXY=$(dapp create ERC721BridgeProxy)
+addAddress "ERC721BRIDGE_PROXY" "$ERC721BRIDGE_PROXY"
+
+seth send $ERC721BRIDGE_PROXY "upgradeTo(address)" $ERC721BRIDGE  
+seth send $ERC721BRIDGE_PROXY "initializeContract(address)" $SETTINGSREGISTRY
+bridgeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_ERC721_BRIDGE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $bridgeId $ERC721BRIDGE_PROXY 
+echo >&2 "${0##*/}: info: ERC721BridgeProxy inited."
+
+# ERC721Adaptor
+ERC721ADAPTOR=$(dapp create ERC721Adaptor)
+addAddress "ERC721ADAPTOR" "$ERC721ADAPTOR"
+
+ERC721ADAPTOR_PROXY=$(dapp create ERC721AdaptorProxy)
+addAddress "ERC721ADAPTOR_PROXY" "$ERC721ADAPTOR_PROXY"
+
+originNFT=$CK
+productId=$(seth --to-uint16 256)
+seth send $ERC721ADAPTOR_PROXY "upgradeTo(address)" $ERC721ADAPTOR  
+seth send $ERC721ADAPTOR_PROXY "initializeContract(address,address,uint16)" $SETTINGSREGISTRY $originNFT $productId
+echo >&2 "${0##*/}: info: ERC721AdaptorProxy inited."
+
+seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $originNFT $(seth --to-hex 2) 
+seth send $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $CK $ERC721ADAPTOR_PROXY
+echo >&2 "${0##*/}: info: CK registry finished."
+
 # PetBase
 PETBASE=$(dapp create PetBase)
 addAddress "PETBASE" "$PETBASE"
