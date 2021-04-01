@@ -4,14 +4,15 @@ set -e
 
 . $(PWD)/bin/init
 
+export SNAPSHOT_PROXY=0x6Ab81AF040fec3c13685ccFB26eC50C8aAB46445
+addAddress "SNAPSHOT_PROXY" "$SNAPSHOT_PROXY"
+
 diviendsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_DIVIDENDS_POOL")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $diviendsId $SNAPSHOT_PROXY
 if test $(seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $diviendsId) != $SNAPSHOT_PROXY; then
   (echo "check register ${registry} failed."; exit 1;)
 fi
-addAddress "DIVIDENDPOOL_PROXY" "$SNAPSHOT_PROXY"
-addAddress "DIVIDENDPOOL" "$EVOLUTIONTELLER"
 
-seth send $SNAPSHOT_PROXY "addRewardDistribution(address)" $REVENUEPOOL_PROXY
+seth send $SNAPSHOT_PROXY "addRewardDistribution(address)" $SNAPSHOT_PROXY
 
-seth call $SNAPSHOT_PROXY "rewardDistributions(address)" $REVENUEPOOL_PROXY
+seth call $SNAPSHOT_PROXY "rewardDistributions(address)" $SNAPSHOT_PROXY
