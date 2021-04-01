@@ -35,15 +35,15 @@ seth send $GENESISHOLDER_PROXY "setOperator(address)" $AUTH
 
 echo >&2 "${0##*/}: info: GenesisHolderProxy inited."
 
-# RevenuePoolV2
-REVENUEPOOLV2=$(dapp create RevenuePoolV2)
-addAddress "REVENUEPOOLV2" "$REVENUEPOOLV2"
+# RevenuePoolV3
+REVENUEPOOLV3=$(dapp create RevenuePoolV3)
+addAddress "REVENUEPOOLV3" "$REVENUEPOOLV3"
 
 REVENUEPOOL_PROXY=$(dapp create RevenuePoolProxy)
 addAddress "REVENUEPOOL_PROXY" "$REVENUEPOOL_PROXY"
 echo >&2 "${0##*/}: info: RevenuePoolProxy created."
 
-seth send $REVENUEPOOL_PROXY "upgradeTo(address)" $REVENUEPOOLV2  
+seth send $REVENUEPOOL_PROXY "upgradeTo(address)" $REVENUEPOOLV3  
 seth send $REVENUEPOOL_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
 
 echo >&2 "${0##*/}: info: RevenuePoolProxy inited."

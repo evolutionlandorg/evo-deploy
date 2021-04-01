@@ -66,7 +66,7 @@ link-mkt:;
 	ln -s $(PWD)/lib/market-contracts/flat/ClockAuctionAuthority.sol $(PWD)/src/market-contracts/ClockAuctionAuthority.f.sol
 	ln -s $(PWD)/lib/market-contracts/flat/GenesisHolder.sol $(PWD)/src/market-contracts/GenesisHolder.f.sol
 	ln -s $(PWD)/lib/market-contracts/flat/PointsRewardPool.sol $(PWD)/src/market-contracts/PointsRewardPool.f.sol
-	ln -s $(PWD)/lib/market-contracts/flat/RevenuePoolV2.sol $(PWD)/src/market-contracts/RevenuePoolV2.f.sol
+	ln -s $(PWD)/lib/market-contracts/flat/RevenuePoolV3.sol $(PWD)/src/market-contracts/RevenuePoolV3.f.sol
 	ln -s $(PWD)/lib/market-contracts/flat/LuckyBox.sol $(PWD)/src/market-contracts/LuckyBox.f.sol
 
 link-id :;
@@ -81,9 +81,9 @@ link-id :;
 	ln -s $(PWD)/lib/id/flat/TakeBack.sol $(PWD)/src/id/TakeBack.f.sol
 	ln -s $(PWD)/lib/id/flat/TakeBackNFT.sol $(PWD)/src/id/TakeBackNFT.f.sol
 
-link-bnk:;
-	rm -rf 'src/bank'
-	mkdir -p 'src/bank'
-	ln -s $(PWD)/lib/bank/flat/GringottsBankV2.sol $(PWD)/src/bank/GringottsBankV2.f.sol
+# link-bnk:;
+# 	rm -rf 'src/bank'
+# 	mkdir -p 'src/bank'
+# 	ln -s $(PWD)/lib/bank/flat/GringottsBankV2.sol $(PWD)/src/bank/GringottsBankV2.f.sol
 
 .PHONY: all clean test deploy link-tkn link-cmn link-id link-mkt link-bnc link-bnk

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+REVENUEPOOLV3=$(dapp create RevenuePoolV3)
+seth send $REVENUEPOOL_PROXY "upgradeTo(address)" $REVENUEPOOLV3  
+if test $(seth call $REVENUEPOOL_PROXY "implementation()(address)") != $REVENUEPOOLV3; then
+  (echo "check migration failed."; exit 1;)
+fi
+addAddress "REVENUEPOOLV3" "$REVENUEPOOLV3"
+echo >&2 "${0##*/}: info: migration finished." 
