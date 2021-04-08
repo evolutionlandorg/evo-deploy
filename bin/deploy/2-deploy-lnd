@@ -55,8 +55,14 @@ MYSTERIOUSTREASURE_PROXY=$(dapp create MysteriousTreasureProxy)
 addAddress "MYSTERIOUSTREASURE_PROXY" "$MYSTERIOUSTREASURE_PROXY"
 echo >&2 "${0##*/}: info: MysteriousTreasureProxy created."
 
+
+# gold: 8077
+# wood: 25440
+# water: 5320
+# fire: 1060
+# earth: 10118
 # 10439, 419, 5258, 12200, 12200
-resources=[$(seth --to-uint256 10439),$(seth --to-uint256 419),$(seth --to-uint256 5258),$(seth --to-uint256 12200),$(seth --to-uint256 12200)]
+resources=[$(seth --to-uint256 8077),$(seth --to-uint256 25440),$(seth --to-uint256 5320),$(seth --to-uint256 1060),$(seth --to-uint256 10118)]
 seth send $MYSTERIOUSTREASURE_PROXY "upgradeTo(address)" $MYSTERIOUSTREASURE  
 seth send $MYSTERIOUSTREASURE_PROXY "initializeContract(address,uint256[5])" $SETTINGSREGISTRY $resources 
 treasureId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_MYSTERIOUS_TREASURE")))
