@@ -40,9 +40,6 @@ echo >&2 "${0##*/}: info: LandResourceProxy created."
 # seth send $LANDRESOURCE_PROXY "initializeContract(address,uint256)" $SETTINGSREGISTRY $starttime  
 # echo >&2 "${0##*/}: info: LandResourceProxy inited."
 
-landBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_BASE")))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landBaseId $LANDBASE_PROXY 
-
 landrsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_RESOURCE")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landrsId $LANDRESOURCE_PROXY 
 
