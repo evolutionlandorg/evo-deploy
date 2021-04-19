@@ -91,6 +91,6 @@ refererCutId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_REFER
 uint_referer_cut=$(seth --to-uint256 2000)
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $refererCutId $uint_referer_cut 
 
-errorSpaceId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_EXCHANGE_ERROR_SPACE")))
-uint_error_space=$(seth --to-uint256 0)
-seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $errorSpaceId $uint_error_space 
+# errorSpaceId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_EXCHANGE_ERROR_SPACE")))
+# uint_error_space=$(seth --to-uint256 0)
+# seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $errorSpaceId $uint_error_space 
