@@ -98,3 +98,7 @@ set -e
 LANDRESOURCE_AUTHORITY=$(dapp create LandResourceAuthority [$TOKENUSE_PROXY])
 seth send $LANDRESOURCE_PROXY "setAuthority(address)" $LANDRESOURCE_AUTHORITY
 addAddress "LANDRESOURCE_AUTHORITY" "$LANDRESOURCE_AUTHORITY"
+
+
+# seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" 0x1836840bff19997BaF1366d45f2566f35F5e273D $(seth --to-hex 4) 
+# seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" 0xeDa29cA96061509d7Ed58a4eF44e8e8e6d0D4EeC $(seth --to-hex 5) 

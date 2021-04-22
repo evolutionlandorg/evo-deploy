@@ -2,6 +2,7 @@
 
 set -e
 
+make all
 # . $(PWD)/bin/test/x-ck
 . $(PWD)/bin/deploy/0-deploy-cmn
 . $(PWD)/bin/test/x-gene

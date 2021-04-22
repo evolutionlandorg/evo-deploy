@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+INTERSTELLARENCODERV3=$(dapp create InterstellarEncoderV3)
+addAddress "INTERSTELLARENCODERV3" "$INTERSTELLARENCODERV3"
+
+interstellarEncoderId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_INTERSTELLAR_ENCODER")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $interstellarEncoderId $INTERSTELLARENCODERV3 
