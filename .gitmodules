@@ -19,6 +19,3 @@
 [submodule "lib/id"]
 	path = lib/id
 	url = https://github.com/evolutionlandorg/id
-[submodule "lib/bank"]
-	path = lib/bank
-	url = https://github.com/evolutionlandorg/bank
