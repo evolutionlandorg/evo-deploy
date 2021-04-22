@@ -41,7 +41,7 @@ link-lnd:;
 	rm -rf 'src/land'
 	mkdir -p 'src/land'
 	ln -s $(PWD)/lib/land/flat/LandBase.sol $(PWD)/src/land/LandBase.f.sol
-	ln -s $(PWD)/lib/land/flat/LandResourceV4.sol $(PWD)/src/land/LandResourceV4.f.sol
+	ln -s $(PWD)/lib/land/flat/LandResourceAuthority.sol $(PWD)/src/land/LandResourceAuthority.f.sol
 	ln -s $(PWD)/lib/land/flat/LandBaseAuthority.sol $(PWD)/src/land/LandBaseAuthority.f.sol
 	ln -s $(PWD)/lib/land/flat/MysteriousTreasure.sol $(PWD)/src/land/MysteriousTreasure.f.sol
 	ln -s $(PWD)/lib/land/flat/MysteriousTreasureAuthority.sol $(PWD)/src/land/MysteriousTreasureAuthority.f.sol
