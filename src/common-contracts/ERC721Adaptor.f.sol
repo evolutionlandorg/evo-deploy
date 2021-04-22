@@ -1,1 +1,0 @@
-/Users/echo/workspace/contract/evolutionlandorg/evo-deploy/lib/common-contracts/flat/ERC721Adaptor.sol

@@ -1,1 +1,0 @@
-/Users/echo/workspace/contract/evolutionlandorg/evo-deploy/lib/token-contracts/flat/KTONAuthorityV2.f.sol
