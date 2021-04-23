@@ -4,8 +4,8 @@ set -e
 
 . $(PWD)/bin/init
 
-seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
+seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
 
-seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" $LANDBASE_PROXY $(seth --to-hex 1) 
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $LANDBASE_PROXY $(seth --to-hex 1) 
 
-seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" $APOSTLEBASE_PROXY $(seth --to-hex 2) 
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $APOSTLEBASE_PROXY $(seth --to-hex 2) 

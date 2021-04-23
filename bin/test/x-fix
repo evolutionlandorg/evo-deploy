@@ -24,7 +24,7 @@ set -e
 # seth send $GENESISHOLDER_PROXY "setOperator(address)" $AUTH
 
 # land1=0x2a2b00032b0003010000000000000003000000000000000000000000000007e9
-# encoder=$INTERSTELLARENCODERV3
+# encoder=$INTERSTELLARENCODERV4
 # seth call $encoder "getObjectAddress(uint256)(address)" $land1
 # seth call $encoder "getObjectClass(uint256)(uint8)" $land1
 # seth call $encoder "getProducerId(uint256)(uint16)" $land1
@@ -100,5 +100,5 @@ seth send $LANDRESOURCE_PROXY "setAuthority(address)" $LANDRESOURCE_AUTHORITY
 addAddress "LANDRESOURCE_AUTHORITY" "$LANDRESOURCE_AUTHORITY"
 
 
-# seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" 0x1836840bff19997BaF1366d45f2566f35F5e273D $(seth --to-hex 4) 
-# seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" 0xeDa29cA96061509d7Ed58a4eF44e8e8e6d0D4EeC $(seth --to-hex 5) 
+# seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" 0x1836840bff19997BaF1366d45f2566f35F5e273D $(seth --to-hex 4) 
+# seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" 0xeDa29cA96061509d7Ed58a4eF44e8e8e6d0D4EeC $(seth --to-hex 5) 

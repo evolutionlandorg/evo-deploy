@@ -4,89 +4,90 @@ set -e
 
 . $(PWD)/bin/init
 
+# # RolesUpdater
+networkId=$(seth --to-uint256 $(seth rpc net_version))
+supervisor='0x00a1537d251a6a4c4effAb76948899061FeA47b9'
+
+# TakeBack-ring
+TAKEBACK_RING=$(dappCreate market-contracts contracts/id/TakeBack.sol:TakeBack $TOKEN_ERC20_RING $supervisor $networkId)
+
+# TakeBack-kton
+# TAKEBACK_KTON=$(dappCreate market-contracts contracts/TakeBack.sol:TakeBack $TOKEN_ERC20_KTON $supervisor $networkId)
+# addAddress "TAKEBACK_KTON" "$TAKEBACK_KTON"
+
+TAKEBAK_NFT=$(dappCreate market-contracts contracts/id/TakeBackNFT.sol:TakeBackNFT $supervisor $networkId)
+
 # ClockAuctionV2
-CLOCKAUCTIONV2=$(dapp create ClockAuctionV2)
+CLOCKAUCTIONV2=$(dappCreate market-contracts contracts/auction/ClockAuctionV2.sol:ClockAuctionV2)
 addAddress "CLOCKAUCTIONV2" "$CLOCKAUCTIONV2"
 
-CLOCKAUCTION_PROXY=$(dapp create ClockAuctionProxy)
-addAddress "CLOCKAUCTION_PROXY" "$CLOCKAUCTION_PROXY"
-echo >&2 "${0##*/}: info: ClockAuctionProxy created."
+CLOCKAUCTION_PROXY=$(dappProxy src/proxy/ClockAuctionProxy.sol:ClockAuctionProxy)
+info "ClockAuctionProxy created."
 
 seth send $CLOCKAUCTION_PROXY "upgradeTo(address)" $CLOCKAUCTIONV2  
 seth send $CLOCKAUCTION_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
+info "ClockAuctionProxy inited."
 
-echo >&2 "${0##*/}: info: ClockAuctionProxy inited."
-
-auctionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_CLOCK_AUCTION")))
+auctionId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_CLOCK_AUCTION"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $auctionId $CLOCKAUCTION_PROXY 
 
 # GenesisHolder
-GENESISHOLDER=$(dapp create GenesisHolder)
-addAddress "GENESISHOLDER" "$GENESISHOLDER"
+GENESISHOLDER=$(dappCreate market-contracts contracts/auction/GenesisHolder.sol:GenesisHolder)
 
-GENESISHOLDER_PROXY=$(dapp create GenesisHolderProxy)
-addAddress "GENESISHOLDER_PROXY" "$GENESISHOLDER_PROXY"
-echo >&2 "${0##*/}: info: GenesisHolderProxy created."
+GENESISHOLDER_PROXY=$(dappProxy src/proxy/GenesisHolderProxy.sol:GenesisHolderProxy)
+info "GenesisHolderProxy created."
 
 seth send $GENESISHOLDER_PROXY "upgradeTo(address)" $GENESISHOLDER  
 seth send $GENESISHOLDER_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
-
 seth send $GENESISHOLDER_PROXY "setOperator(address)" $AUTH
+info "GenesisHolderProxy inited."
 
-echo >&2 "${0##*/}: info: GenesisHolderProxy inited."
+# RevenuePoolV2
+REVENUEPOOLV2=$(dappCreate market-contracts contracts/auction/RevenuePoolV2.sol:RevenuePoolV2)
 
-# RevenuePoolV3
-REVENUEPOOLV3=$(dapp create RevenuePoolV3)
-addAddress "REVENUEPOOLV3" "$REVENUEPOOLV3"
+REVENUEPOOL_PROXY=$(dappProxy src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy)
+info "RevenuePoolProxy created."
 
-REVENUEPOOL_PROXY=$(dapp create RevenuePoolProxy)
-addAddress "REVENUEPOOL_PROXY" "$REVENUEPOOL_PROXY"
-echo >&2 "${0##*/}: info: RevenuePoolProxy created."
-
-seth send $REVENUEPOOL_PROXY "upgradeTo(address)" $REVENUEPOOLV3  
+seth send $REVENUEPOOL_PROXY "upgradeTo(address)" $REVENUEPOOLV2
 seth send $REVENUEPOOL_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
+info "RevenuePoolProxy inited."
 
-echo >&2 "${0##*/}: info: RevenuePoolProxy inited."
-
-revenueId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_REVENUE_POOL")))
+revenueId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_REVENUE_POOL"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $revenueId $REVENUEPOOL_PROXY
 
 # PointsRewardPool
-POINTSREWARDPOOL=$(dapp create PointsRewardPool)
-addAddress "POINTSREWARDPOOL" "$POINTSREWARDPOOL"
+POINTSREWARDPOOL=$(dappCreate market-contracts contracts/auction/PointsRewardPool.sol:PointsRewardPool)
 
-POINTSREWARDPOOL_PROXY=$(dapp create PointsRewardPoolProxy)
-addAddress "POINTSREWARDPOOL_PROXY" "$POINTSREWARDPOOL_PROXY"
-echo >&2 "${0##*/}: info: PointsRewardPoolProxy created."
+POINTSREWARDPOOL_PROXY=$(dappProxy src/proxy/PointsRewardPoolProxy.sol:PointsRewardPoolProxy)
+info "PointsRewardPoolProxy created."
 
 seth send $POINTSREWARDPOOL_PROXY "upgradeTo(address)" $POINTSREWARDPOOL  
 seth send $POINTSREWARDPOOL_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
+info "PointsRewardPoolProxy inited."
 
-echo >&2 "${0##*/}: info: PointsRewardPoolProxy inited."
-
-pointsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_POINTS_REWARD_POOL")))
+pointsId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_POINTS_REWARD_POOL"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $pointsId $POINTSREWARDPOOL_PROXY
 
 ## TODO::check
-contributionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_CONTRIBUTION_POOL")))
+contributionId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_CONTRIBUTION_POOL"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $contributionId $AUTH
 
-devpoolId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_DEV_POOL")))
+devpoolId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_DEV_POOL"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $devpoolId $AUTH
 
 # LuckyBox
 
 # SettingIds
-auctionCutId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUCTION_CUT")))
+auctionCutId=$(seth --to-bytes32 $(seth --from-ascii "UINT_AUCTION_CUT"))
 # 4%
 uint_auction_cut=$(seth --to-uint256 400)
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $auctionCutId $uint_auction_cut 
 
-waitingTimeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUCTION_BID_WAITING_TIME")))
+waitingTimeId=$(seth --to-bytes32 $(seth --from-ascii "UINT_AUCTION_BID_WAITING_TIME"))
 # 30 minutes
 uint_bid_waiting_time=$(seth --to-uint256 1800)
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $waitingTimeId $uint_bid_waiting_time 
-refererCutId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_REFERER_CUT")))
+refererCutId=$(seth --to-bytes32 $(seth --from-ascii "UINT_REFERER_CUT"))
 # 20%
 uint_referer_cut=$(seth --to-uint256 2000)
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $refererCutId $uint_referer_cut 

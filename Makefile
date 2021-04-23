@@ -24,7 +24,7 @@ solc-6: build-furnace
 solc-7: build-governance
 
 proxy: 
-	@dapp --use solc:0.4.24 build
+	source .env && dapp --use solc:0.4.24 build
 
 build-apostle:
 	@cd lib/apostle && (MAKE)
@@ -48,7 +48,7 @@ build-governance:
 	@cd lib/governance && (MAKE)
 
 clean   : 
-	@dapp clean
+	source .env && dapp clean
 	for dir in $(SUBDIRS); do \
 		$(MAKE) -C $$DAPP_LIB$$dir clean ; \
 	done
