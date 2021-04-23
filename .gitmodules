@@ -16,3 +16,6 @@
 [submodule "lib/market-contracts"]
 	path = lib/market-contracts
 	url = https://github.com/evolutionlandorg/market-contracts
+[submodule "lib/furnace"]
+	path = lib/furnace
+	url = https://github.com/evolutionlandorg/furnace
