@@ -71,3 +71,9 @@ if [[ "$DEPLOY_CHAIN?" ]]; then
   esac
 fi
 
+dappCreate() {
+    set -e
+    local lib; lib=$1
+    local class; class=$2
+    DAPP_OUT="$DAPP_LIB/$lib/$DAPP_OUT" dapp create "$class" "${@:3}"
+}
