@@ -3,6 +3,9 @@
 .PHONY:	build-apostle build-common build-land build-market build-token proxy
 .PHONY: build-furnace build-governance
 
+SUBDIRS = apostle common-contracts furnace governance land market-contracts token-contracts
+DAPP_LIB = lib/
+
 all: pre-4 solc-4 pre-6 solc-6 pre-7 solc-7
 
 pre-4:
@@ -44,7 +47,12 @@ build-furnace:
 build-governance:
 	@cd lib/governance && (MAKE)
 
-clean   : dapp clean
+clean   : 
+	@dapp clean
+	for dir in $(SUBDIRS); do \
+		$(MAKE) -C $$DAPP_LIB$$dir clean ; \
+	done
+
 test    : dapp test
 deploy  : 
 	@bash bin/deploy/deploy-all
