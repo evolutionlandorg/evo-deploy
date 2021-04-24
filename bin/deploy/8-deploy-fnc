@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+(TOKEN_LP_FIRE_RING="0x0000000000000000000000000000000000000000" \
+ TOKEN_LP_GOLD_RING="0x0000000000000000000000000000000000000000" \
+ TOKEN_LP_SOIL_RING="0x0000000000000000000000000000000000000000" \
+ TOKEN_LP_WATER_RING="0x0000000000000000000000000000000000000000" \
+ TOKEN_LP_WOOD_RING="0x0000000000000000000000000000000000000000" \
+DAPP_REMAPPINGS="zeppelin-solidity/=lib/zeppelin-solidity/contracts/ \
+ds-auth/=lib/ds-auth/src/ \
+ds-test/=lib/ds-test/src/ \
+ds-math/=lib/ds-math/src/ \
+ds-stop/=lib/ds-stop/src/ \
+ds-note/=lib/ds-stop/lib/ds-note/src/" \
+DAPP_OUT="lib/furnace/out" fnc deploy all)
