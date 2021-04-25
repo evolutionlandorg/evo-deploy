@@ -66,14 +66,14 @@ if [[ "$DEPLOY_CHAIN?" ]]; then
     pangolin)
       config-init "${PWD}/bin/addr/pangolin.json";
       ;;
-    heco-test)
-      config-init "${PWD}/bin/addr/heco-test.json";
+    hecotest)
+      config-init "${PWD}/bin/addr/hecotest.json";
       ;;
-    bsc-test)
-      config-init "${PWD}/bin/addr/bsc-test.json";
+    bsctest)
+      config-init "${PWD}/bin/addr/bsctest.json";
       ;;
     *)
-      exit 1
+      (echo "Invalid DEPLOY_CHAIN"; exit 1)
   esac
 fi
 
@@ -97,12 +97,8 @@ dappCreate() {
   local class; class=$2
   local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "${@:3}")
   local name; name=${class#*:}
-  local proxy; proxy=$(toUpper "$name")
-  if test "${proxy%%"PROXY"}" == "PROXY"; then 
-    proxy="${proxy%%"PROXY"}_PROXY"
-  fi
-  addAddress "$proxy" "$addr" >/dev/null
-  info "$proxy deployed at $addr"
+  addAddress "$name" "$addr" >/dev/null
+  info "$name deployed at $addr"
   echo "$addr"
 }
 
@@ -112,9 +108,7 @@ dappProxy() {
   local addr; addr=$(DAPP_OUT="./out" dapp create "$class" "${@:2}")
   local name; name=${class#*:}
   local proxy; proxy=$(toUpper "$name")
-  if test "${proxy%%"PROXY"}" == "PROXY"; then 
-    proxy="${proxy%%"PROXY"}_PROXY"
-  fi
+  proxy="${proxy%%"PROXY"}_PROXY"
   info "$proxy deployed at $addr"
   echo "$addr"
 }
@@ -141,7 +135,7 @@ uintOf() {
 }
 
 setUint() {
-  set -ex
+  set -e
   local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
   local addr="${2?}"
   seth send "${SETTINGSREGISTRY?}" "setUintProperty(bytes32,uint256)" "$id" "$addr" 

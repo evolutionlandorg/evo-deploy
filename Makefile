@@ -1,6 +1,6 @@
-.PHONY: all clean test deploy 
+.PHONY: all clean test deploy proxy
 .PHONY: pre-4 solc-4 pre-6 solc-6 pre-7 solc-7
-.PHONY:	build-apostle build-common build-land build-market build-token proxy
+.PHONY:	build-apostle build-common build-land build-market build-token 
 .PHONY: build-furnace build-governance
 
 SUBDIRS = apostle common-contracts furnace governance land market-contracts token-contracts
@@ -17,9 +17,9 @@ pre-6:
 pre-7: 
 	@nix-env -f https://github.com/dapphub/dapptools/archive/master.tar.gz -iA solc-static-versions.solc_0_7_6
 
-solc-4: build-apostle build-common build-land build-market build-token proxy
+solc-4: build-apostle build-common build-land build-market build-token
 
-solc-6: build-furnace
+solc-6: build-furnace proxy
 
 solc-7: build-governance
 
