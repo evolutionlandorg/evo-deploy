@@ -1,0 +1,52 @@
+{
+    "auth": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+    "common": {
+        "encoder": {
+            "chainId": 3,
+            "landId": 3
+        },
+        "tokenOfferCut": 400
+    },
+    "land": {
+        "operator": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+        "base": {
+            "xLow": -67,
+            "xHigh": -23,
+            "yLow": -22,
+            "yHigh": 22
+        },
+        "resourcesPool": {
+            "gold": 8077,
+            "wood": 25440,
+            "water": 5320,
+            "fire": 1060,
+            "soil": 10118
+        },
+        "resourceReleaseTime": 1619328791
+    },
+    "apostle": {
+        "operator": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+        "gen0Limit": 10000000,
+        "birthFee": 50,
+        "mixTalent": 5,
+        "bidWaitingTime": 600
+    },
+    "market": {
+        "contributionPool": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+        "devPool": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+        "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9",
+        "auctionCut": 400,
+        "bidWaitingTime": 1800,
+        "refererCut": 2000
+    },
+    "furnace": {
+        "lpGOLD": "0x0",
+        "lpWOOD": "0x0",
+        "lpWATER": "0x0",
+        "lpFIRE": "0x0",
+        "lpSOIL": "0x0",
+        "itemMineFee": 5000000,
+        "itemProtectPeriod": 604800,
+        "drillLuckyBoxReleaseTime": 1619328791
+    }
+}

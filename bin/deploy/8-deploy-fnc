@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+(SUPERVISOR=$(loadConf ".market.supervisor") \
+  OWNER=$(loadConf ".auth") \
+FURNACE_ITEM_MINE_FEE=$(loadConf ".furnace.itemMineFee") \
+UINT_ITEMBAR_PROTECT_PERIOD=$(loadConf ".furnace.itemProtectPeriod") \
+DRILLLUCKYBOX_RELEASE_TIME=$(loadConf ".furnace.drillLuckyBoxReleaseTime") \
+TOKEN_LP_FIRE_RING="$(loadConf ".furnace.lpFIRE")" \
+TOKEN_LP_GOLD_RING="$(loadConf ".furnace.lpGOLD")" \
+TOKEN_LP_SOIL_RING="$(loadConf ".furnace.lpSOIL")" \
+TOKEN_LP_WATER_RING="$(loadConf ".furnace.lpWATER")" \
+TOKEN_LP_WOOD_RING="$(loadConf ".furnace.lpWOOD")" \
+DAPP_REMAPPINGS="zeppelin-solidity/=lib/zeppelin-solidity/contracts/ \
+ds-auth/=lib/ds-auth/src/ \
+ds-test/=lib/ds-test/src/ \
+ds-math/=lib/ds-math/src/ \
+ds-stop/=lib/ds-stop/src/ \
+ds-note/=lib/ds-stop/lib/ds-note/src/" \
+DAPP_OUT="lib/furnace/out" fnc deploy all)

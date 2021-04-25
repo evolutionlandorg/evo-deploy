@@ -49,17 +49,20 @@ set -e
 # echo >&2 "${0##*/}: info: UserRolesProxy inited."
 
 # # RolesUpdater
-networkId=$(seth --to-uint256 $(seth rpc net_version))
-supervisor='0x00a1537d251a6a4c4effAb76948899061FeA47b9'
+# networkId=$(seth --to-uint256 $(seth rpc net_version))
+# supervisor='0x00a1537d251a6a4c4effAb76948899061FeA47b9'
 # ROLESUPDATER=$(dapp create RolesUpdater $USERROLES_PROXY $networkId $supervisor)
 # addAddress "ROLESUPDATER" "$ROLESUPDATER"
 
-# TakeBack-ring
-TAKEBACK_RING=$(dapp create TakeBack $TOKEN_ERC20_RING $supervisor $networkId)
-addAddress "TAKEBACK_RING" "$TAKEBACK_RING"
+# # TakeBack-ring
+# TAKEBACK_RING=$(dapp create TakeBack $TOKEN_ERC20_RING $supervisor $networkId)
+# addAddress "TAKEBACK_RING" "$TAKEBACK_RING"
 
-# TakeBack-kton
-TAKEBACK_KTON=$(dapp create TakeBack $TOKEN_ERC20_KTON $supervisor $networkId)
-addAddress "TAKEBACK_KTON" "$TAKEBACK_KTON"
+# # TakeBack-kton
+# TAKEBACK_KTON=$(dapp create TakeBack $TOKEN_ERC20_KTON $supervisor $networkId)
+# addAddress "TAKEBACK_KTON" "$TAKEBACK_KTON"
+
+# TAKEBAK_NFT=$(dapp create TakeBackNFT $supervisor $networkId)
+# addAddress "TAKEBAK_NFT" $TAKEBAK_NFT
 
 # RedBag

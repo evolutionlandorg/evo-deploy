@@ -5,16 +5,14 @@ set -e
 . $(PWD)/bin/init
 
 # GringottsBankV2
-GRINGOTTSBANKV2=$(dapp create GringottsBankV2)
-addAddress "GRINGOTTSBANKV2" "$GRINGOTTSBANKV2"
+GRINGOTTSBANKV2=$(dappCreate bank contracts/GringottsBankV2.sol:GringottsBankV2)
 
-GRINGOTTSBANK_PROXY=$(dapp create GringottsBankProxy)
-addAddress "GRINGOTTSBANK_PROXY" "$GRINGOTTSBANK_PROXY"
-echo >&2 "${0##*/}: info: GringottsBankProxy created."
+GRINGOTTSBANK_PROXY=$(dappProxy src/proxy/GringottsBankProxy.sol:GringottsBankProxy)
+info "GringottsBankProxy created."
 
 seth send $GRINGOTTSBANK_PROXY "upgradeTo(address)" $GRINGOTTSBANKV2  
 seth send $GRINGOTTSBANK_PROXY "initializeContract(address)" $SETTINGSREGISTRY  
-echo >&2 "${0##*/}: info: GringottsBankProxy inited."
+info "GringottsBankProxy inited."
 
 interestId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_BANK_UNIT_INTEREST")))
 bank_unit_interest=$(seth --to-uint256 1000)

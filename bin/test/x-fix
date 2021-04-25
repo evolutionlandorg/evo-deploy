@@ -24,7 +24,7 @@ set -e
 # seth send $GENESISHOLDER_PROXY "setOperator(address)" $AUTH
 
 # land1=0x2a2b00032b0003010000000000000003000000000000000000000000000007e9
-# encoder=$INTERSTELLARENCODERV3
+# encoder=$INTERSTELLARENCODERV4
 # seth call $encoder "getObjectAddress(uint256)(address)" $land1
 # seth call $encoder "getObjectClass(uint256)(uint8)" $land1
 # seth call $encoder "getProducerId(uint256)(uint16)" $land1
@@ -90,3 +90,15 @@ set -e
 
 # geneId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_GENE_SCIENCE")))
 # seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $geneId $GENESCIENCEV8
+
+# test swap
+# seth estimate 0xC2326B74350A66f88620fb91243E3420a2d31EcE "addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)" 0xd4c2f962b8b94cdd2e0b2e8e765d39f32980a1c1 0x2f6ae7fdbb7c0c613f7923ddce3e5b71afe71f78 0xde0b6b3a7640000 0x1bc16d674ec80000 0x1 0x1 0x735182c782cb8e7806f8903de7913e6880cbf82e 0x6079152b
+
+# LandResourceAuthority
+LANDRESOURCE_AUTHORITY=$(dapp create LandResourceAuthority [$TOKENUSE_PROXY])
+seth send $LANDRESOURCE_PROXY "setAuthority(address)" $LANDRESOURCE_AUTHORITY
+addAddress "LANDRESOURCE_AUTHORITY" "$LANDRESOURCE_AUTHORITY"
+
+
+# seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" 0x1836840bff19997BaF1366d45f2566f35F5e273D $(seth --to-hex 4) 
+# seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" 0xeDa29cA96061509d7Ed58a4eF44e8e8e6d0D4EeC $(seth --to-hex 5) 

@@ -4,20 +4,43 @@ set -e
 
 . $(PWD)/bin/init
 
-# PetBase
-PETBASE=$(dapp create PetBase)
-addAddress "PETBASE" "$PETBASE"
+# ERC721Bridge
+ERC721BRIDGE=$(dappCreate common-contracts contracts/ERC721Bridge.sol:ERC721Bridge)
 
-PETBASE_PROXY=$(dapp create PetBaseProxy)
-addAddress "PETBASE_PROXY" "$PETBASE_PROXY"
-echo >&2 "${0##*/}: info: PetBaseProxy created."
+ERC721BRIDGE_PROXY=$(dappProxy src/proxy/ERC721BridgeProxy.sol:ERC721BridgeProxy)
+
+seth send $ERC721BRIDGE_PROXY "upgradeTo(address)" $ERC721BRIDGE  
+seth send $ERC721BRIDGE_PROXY "initializeContract(address)" $SETTINGSREGISTRY
+bridgeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_ERC721_BRIDGE")))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $bridgeId $ERC721BRIDGE_PROXY 
+info "ERC721BridgeProxy inited."
+
+# ERC721Adaptor
+ERC721ADAPTOR=$(dappCreate common-contracts contracts/ERC721Adaptor.sol:ERC721Adaptor)
+
+ERC721ADAPTOR_PROXY=$(dappProxy src/proxy/ERC721AdaptorProxy.sol:ERC721AdaptorProxy)
+
+originNFT=$CK
+productId=$(seth --to-uint16 256)
+seth send $ERC721ADAPTOR_PROXY "upgradeTo(address)" $ERC721ADAPTOR  
+seth send $ERC721ADAPTOR_PROXY "initializeContract(address,address,uint16)" $SETTINGSREGISTRY $originNFT $productId
+info "ERC721AdaptorProxy inited."
+
+seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $originNFT $(seth --to-hex 2) 
+seth send $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $CK $ERC721ADAPTOR_PROXY
+info "CK registry finished."
+
+# PetBase
+PETBASE=$(dappCreate apostle contracts/PetBase.sol:PetBase)
+
+PETBASE_PROXY=$(dappProxy src/proxy/PetBaseProxy.sol:PetBaseProxy)
+info "PetBaseProxy created."
 
 seth send $PETBASE_PROXY "upgradeTo(address)" $PETBASE  
 seth send $PETBASE_PROXY "initializeContract(address,uint128)" $SETTINGSREGISTRY $(seth --to-uint128 1) 
-
-echo >&2 "${0##*/}: info: PetBaseProxy inited."
+info "PetBaseProxy inited."
 
 petBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_PET_BASE")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $petBaseId $PETBASE_PROXY 
-seth send $INTERSTELLARENCODERV3 "registerNewObjectClass(address,uint8)" $PETBASE_PROXY $(seth --to-hex 3) 
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $PETBASE_PROXY $(seth --to-hex 3) 
 

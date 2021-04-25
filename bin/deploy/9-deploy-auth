@@ -5,18 +5,15 @@ set -e
 . $(PWD)/bin/init
 
 # TokenLocationAuthority
-TOKENLOCATION_AUTHORITY=$(dapp create TokenLocationAuthority [$LANDBASE_PROXY])
-addAddress "TOKENLOCATION_AUTHORITY" "$TOKENLOCATION_AUTHORITY"
+TOKENLOCATION_AUTHORITY=$(dappCreate common-contracts contracts/TokenLocationAuthority.sol:TokenLocationAuthority [$LANDBASE_PROXY])
 seth send $TOKENLOCATION_PROXY "setAuthority(address)" $TOKENLOCATION_AUTHORITY
 
 # TokenUseAuthority
-TOKENUSE_AUTHORITY=$(dapp create TokenUseAuthority [$TOKENUSE_PROXY,$APOSTLEBASE_PROXY,$LANDRESOURCE_PROXY])
-addAddress "TOKENUSE_AUTHORITY" "$TOKENUSE_AUTHORITY"
+TOKENUSE_AUTHORITY=$(dappCreate common-contracts contracts/TokenUseAuthority.sol:TokenUseAuthority [$APOSTLEBASE_PROXY,$LANDRESOURCE_PROXY])
 seth send $TOKENUSE_PROXY "setAuthority(address)" $TOKENUSE_AUTHORITY
 
 # MintAndBurnAuthority
-MINTANDBURN_AUTHORITY_ELEMENT=$(dapp create MintAndBurnAuthority [$LANDRESOURCE_PROXY])
-addAddress "MINTANDBURN_AUTHORITY_ELEMENT" "$MINTANDBURN_AUTHORITY_ELEMENT"
+MINTANDBURN_AUTHORITY_ELEMENT=$(dappCreate common-contracts contracts/MintAndBurnAuthority.sol:MintAndBurnAuthority [$LANDRESOURCE_PROXY])
 
 seth send $TOKEN_ERC20_GOLD "setAuthority(address)" $MINTANDBURN_AUTHORITY_ELEMENT
 seth send $TOKEN_ERC20_WOOD "setAuthority(address)" $MINTANDBURN_AUTHORITY_ELEMENT
@@ -25,23 +22,21 @@ seth send $TOKEN_ERC20_FIRE "setAuthority(address)" $MINTANDBURN_AUTHORITY_ELEME
 seth send $TOKEN_ERC20_SOIL "setAuthority(address)" $MINTANDBURN_AUTHORITY_ELEMENT
 
 # ClockAuctionAuthority
-CLOCKAUCTION_AUTHORITY_APOSTLE=$(dapp create src/apostle/ClockAuctionAuthority.f.sol:ClockAuctionAuthority [$GEN0APOSTLE_PROXY])
-addAddress "CLOCKAUCTION_AUTHORITY_APOSTLE" "$CLOCKAUCTION_AUTHORITY_APOSTLE"
+CLOCKAUCTION_AUTHORITY_APOSTLE=$(dappCreate apostle contracts/ClockAuctionAuthority.sol:ClockAuctionAuthority [$GEN0APOSTLE_PROXY])
 seth send $APOSTLECLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY_APOSTLE
 
 # ApostleBaseAuthorityV2
-APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLE_PROXY,$SIRINGCLOCKAUCTION_PROXY,$PETBASE_PROXY,$TOKENUSE_PROXY])
-addAddress "APOSTLEBASEV2_AUTHORITY" "$APOSTLEBASEV2_AUTHORITY"
+# Pet
+# APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLE_PROXY,$SIRINGCLOCKAUCTION_PROXY,$PETBASE_PROXY,$TOKENUSE_PROXY])
+APOSTLEBASEV2_AUTHORITY=$(dappCreate apostle contracts/ApostleBaseAuthorityV2.sol:ApostleBaseAuthorityV2 [$GEN0APOSTLE_PROXY,$SIRINGCLOCKAUCTION_PROXY,$TOKENUSE_PROXY])
 seth send $APOSTLEBASE_PROXY "setAuthority(address)" $APOSTLEBASEV2_AUTHORITY
 
 # UserPointsAuthority
-USERPOINTS_AUTHORITY=$(dapp create UserPointsAuthority [$REVENUEPOOL_PROXY,$POINTSREWARDPOOL_PROXY])
-addAddress "USERPOINTS_AUTHORITY" "$USERPOINTS_AUTHORITY"
+USERPOINTS_AUTHORITY=$(dappCreate common-contracts contracts/UserPointsAuthority.sol:UserPointsAuthority [$REVENUEPOOL_PROXY,$POINTSREWARDPOOL_PROXY])
 seth send $USERPOINTS_PROXY "setAuthority(address)" $USERPOINTS_AUTHORITY
 
 # LandBaseAuthority
-LANDBASE_AUTHORITY=$(dapp create LandBaseAuthority [$MYSTERIOUSTREASURE_PROXY])
-addAddress "LANDBASE_AUTHORITY" "$LANDBASE_AUTHORITY"
+LANDBASE_AUTHORITY=$(dappCreate land contracts/LandBaseAuthority.sol:LandBaseAuthority [$MYSTERIOUSTREASURE_PROXY])
 seth send $LANDBASE_PROXY "setAuthority(address)" $LANDBASE_AUTHORITY
 
 # BancorExchangeAuthority
@@ -49,8 +44,7 @@ seth send $LANDBASE_PROXY "setAuthority(address)" $LANDBASE_AUTHORITY
 # seth send $BANCOREXCHANGE "setAuthority(address)" $BANCOREXCHANGE_AUTHORITY
 
 # ClockAuctionAuthority
-CLOCKAUCTION_AUTHORITY_MARKET=$(dapp create src/market-contracts/ClockAuctionAuthority.f.sol:ClockAuctionAuthority [$GENESISHOLDER_PROXY])
-addAddress "CLOCKAUCTION_AUTHORITY_MARKET" "$CLOCKAUCTION_AUTHORITY_MARKET"
+CLOCKAUCTION_AUTHORITY_MARKET=$(dappCreate market-contracts contracts/auction/ClockAuctionAuthority.sol:ClockAuctionAuthority [$GENESISHOLDER_PROXY])
 seth send $CLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY_MARKET
 
 # # UserRolesAuthority
@@ -64,21 +58,30 @@ seth send $CLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY_MA
 # seth send $TOKEN_ERC20_KTON "setAuthority(address)" $MINTANDBURN_AUTHORITY_KTON
 
 # ObjectOwnershipAuthorityV2
-OBJECTOWNERSHIPV2_AUTHORITY=$(dapp create src/common-contracts/ObjectOwnershipAuthorityV2.f.sol:ObjectOwnershipAuthorityV2 [$LANDBASE_PROXY,$APOSTLEBASE_PROXY,$ERC721BRIDGE_PROXY])
-addAddress "OBJECTOWNERSHIPV2_AUTHORITY" "$OBJECTOWNERSHIPV2_AUTHORITY"
-seth send $OBJECTOWNERSHIP_PROXY "setAuthority(address)" $OBJECTOWNERSHIPV2_AUTHORITY 
+# Pet
+# OBJECTOWNERSHIPV2_AUTHORITY=$(dapp create src/common-contracts/ObjectOwnershipAuthorityV2.f.sol:ObjectOwnershipAuthorityV2 [$LANDBASE_PROXY,$APOSTLEBASE_PROXY,$ERC721BRIDGE_PROXY])
+# addAddress "OBJECTOWNERSHIPV2_AUTHORITY" "$OBJECTOWNERSHIPV2_AUTHORITY"
+# seth send $OBJECTOWNERSHIP_PROXY "setAuthority(address)" $OBJECTOWNERSHIPV2_AUTHORITY 
 
-# ERC721AdaptorAuthority
-ERC721ADAPTOR_AUTHORITY=$(dapp create src/common-contracts/ERC721AdaptorAuthority.f.sol:ERC721AdaptorAuthority [$ERC721BRIDGE_PROXY])
-addAddress "ERC721ADAPTOR_AUTHORITY" "$ERC721ADAPTOR_AUTHORITY"
-seth send $ERC721ADAPTOR_PROXY "setAuthority(address)" $ERC721ADAPTOR_AUTHORITY 
+# Pet
+# # ERC721AdaptorAuthority
+# ERC721ADAPTOR_AUTHORITY=$(dapp create src/common-contracts/ERC721AdaptorAuthority.f.sol:ERC721AdaptorAuthority [$ERC721BRIDGE_PROXY])
+# addAddress "ERC721ADAPTOR_AUTHORITY" "$ERC721ADAPTOR_AUTHORITY"
+# seth send $ERC721ADAPTOR_PROXY "setAuthority(address)" $ERC721ADAPTOR_AUTHORITY 
 
-# ERC721BridgeAuthority
-ERC721BRIDGE_AUTHORITY=$(dapp create src/apostle/ERC721BridgeAuthority.f.sol:ERC721BridgeAuthority [$PETBASE_PROXY])
-addAddress "ERC721BRIDGE_AUTHORITY" "$ERC721BRIDGE_AUTHORITY"
-seth send $ERC721BRIDGE_PROXY "setAuthority(address)" $ERC721BRIDGE_AUTHORITY 
+# # ERC721BridgeAuthority
+# ERC721BRIDGE_AUTHORITY=$(dapp create src/apostle/ERC721BridgeAuthority.f.sol:ERC721BridgeAuthority [$PETBASE_PROXY])
+# addAddress "ERC721BRIDGE_AUTHORITY" "$ERC721BRIDGE_AUTHORITY"
+# seth send $ERC721BRIDGE_PROXY "setAuthority(address)" $ERC721BRIDGE_AUTHORITY 
 
 
 # MysteriousTreasure
-seth send $MYSTERIOUSTREASURE_PROXY "setOwner(address)" $CLOCKAUCTION_PROXY
+MYSTERIOUSTREASURE_AUTHORITY=$(dappCreate land contracts/MysteriousTreasureAuthority.sol:MysteriousTreasureAuthority [$CLOCKAUCTION_PROXY])
+seth send $MYSTERIOUSTREASURE_PROXY "setAuthority(address)" $MYSTERIOUSTREASURE_AUTHORITY
+
+
+# # LandResourceAuthority
+LANDRESOURCE_AUTHORITY=$(dappCreate land contracts/LandResourceAuthority.sol:LandResourceAuthority [$TOKENUSE_PROXY])
+seth send $LANDRESOURCE_PROXY "setAuthority(address)" $LANDRESOURCE_AUTHORITY
+
 

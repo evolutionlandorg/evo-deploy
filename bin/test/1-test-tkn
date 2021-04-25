@@ -7,15 +7,31 @@ set -e
 # cap=$(seth --to-uint256 $(seth --to-wei 100000000000000 ether))
 # seth send "$TOKEN_ERC20_RING" "changeCap(uint256)" "$cap"
 
-# test mint
-# amount=$(seth --to-uint256 $(seth --to-wei 10 ether))
-# tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
+# # test mint
+# amount=$(seth --to-uint256 $(seth --to-wei 5000000 ether))
+# # tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
+# tokens=("RING")
 # for token in "${tokens[@]}"; do
 #   seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(uint256)" "$amount"
 # done
 
-# seth send -V "$(seth --to-wei 1 ether)"  "$TOKEN_ERC20_RING" "deposit()" 
+# # seth send -V "$(seth --to-wei 1 ether)"  "$TOKEN_ERC20_RING" "deposit()" 
 
 # seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $AUTH
-# seth send "$TOKEN_ERC20_RING" "transfer(address dst, uint wad)" 0x0000000000000000000000000000000000000000 $(seth --to-wei 1 ether)
+# seth send "$TOKEN_ERC20_RING" "transfer(address dst, uint wad)" 0x735182c782CB8e7806F8903dE7913e6880CbF82E $amount
 # seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $AUTH
+
+# WCKTON
+TOKEN_ERC20_WKTON=0xcBA4d36532984cbB71EE7E308a5a80D1545C2AE8
+token balance $TOKEN_ERC20_WKTON $AUTH
+
+KTON_PRECOMPILE=0x0000000000000000000000000000000000000016
+amount=$(seth --to-uint256 $(seth --to-wei 10 ether))
+seth send "$KTON_PRECOMPILE" "transfer_and_call(address,uint)" "$TOKEN_ERC20_WKTON" $amount 
+
+token balance $TOKEN_ERC20_WKTON $AUTH
+
+# WRING
+TO=0x0000000000000000000000000000000000000015
+# 0x8cbf52d3e8a22ecf6a03a49ce77ebba46220262f4d0ee7566aa741e69ee23839(2rMRC7MACm9UhTr5k1qDx7LmkgXu158CCr619ZYZjXBgTXr2)
+# seth send -V "$(seth --to-wei 1 ether)" "$TO" "0x8cbf52d3e8a22ecf6a03a49ce77ebba46220262f4d0ee7566aa741e69ee23839"

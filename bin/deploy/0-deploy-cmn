@@ -4,103 +4,67 @@ set -e
 
 . $(PWD)/bin/init
 
-SETTINGSREGISTRY=$(dapp create SettingsRegistry)
-addAddress "SETTINGSREGISTRY" "$SETTINGSREGISTRY"
+SETTINGSREGISTRY=$(dappCreate common-contracts contracts/SettingsRegistry.sol:SettingsRegistry)
 
-# INTERSTELLARENCODERV3 
-# proxy?
-INTERSTELLARENCODERV3=$(dapp create InterstellarEncoderV3)
-addAddress "INTERSTELLARENCODERV3" "$INTERSTELLARENCODERV3"
+# INTERSTELLARENCODERV4 
+CHAIN_ID=$(loadConf ".common.encoder.chainId")
+LAND_ID=$(loadConf ".common.encoder.landId")
+INTERSTELLARENCODERV4=$(dappCreate common-contracts contracts/InterstellarEncoderV4.sol:InterstellarEncoderV4 3 3)
 
-interstellarEncoderId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_INTERSTELLAR_ENCODER")))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $interstellarEncoderId $INTERSTELLARENCODERV3 
+interstellarEncoderId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_INTERSTELLAR_ENCODER"))
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $interstellarEncoderId $INTERSTELLARENCODERV4 
 
-# OBJECTOWNERSHIPV2 
-OBJECTOWNERSHIPV2=$(dapp create ObjectOwnershipV2)
-addAddress "OBJECTOWNERSHIPV2" "$OBJECTOWNERSHIPV2"
+# OBJECTOWNERSHIP 
+OBJECTOWNERSHIP=$(dappCreate common-contracts contracts/ObjectOwnershipV2.sol:ObjectOwnershipV2)
+OBJECTOWNERSHIP_PROXY=$(dappProxy src/proxy/ObjectOwnerShipProxy.sol:ObjectOwnerShipProxy)
 
-OBJECTOWNERSHIP_PROXY=$(dapp create ObjectOwnerShipProxy)
-addAddress "OBJECTOWNERSHIP_PROXY" "$OBJECTOWNERSHIP_PROXY"
-
-seth send $OBJECTOWNERSHIP_PROXY "upgradeTo(address)" $OBJECTOWNERSHIPV2  
+seth send $OBJECTOWNERSHIP_PROXY "upgradeTo(address)" $OBJECTOWNERSHIP
 seth send $OBJECTOWNERSHIP_PROXY "initializeContract(address)" $SETTINGSREGISTRY
-echo >&2 "${0##*/}: info: ObjectOwnerShipV2Proxy inited."
+info "ObjectOwnerShipV2Proxy inited."
 
-objectOwnershipId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_OBJECT_OWNERSHIP")))
+objectOwnershipId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_OBJECT_OWNERSHIP"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $objectOwnershipId $OBJECTOWNERSHIP_PROXY 
 
 ## TODO::CHECK
-seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
+seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
 
 # TokenLocation
-TOKENLOCATION=$(dapp create TokenLocation)
-addAddress "TOKENLOCATION" "$TOKENLOCATION"
+TOKENLOCATION=$(dappCreate common-contracts contracts/TokenLocation.sol:TokenLocation)
 
-TOKENLOCATION_PROXY=$(dapp create TokenLocationProxy)
-addAddress "TOKENLOCATION_PROXY" "$TOKENLOCATION_PROXY"
+TOKENLOCATION_PROXY=$(dappProxy src/proxy/TokenLocationProxy.sol:TokenLocationProxy)
 
 seth send $TOKENLOCATION_PROXY "upgradeTo(address)" $TOKENLOCATION  
 seth send $TOKENLOCATION_PROXY "initializeContract()" 
-echo >&2 "${0##*/}: info: TokenLocationProxy inited."
+info "TokenLocationProxy inited."
 
-tokenLocationId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_TOKEN_LOCATION")))
+tokenLocationId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_TOKEN_LOCATION"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $tokenLocationId $TOKENLOCATION_PROXY 
 
 # TokenUse
-TOKENUSE=$(dapp create TokenUse)
-addAddress "TOKENUSE" "$TOKENUSE"
+TOKENUSE=$(dappCreate common-contracts contracts/TokenUse.sol:TokenUse)
 
-TOKENUSE_PROXY=$(dapp create TokenUseProxy)
-addAddress "TOKENUSE_PROXY" "$TOKENUSE_PROXY"
+TOKENUSE_PROXY=$(dappProxy src/proxy/TokenUseProxy.sol:TokenUseProxy)
 
 seth send $TOKENUSE_PROXY "upgradeTo(address)" $TOKENUSE  
 seth send $TOKENUSE_PROXY "initializeContract(address)" $SETTINGSREGISTRY
-echo >&2 "${0##*/}: info: TokenUseProxy inited."
+info "TokenUseProxy inited."
 
-tokenUseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_TOKEN_USE")))
+tokenUseId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_TOKEN_USE"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $tokenUseId $TOKENUSE_PROXY 
 
-# UserPoints 
-USERPOINTS=$(dapp create UserPoints)
-addAddress "USERPOINTS" "$USERPOINTS"
+cutId=$(seth --to-bytes32 $(seth --from-ascii "UINT_TOKEN_OFFER_CUT"))
+uint_token_offer_cut=$(loadConf ".common.tokenOfferCut")
+seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $cutId $uint_token_offer_cut 
 
-USERPOINTS_PROXY=$(dapp create UserPointsProxy)
-addAddress "USERPOINTS_PROXY" "$USERPOINTS_PROXY"
+# UserPoints 
+USERPOINTS=$(dappCreate common-contracts contracts/UserPoints.sol:UserPoints)
+
+USERPOINTS_PROXY=$(dappProxy src/proxy/UserPointsProxy.sol:UserPointsProxy)
 
 seth send $USERPOINTS_PROXY "upgradeTo(address)" $USERPOINTS  
 seth send $USERPOINTS_PROXY "initializeContract()" 
-echo >&2 "${0##*/}: info: UserPointsProxy inited."
+info "UserPointsProxy inited."
 
-userPointsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_USER_POINTS")))
+userPointsId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_USER_POINTS"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $userPointsId $USERPOINTS_PROXY 
-
-# ERC721Bridge
-ERC721BRIDGE=$(dapp create ERC721Bridge)
-addAddress "ERC721BRIDGE" "$ERC721BRIDGE"
-
-ERC721BRIDGE_PROXY=$(dapp create ERC721BridgeProxy)
-addAddress "ERC721BRIDGE_PROXY" "$ERC721BRIDGE_PROXY"
-
-seth send $ERC721BRIDGE_PROXY "upgradeTo(address)" $ERC721BRIDGE  
-seth send $ERC721BRIDGE_PROXY "initializeContract(address)" $SETTINGSREGISTRY
-bridgeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_ERC721_BRIDGE")))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $bridgeId $ERC721BRIDGE_PROXY 
-echo >&2 "${0##*/}: info: ERC721BridgeProxy inited."
-
-# ERC721Adaptor
-ERC721ADAPTOR=$(dapp create ERC721Adaptor)
-addAddress "ERC721ADAPTOR" "$ERC721ADAPTOR"
-
-ERC721ADAPTOR_PROXY=$(dapp create ERC721AdaptorProxy)
-addAddress "ERC721ADAPTOR_PROXY" "$ERC721ADAPTOR_PROXY"
-
-originNFT=$CK
-productId=$(seth --to-uint16 256)
-seth send $ERC721ADAPTOR_PROXY "upgradeTo(address)" $ERC721ADAPTOR  
-seth send $ERC721ADAPTOR_PROXY "initializeContract(address,address,uint16)" $SETTINGSREGISTRY $originNFT $productId
-echo >&2 "${0##*/}: info: ERC721AdaptorProxy inited."
-
-seth send $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $originNFT $(seth --to-hex 2) 
-seth send $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $CK $ERC721ADAPTOR_PROXY
-echo >&2 "${0##*/}: info: CK registry finished."
 
