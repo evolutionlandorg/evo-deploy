@@ -20,7 +20,7 @@ register "addr" "CONTRACT_APOSTLE_AUCTION" "$APOSTLECLOCKAUCTION_PROXY"
 gen0Limit=$(loadConf ".apostle.gen0Limit")
 operator=$(loadConf ".apostle.operator")
 sig="initializeContract(address,uint256)"
-GEN0APOSTLE_PROXY=$(deployProxy "$lib" src/proxy/Gen0ApostleProxy.sol:Gen0ApostleProxy contracts/Gen0ApostleV2.sol:Gen0ApostleV2 "$SETTINGSREGISTRY" "$sig" "$gen0Limit")
+GEN0APOSTLE_PROXY=$(deployProxy "$lib" src/proxy/Gen0ApostleProxy.sol:Gen0ApostleProxy contracts/Gen0ApostleV2.sol:Gen0ApostleV2 "$sig" "$SETTINGSREGISTRY" "$gen0Limit")
 seth send $GEN0APOSTLE_PROXY "setOperator(address)" $operator
 
 # SiringClockAuctionV2

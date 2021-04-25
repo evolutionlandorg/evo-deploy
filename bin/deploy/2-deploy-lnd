@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
 
-set -ex
+set -e
 
 . $(PWD)/bin/init
 
 lib="land"
-
-LANDBASEV2=$(dappCreate land contracts/LandBaseV2.sol:LandBaseV2)
-info "LandBaseV2 created."
 
 xLow=$(seth --to-int256 $(loadConf ".land.base.xLow"))
 xHigh=$(seth --to-int256 $(loadConf ".land.base.xHigh"))
