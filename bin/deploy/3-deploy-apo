@@ -33,10 +33,11 @@ GEN0APOSTLEV2=$(dappCreate apostle contracts/Gen0ApostleV2.sol:Gen0ApostleV2)
 
 GEN0APOSTLE_PROXY=$(dappProxy src/proxy/Gen0ApostleProxy.sol:Gen0ApostleProxy)
 
-gen0Limit=$(seth --to-uint256 10000000)
+gen0Limit=$(loadConf ".apostle.gen0Limit")
+operator=$(loadConf ".apostle.operator")
 seth send $GEN0APOSTLE_PROXY "upgradeTo(address)" $GEN0APOSTLEV2  
 seth send $GEN0APOSTLE_PROXY "initializeContract(address,uint256)" $SETTINGSREGISTRY $gen0Limit 
-seth send $GEN0APOSTLE_PROXY "setOperator(address)" $AUTH 
+seth send $GEN0APOSTLE_PROXY "setOperator(address)" $operator
 
 # SiringClockAuctionV2
 SIRINGCLOCKAUCTIONV2=$(dappCreate apostle contracts/SiringClockAuctionV2.sol:SiringClockAuctionV2)
@@ -51,13 +52,15 @@ seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $siringAuction
 
 # ApostelSettingIds
 birthfeeid=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUTOBIRTH_FEE")))
-autoBirthFee=$(seth --to-uint256 $(seth --to-wei 50 ether))
+birthFee=$(loadConf ".apostle.birthFee")
+autoBirthFee=$(seth --to-uint256 $(seth --to-wei $birthFee ether))
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $birthfeeid $autoBirthFee 
 
 mixTalentId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_MIX_TALENT")))
-resourceNeededPerLevel=$(seth --to-uint256 $(seth --to-wei 5 ether))
+maxTalent=$(loadConf ".apostle.mixTalent")
+resourceNeededPerLevel=$(seth --to-uint256 $(seth --to-wei $mixTalent ether))
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $mixTalentId $resourceNeededPerLevel 
 
 bidWaitingTimeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_APOSTLE_BID_WAITING_TIME")))
-bidWaitingTime=$(seth --to-uint256 600)
+bidWaitingTime=$(loadConf ".apostle.bidWaitingTime")
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $bidWaitingTimeId $bidWaitingTime 

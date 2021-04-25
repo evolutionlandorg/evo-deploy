@@ -7,8 +7,8 @@ set -e
 SETTINGSREGISTRY=$(dappCreate common-contracts contracts/SettingsRegistry.sol:SettingsRegistry)
 
 # INTERSTELLARENCODERV4 
-CHAIN_ID=3
-LAND_ID=3
+CHAIN_ID=$(loadConf ".common.encoder.chainId")
+LAND_ID=$(loadConf ".common.encoder.landId")
 INTERSTELLARENCODERV4=$(dappCreate common-contracts contracts/InterstellarEncoderV4.sol:InterstellarEncoderV4 3 3)
 
 interstellarEncoderId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_INTERSTELLAR_ENCODER"))
@@ -51,6 +51,10 @@ info "TokenUseProxy inited."
 
 tokenUseId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_TOKEN_USE"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $tokenUseId $TOKENUSE_PROXY 
+
+cutId=$(seth --to-bytes32 $(seth --from-ascii "UINT_TOKEN_OFFER_CUT"))
+uint_token_offer_cut=$(loadConf ".common.tokenOfferCut")
+seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $cutId $uint_token_offer_cut 
 
 # UserPoints 
 USERPOINTS=$(dappCreate common-contracts contracts/UserPoints.sol:UserPoints)

@@ -61,16 +61,16 @@ fi
 if [[ "$DEPLOY_CHAIN?" ]]; then  
   case "$DEPLOY_CHAIN" in
     ropsten)
-      config-init "${PWD}/bin/conf/ropsten.json";
+      config-init "${PWD}/bin/addr/ropsten.json";
       ;;
     pangolin)
-      config-init "${PWD}/bin/conf/pangolin.json";
+      config-init "${PWD}/bin/addr/pangolin.json";
       ;;
     heco-test)
-      config-init "${PWD}/bin/conf/heco-test.json";
+      config-init "${PWD}/bin/addr/heco-test.json";
       ;;
     bsc-test)
-      config-init "${PWD}/bin/conf/bsc-test.json";
+      config-init "${PWD}/bin/addr/bsc-test.json";
       ;;
     *)
       exit 1
@@ -83,7 +83,11 @@ dappCreate() {
     local class; class=$2
     local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "${@:3}")
     local name; name=${class#*:}
-    addAddress $(toUpper "$name") "$addr" >/dev/null
+    local proxy; proxy=$(toUpper "$name")
+    if test "${proxy%%"PROXY"}" == "PROXY"; then 
+      proxy="${proxy%%"PROXY"}_PROXY"
+    fi
+    addAddress "$proxy" "$addr" >/dev/null
     echo "$addr"
 }
 
@@ -93,6 +97,20 @@ dappProxy() {
     local addr; addr=$(DAPP_OUT="./out" dapp create "$class" "${@:2}")
     local name; name=${class#*:}
     local proxy; proxy=$(toUpper "$name")
-    addAddress "${proxy%%"PROXY"}_PROXY" "$addr" >/dev/null
+    if test "${proxy%%"PROXY"}" == "PROXY"; then 
+      proxy="${proxy%%"PROXY"}_PROXY"
+    fi
     echo "$addr"
 }
+
+loadConf() {
+  if [ -z "$1" ]  
+    then
+      echo "conf: Invalid key"
+      exit 1
+  fi
+  local key; key=$1
+  jq -r "${key}" "$CONFIG_FILE"
+}
+
+export CONFIG_FILE="${CONFIG_FILE-PWD/bin/conf/default.json}" 

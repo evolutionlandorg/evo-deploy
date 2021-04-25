@@ -55,4 +55,4 @@ clean   :
 
 test    : dapp test
 deploy  : 
-	@bash bin/deploy/deploy-all
+	make all && bash bin/deploy/deploy-all

@@ -6,16 +6,15 @@ set -e
 
 # # RolesUpdater
 networkId=$(seth --to-uint256 $(seth rpc net_version))
-supervisor='0x00a1537d251a6a4c4effAb76948899061FeA47b9'
-
+SUPERVISOR=$(loadConf ".market.supervisor")
 # TakeBack-ring
-TAKEBACK_RING=$(dappCreate market-contracts contracts/id/TakeBack.sol:TakeBack $TOKEN_ERC20_RING $supervisor $networkId)
+TAKEBACK_RING=$(dappCreate market-contracts contracts/id/TakeBack.sol:TakeBack $TOKEN_ERC20_RING $SUPERVISOR $networkId)
 
 # TakeBack-kton
 # TAKEBACK_KTON=$(dappCreate market-contracts contracts/TakeBack.sol:TakeBack $TOKEN_ERC20_KTON $supervisor $networkId)
 # addAddress "TAKEBACK_KTON" "$TAKEBACK_KTON"
 
-TAKEBAK_NFT=$(dappCreate market-contracts contracts/id/TakeBackNFT.sol:TakeBackNFT $supervisor $networkId)
+TAKEBAK_NFT=$(dappCreate market-contracts contracts/id/TakeBackNFT.sol:TakeBackNFT $SUPERVISOR $networkId)
 
 # ClockAuctionV2
 CLOCKAUCTIONV2=$(dappCreate market-contracts contracts/auction/ClockAuctionV2.sol:ClockAuctionV2)
@@ -37,18 +36,19 @@ GENESISHOLDER=$(dappCreate market-contracts contracts/auction/GenesisHolder.sol:
 GENESISHOLDER_PROXY=$(dappProxy src/proxy/GenesisHolderProxy.sol:GenesisHolderProxy)
 info "GenesisHolderProxy created."
 
+operator=$(loadConf ".land.operator")
 seth send $GENESISHOLDER_PROXY "upgradeTo(address)" $GENESISHOLDER  
 seth send $GENESISHOLDER_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
-seth send $GENESISHOLDER_PROXY "setOperator(address)" $AUTH
+seth send $GENESISHOLDER_PROXY "setOperator(address)" $operator
 info "GenesisHolderProxy inited."
 
-# RevenuePoolV2
-REVENUEPOOLV2=$(dappCreate market-contracts contracts/auction/RevenuePoolV2.sol:RevenuePoolV2)
+# RevenuePoolV3
+REVENUEPOOLV3=$(dappCreate market-contracts contracts/auction/RevenuePoolV3.sol:RevenuePoolV3)
 
 REVENUEPOOL_PROXY=$(dappProxy src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy)
 info "RevenuePoolProxy created."
 
-seth send $REVENUEPOOL_PROXY "upgradeTo(address)" $REVENUEPOOLV2
+seth send $REVENUEPOOL_PROXY "upgradeTo(address)" $REVENUEPOOLV3
 seth send $REVENUEPOOL_PROXY "initializeContract(address)" $SETTINGSREGISTRY   
 info "RevenuePoolProxy inited."
 
@@ -69,27 +69,29 @@ pointsId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_POINTS_REWARD_POOL"))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $pointsId $POINTSREWARDPOOL_PROXY
 
 ## TODO::check
+contributionPool=$(loadConf ".market.contributionPool")
 contributionId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_CONTRIBUTION_POOL"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $contributionId $AUTH
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $contributionId $contributionPool
 
+devPool=$(loadConf ".market.devPool")
 devpoolId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_DEV_POOL"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $devpoolId $AUTH
+seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $devpoolId $devPool
 
 # LuckyBox
 
 # SettingIds
 auctionCutId=$(seth --to-bytes32 $(seth --from-ascii "UINT_AUCTION_CUT"))
 # 4%
-uint_auction_cut=$(seth --to-uint256 400)
+uint_auction_cut=$(loadConf ".market.auctionCut")
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $auctionCutId $uint_auction_cut 
 
 waitingTimeId=$(seth --to-bytes32 $(seth --from-ascii "UINT_AUCTION_BID_WAITING_TIME"))
 # 30 minutes
-uint_bid_waiting_time=$(seth --to-uint256 1800)
+uint_bid_waiting_time=$(loadConf ".market.bidWaitingTime")
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $waitingTimeId $uint_bid_waiting_time 
 refererCutId=$(seth --to-bytes32 $(seth --from-ascii "UINT_REFERER_CUT"))
 # 20%
-uint_referer_cut=$(seth --to-uint256 2000)
+uint_referer_cut=$(loadConf ".market.refererCut")
 seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $refererCutId $uint_referer_cut 
 
 # errorSpaceId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_EXCHANGE_ERROR_SPACE")))

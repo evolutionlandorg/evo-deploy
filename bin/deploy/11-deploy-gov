@@ -4,8 +4,10 @@ set -e
 
 . $(PWD)/bin/init
 
-export SNAPSHOT_PROXY=0xfEaaD116A6AA5ce7FB2D5Adc66Cf66fc64548CFB
-addAddress "SNAPSHOT_PROXY" "$SNAPSHOT_PROXY"
+EVOLUTIONTELLER=$(dappCreate governance contracts/EvolutionTeller.sol:EvolutionTeller)
+
+calldata=$(seth calldata "initialize(address,address,address)" $SETTINGSREGISTRY $TOKEN_ERC20_KTON $TOKEN_ERC20_RING)
+SNAPSHOT_PROXY=$(dappCreate governance contracts/SnapshotProxy.sol:SnapshotProxy $EVOLUTIONTELLER $FURNACEPROXYADMIN $calldata)
 
 diviendsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_DIVIDENDS_POOL")))
 seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $diviendsId $SNAPSHOT_PROXY
@@ -13,6 +15,6 @@ if test $(seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $diviendsId)
   (echo "check register ${registry} failed."; exit 1;)
 fi
 
-seth send $SNAPSHOT_PROXY "addRewardDistribution(address)" $SNAPSHOT_PROXY
+seth send $SNAPSHOT_PROXY "addRewardDistribution(address)" $REVENUEPOOL_PROXY
 
-seth call $SNAPSHOT_PROXY "rewardDistributions(address)" $SNAPSHOT_PROXY
+seth call $SNAPSHOT_PROXY "rewardDistributions(address)" $REVENUEPOOL_PROXY

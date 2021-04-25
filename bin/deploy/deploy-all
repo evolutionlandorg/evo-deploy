@@ -2,7 +2,6 @@
 
 set -e
 
-make all
 # . $(PWD)/bin/test/x-ck
 . $(PWD)/bin/deploy/0-deploy-cmn
 . $(PWD)/bin/test/x-gene
@@ -16,3 +15,4 @@ make all
 . $(PWD)/bin/deploy/8-deploy-fnc
 . $(PWD)/bin/deploy/9-deploy-auth
 # . $(PWD)/bin/deploy/10-deploy-registry
+# . $(PWD)/bin/deploy/11-deploy-gov

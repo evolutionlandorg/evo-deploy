@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 . $(PWD)/bin/init
 
@@ -10,10 +10,10 @@ info "LandBaseV2 created."
 LANDBASE_PROXY=$(dappProxy src/proxy/LandBaseProxy.sol:LandBaseProxy)
 info "LandBaseProxy created."
 
-xLow=$(seth --to-int256 -67)
-xHigh=$(seth --to-int256 -23)
-yLow=$(seth --to-int256 -22)
-yHigh=$(seth --to-int256 22)
+xLow=$(seth --to-int256 $(loadConf ".land.base.xLow"))
+xHigh=$(seth --to-int256 $(loadConf ".land.base.xHigh"))
+yLow=$(seth --to-int256 $(loadConf ".land.base.yLow"))
+yHigh=$(seth --to-int256 $(loadConf ".land.base.yHigh"))
 seth send $LANDBASE_PROXY "upgradeTo(address)" $LANDBASEV2  
 seth send $LANDBASE_PROXY "initializeContract(address,int256,int256,int256,int256)" $SETTINGSREGISTRY $xLow $xHigh $yLow $yHigh
 info "LandBaseProxy inited."
@@ -32,7 +32,7 @@ if test $(seth call $LANDRESOURCE_PROXY "implementation()(address)") != $LANDRES
   (echo "check migration failed."; exit 1;)
 fi
 #resource release start time 1544083267
-starttime=$(seth --to-uint256 $(date +%s))
+starttime=$(loadConf ".land.resourceReleaseTime")
 seth send $LANDRESOURCE_PROXY "initializeContract(address,uint256)" $SETTINGSREGISTRY $starttime  
 
 info "migration finished." 
@@ -47,13 +47,12 @@ info "MysteriousTreasure created."
 MYSTERIOUSTREASURE_PROXY=$(dapp create MysteriousTreasureProxy)
 info "MysteriousTreasureProxy created."
 
-# gold: 8077
-# wood: 25440
-# water: 5320
-# fire: 1060
-# earth: 10118
-# 10439, 419, 5258, 12200, 12200
-resources=[$(seth --to-uint256 8077),$(seth --to-uint256 25440),$(seth --to-uint256 5320),$(seth --to-uint256 1060),$(seth --to-uint256 10118)]
+gold=$(loadConf ".land.resourcesPool.gold")
+wood=$(loadConf ".land.resourcesPool.wood")
+water=$(loadConf ".land.resourcesPool.water")
+fire=$(loadConf ".land.resourcesPool.fire")
+earth=$(loadConf ".land.resourcesPool.soil")
+resources=[$gold,$wood,$water,$fire,$earth]
 seth send $MYSTERIOUSTREASURE_PROXY "upgradeTo(address)" $MYSTERIOUSTREASURE  
 seth send $MYSTERIOUSTREASURE_PROXY "initializeContract(address,uint256[5])" $SETTINGSREGISTRY $resources 
 treasureId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_MYSTERIOUS_TREASURE"))
