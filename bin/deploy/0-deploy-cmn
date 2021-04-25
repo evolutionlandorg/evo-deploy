@@ -29,5 +29,5 @@ register "uint" "UINT_TOKEN_OFFER_CUT" "$(loadConf ".common.tokenOfferCut")"
 
 # UserPoints 
 sig="initializeContract()"
-USERPOINTS_PROXY=$(deployProxy "$lib" src/proxy/UserPointsProxy.sol:UserPointsProxy contracts/UserPoints.sol:UserPoints)
+USERPOINTS_PROXY=$(deployProxy "$lib" src/proxy/UserPointsProxy.sol:UserPointsProxy contracts/UserPoints.sol:UserPoints "$sig")
 register "addr" "CONTRACT_USER_POINTS" "$USERPOINTS_PROXY"
