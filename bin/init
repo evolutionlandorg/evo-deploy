@@ -90,6 +90,18 @@ deployProxy() {
   echo "$proxyAddr"
 }
 
+deployProxy2() {
+  set -e
+  local lib; lib=$1
+  local proxy; proxy=$2
+  local class; class=$3
+  local sig; sig=$4
+  local calldata; calldata=$(seth calldata "$sig" ${@:5})
+  local addr; addr=$(dappCreate "$lib" "$class")
+  local proxyAddr; proxyAddr=$(dappCreate "$lib" "$proxy" "$addr" "${EVOPROXYADMIN?}" "$calldata")
+  echo "$proxyAddr"
+}
+
 
 dappCreate() {
   set -e
@@ -97,7 +109,7 @@ dappCreate() {
   local class; class=$2
   local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "${@:3}")
   local name; name=${class#*:}
-  addAddress "$name" "$addr" >/dev/null
+  addAddress "$(toUpper $name)" "$addr" >/dev/null
   info "$name deployed at $addr"
   echo "$addr"
 }
@@ -109,6 +121,7 @@ dappProxy() {
   local name; name=${class#*:}
   local proxy; proxy=$(toUpper "$name")
   proxy="${proxy%%"PROXY"}_PROXY"
+  addAddress "$proxy" "$addr" >/dev/null
   info "$proxy deployed at $addr"
   echo "$addr"
 }

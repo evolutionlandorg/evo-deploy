@@ -5,7 +5,7 @@ set -e
 . $(PWD)/bin/init
 
 sig="initialize(address,address,address)"
-SNAPSHOT_PROXY=$(deployProxy governance contracts/SnapshotProxy.sol:SnapshotProxy contracts/EvolutionTeller.sol:EvolutionTeller "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_KTON" "$TOKEN_ERC20_RING")
+SNAPSHOT_PROXY=$(deployProxy2 governance contracts/SnapshotProxy.sol:SnapshotProxy contracts/EvolutionTeller.sol:EvolutionTeller "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_KTON" "$TOKEN_ERC20_RING")
 register "addr" "CONTRACT_DIVIDENDS_POOL" "$SNAPSHOT_PROXY"
 
 seth send $SNAPSHOT_PROXY "addRewardDistribution(address)" $REVENUEPOOL_PROXY
