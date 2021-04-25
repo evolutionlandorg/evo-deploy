@@ -17,9 +17,5 @@ for token in "${tokens[@]}"; do
     fi
     addAddress "TOKEN_ERC20_$setting" "$address"
     id="CONTRACT_${setting}_ERC20_TOKEN"
-    id=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii $id)))
-    seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $id $address 
-    if test $(seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $id) != $address; then
-      (echo "check register ${registry} failed."; exit 1;)
-    fi
+    register "addr" "$id" "$address"
 done

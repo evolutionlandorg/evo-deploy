@@ -4,56 +4,35 @@ set -ex
 
 . $(PWD)/bin/init
 
+lib="land"
+
 LANDBASEV2=$(dappCreate land contracts/LandBaseV2.sol:LandBaseV2)
 info "LandBaseV2 created."
-
-LANDBASE_PROXY=$(dappProxy src/proxy/LandBaseProxy.sol:LandBaseProxy)
-info "LandBaseProxy created."
 
 xLow=$(seth --to-int256 $(loadConf ".land.base.xLow"))
 xHigh=$(seth --to-int256 $(loadConf ".land.base.xHigh"))
 yLow=$(seth --to-int256 $(loadConf ".land.base.yLow"))
 yHigh=$(seth --to-int256 $(loadConf ".land.base.yHigh"))
-seth send $LANDBASE_PROXY "upgradeTo(address)" $LANDBASEV2  
-seth send $LANDBASE_PROXY "initializeContract(address,int256,int256,int256,int256)" $SETTINGSREGISTRY $xLow $xHigh $yLow $yHigh
-info "LandBaseProxy inited."
+sig="initializeContract(address,int256,int256,int256,int256)"
+LANDBASE_PROXY=$(deployProxy "$lib" src/proxy/LandBaseProxy.sol:LandBaseProxy contracts/LandBaseV2.sol:LandBaseV2 "$sig" "$SETTINGSREGISTRY" "$xLow" "$xHigh" "$yLow" "$yHigh")
 
 seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $LANDBASE_PROXY $(seth --to-hex 1) 
+register "addr" "CONTRACT_LAND_BASE" "$LANDBASE_PROXY"
 
-landBaseId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_LAND_BASE"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landBaseId $LANDBASE_PROXY 
 
-LANDRESOURCE_PROXY=$(dappProxy src/proxy/LandResourceProxy.sol:LandResourceProxy)
-info "LandResourceProxy inited."
-
-LANDRESOURCEV6=$(dappCreate land contracts/LandResourceV6.sol:LandResourceV6)
-seth send $LANDRESOURCE_PROXY "upgradeTo(address)" $LANDRESOURCEV6
-if test $(seth call $LANDRESOURCE_PROXY "implementation()(address)") != $LANDRESOURCEV6; then
-  (echo "check migration failed."; exit 1;)
-fi
 #resource release start time 1544083267
 starttime=$(loadConf ".land.resourceReleaseTime")
-seth send $LANDRESOURCE_PROXY "initializeContract(address,uint256)" $SETTINGSREGISTRY $starttime  
-
-info "migration finished." 
-
-landrsId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_LAND_RESOURCE"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landrsId $LANDRESOURCE_PROXY 
+sig="initializeContract(address,uint256)"
+LANDRESOURCE_PROXY=$(deployProxy "$lib" src/proxy/LandResourceProxy.sol:LandResourceProxy contracts/LandResourceV6.sol:LandResourceV6 "$sig" "$SETTINGSREGISTRY" "$starttime")
+register "addr" "CONTRACT_LAND_RESOURCE" "$LANDRESOURCE_PROXY"
 
 # mysteriousTreasure
-MYSTERIOUSTREASURE=$(dappCreate land contracts/MysteriousTreasure.sol:MysteriousTreasure)
-info "MysteriousTreasure created."
-
-MYSTERIOUSTREASURE_PROXY=$(dapp create MysteriousTreasureProxy)
-info "MysteriousTreasureProxy created."
-
 gold=$(loadConf ".land.resourcesPool.gold")
 wood=$(loadConf ".land.resourcesPool.wood")
 water=$(loadConf ".land.resourcesPool.water")
 fire=$(loadConf ".land.resourcesPool.fire")
 earth=$(loadConf ".land.resourcesPool.soil")
 resources=[$gold,$wood,$water,$fire,$earth]
-seth send $MYSTERIOUSTREASURE_PROXY "upgradeTo(address)" $MYSTERIOUSTREASURE  
-seth send $MYSTERIOUSTREASURE_PROXY "initializeContract(address,uint256[5])" $SETTINGSREGISTRY $resources 
-treasureId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_MYSTERIOUS_TREASURE"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $treasureId $MYSTERIOUSTREASURE_PROXY 
+sig="initializeContract(address,uint256[5])"
+MYSTERIOUSTREASURE_PROXY=$(deployProxy "$lib" src/proxy/MysteriousTreasureProxy.sol:MysteriousTreasureProxy contracts/MysteriousTreasure.sol:MysteriousTreasure "$sig" "$SETTINGSREGISTRY" "$resources")
+register "addr" "CONTRACT_MYSTERIOUS_TREASURE" "$MYSTERIOUSTREASURE_PROXY"

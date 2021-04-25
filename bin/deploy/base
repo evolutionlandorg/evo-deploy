@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+EVOPROXYADMIN=$(DAPP_OUT="./out" dapp create src/admin/EVOProxyAdmin.sol:EVOProxyAdmin)
+addAddress "EVOPROXYADMIN" "$EVOPROXYADMIN"
+info "EVOProxyAdmin created."
+
+SETTINGSREGISTRY=$(dappCreate common-contracts contracts/SettingsRegistry.sol:SettingsRegistry)
+info "SettingsRegistry created."
+# INTERSTELLARENCODERV4 
+CHAIN_ID=$(loadConf ".common.encoder.chainId")
+LAND_ID=$(loadConf ".common.encoder.landId")
+INTERSTELLARENCODERV4=$(dappCreate common-contracts contracts/InterstellarEncoderV4.sol:InterstellarEncoderV4 3 3)
+register "addr" "CONTRACT_INTERSTELLAR_ENCODER" "$INTERSTELLARENCODERV4"
+info "InterstellarEncoderV4 created."
+

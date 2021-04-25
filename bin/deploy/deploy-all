@@ -3,6 +3,7 @@
 set -e
 
 # . $(PWD)/bin/test/x-ck
+. $(PWD)/bin/deploy/base
 . $(PWD)/bin/deploy/0-deploy-cmn
 . $(PWD)/bin/test/x-gene
 . $(PWD)/bin/deploy/1-deploy-tkn
@@ -15,4 +16,4 @@ set -e
 . $(PWD)/bin/deploy/8-deploy-fnc
 . $(PWD)/bin/deploy/9-deploy-auth
 # . $(PWD)/bin/deploy/10-deploy-registry
-# . $(PWD)/bin/deploy/11-deploy-gov
+. $(PWD)/bin/deploy/11-deploy-gov

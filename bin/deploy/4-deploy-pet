@@ -4,43 +4,26 @@ set -e
 
 . $(PWD)/bin/init
 
+lib="apostle"
+
 # ERC721Bridge
-ERC721BRIDGE=$(dappCreate common-contracts contracts/ERC721Bridge.sol:ERC721Bridge)
-
-ERC721BRIDGE_PROXY=$(dappProxy src/proxy/ERC721BridgeProxy.sol:ERC721BridgeProxy)
-
-seth send $ERC721BRIDGE_PROXY "upgradeTo(address)" $ERC721BRIDGE  
-seth send $ERC721BRIDGE_PROXY "initializeContract(address)" $SETTINGSREGISTRY
-bridgeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_ERC721_BRIDGE")))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $bridgeId $ERC721BRIDGE_PROXY 
-info "ERC721BridgeProxy inited."
+sig="initializeContract(address)"
+ERC721BRIDGE_PROXY=$(deployProxy common-contracts src/proxy/ERC721BridgeProxy.sol:ERC721BridgeProxy contracts/ERC721Bridge.sol:ERC721Bridge "$sig" "$SETTINGSREGISTRY")
+register "addr" "CONTRACT_ERC721_BRIDGE" "$ERC721BRIDGE_PROXY"
 
 # ERC721Adaptor
-ERC721ADAPTOR=$(dappCreate common-contracts contracts/ERC721Adaptor.sol:ERC721Adaptor)
-
-ERC721ADAPTOR_PROXY=$(dappProxy src/proxy/ERC721AdaptorProxy.sol:ERC721AdaptorProxy)
-
 originNFT=$CK
 productId=$(seth --to-uint16 256)
-seth send $ERC721ADAPTOR_PROXY "upgradeTo(address)" $ERC721ADAPTOR  
-seth send $ERC721ADAPTOR_PROXY "initializeContract(address,address,uint16)" $SETTINGSREGISTRY $originNFT $productId
-info "ERC721AdaptorProxy inited."
+sig="initializeContract(address,address,uint16)"
+ERC721ADAPTOR_PROXY=$(deployProxy common-contracts src/proxy/ERC721AdaptorProxy.sol:ERC721AdaptorProxy contracts/ERC721Adaptor.sol:ERC721Adaptor "$sig" "$SETTINGSREGISTRY" "$originNFT" "$productId")
 
 seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $originNFT $(seth --to-hex 2) 
 seth send $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $CK $ERC721ADAPTOR_PROXY
 info "CK registry finished."
 
 # PetBase
-PETBASE=$(dappCreate apostle contracts/PetBase.sol:PetBase)
-
-PETBASE_PROXY=$(dappProxy src/proxy/PetBaseProxy.sol:PetBaseProxy)
-info "PetBaseProxy created."
-
-seth send $PETBASE_PROXY "upgradeTo(address)" $PETBASE  
-seth send $PETBASE_PROXY "initializeContract(address,uint128)" $SETTINGSREGISTRY $(seth --to-uint128 1) 
-info "PetBaseProxy inited."
-
-petBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_PET_BASE")))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $petBaseId $PETBASE_PROXY 
+sig="initializeContract(address,uint128)"
+PETBASE_PROXY=$(deployProxy apostle src/proxy/PetBaseProxy.sol:PetBaseProxy contracts/PetBase.sol:PetBase "$sig" $SETTINGSREGISTRY $(seth --to-uint128 1))
+register "addr" "CONTRACT_PET_BASE" "$PETBASE_PROXY"
 seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $PETBASE_PROXY $(seth --to-hex 3) 
 

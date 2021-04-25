@@ -2,7 +2,7 @@
 
 set -e
 
-. $(PWD)/bin/init
+# . $(PWD)/bin/init
 
 # DividendPool 
 # TODL:check

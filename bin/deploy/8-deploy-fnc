@@ -4,8 +4,9 @@ set -e
 
 . $(PWD)/bin/init
 
-(SUPERVISOR=$(loadConf ".market.supervisor") \
-  OWNER=$(loadConf ".auth") \
+(FURNACEPROXYADMIN="$EVOPROXYADMIN" \
+SUPERVISOR=$(loadConf ".market.supervisor") \
+OWNER=$(loadConf ".auth") \
 FURNACE_ITEM_MINE_FEE=$(loadConf ".furnace.itemMineFee") \
 UINT_ITEMBAR_PROTECT_PERIOD=$(loadConf ".furnace.itemProtectPeriod") \
 DRILLLUCKYBOX_RELEASE_TIME=$(loadConf ".furnace.drillLuckyBoxReleaseTime") \

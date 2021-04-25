@@ -7,7 +7,7 @@ set -e
 
 # seth call $GEN0APOSTLE_PROXY "owner()(address)" 
 # seth call $GEN0APOSTLE_PROXY "operator()(address)" 
-# seth send $GEN0APOSTLE_PROXY "setOperator(address)" 0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
+seth send $GEN0APOSTLE_PROXY "setOperator(address)" 0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
 
 # APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLE_PROXY,$SIRINGCLOCKAUCTION_PROXY,$PETBASE_PROXY,$TOKENUSE_PROXY])
 # addAddress "APOSTLEBASEV2_AUTHORITY" "$APOSTLEBASEV2_AUTHORITY"
@@ -21,7 +21,7 @@ set -e
 
 # seth call $GENESISHOLDER_PROXY "owner()(address)" 
 # seth call $GENESISHOLDER_PROXY "operator()(address)" 
-# seth send $GENESISHOLDER_PROXY "setOperator(address)" $AUTH
+seth send $GENESISHOLDER_PROXY "setOperator(address)" 0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
 
 # land1=0x2a2b00032b0003010000000000000003000000000000000000000000000007e9
 # encoder=$INTERSTELLARENCODERV4

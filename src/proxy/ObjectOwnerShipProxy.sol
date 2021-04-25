@@ -1,5 +1,11 @@
-pragma solidity >=0.4.24;
+pragma solidity ^0.6.7;
 
-import "upgradeability-using-unstructured-storage/OwnedUpgradeabilityProxy.sol";
+import "zeppelin-solidity/proxy/TransparentUpgradeableProxy.sol";
 
-contract ObjectOwnerShipProxy is OwnedUpgradeabilityProxy {}
+contract ObjectOwnerShipProxy is TransparentUpgradeableProxy {
+	constructor(
+		address _logic,
+		address _admin,
+		bytes memory _data
+	) public payable TransparentUpgradeableProxy(_logic, _admin, _data) {}
+}

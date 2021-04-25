@@ -24,7 +24,7 @@ solc-6: build-furnace
 solc-7: build-governance
 
 proxy: 
-	source .env && dapp --use solc:0.4.24 build
+	@source .env && dapp build
 
 build-apostle:
 	@cd lib/apostle && (MAKE)

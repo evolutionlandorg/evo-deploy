@@ -2,22 +2,22 @@
 
 set -e
 
-. $(PWD)/bin/init
+# . $(PWD)/bin/init
 
-# GringottsBankV2
-GRINGOTTSBANKV2=$(dappCreate bank contracts/GringottsBankV2.sol:GringottsBankV2)
+# # GringottsBankV2
+# GRINGOTTSBANKV2=$(dappCreate bank contracts/GringottsBankV2.sol:GringottsBankV2)
 
-GRINGOTTSBANK_PROXY=$(dappProxy src/proxy/GringottsBankProxy.sol:GringottsBankProxy)
-info "GringottsBankProxy created."
+# GRINGOTTSBANK_PROXY=$(dappProxy src/proxy/GringottsBankProxy.sol:GringottsBankProxy)
+# info "GringottsBankProxy created."
 
-seth send $GRINGOTTSBANK_PROXY "upgradeTo(address)" $GRINGOTTSBANKV2  
-seth send $GRINGOTTSBANK_PROXY "initializeContract(address)" $SETTINGSREGISTRY  
-info "GringottsBankProxy inited."
+# seth send $GRINGOTTSBANK_PROXY "upgradeTo(address)" $GRINGOTTSBANKV2  
+# seth send $GRINGOTTSBANK_PROXY "initializeContract(address)" $SETTINGSREGISTRY  
+# info "GringottsBankProxy inited."
 
-interestId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_BANK_UNIT_INTEREST")))
-bank_unit_interest=$(seth --to-uint256 1000)
-seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $interestId $bank_unit_interest 
+# interestId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_BANK_UNIT_INTEREST")))
+# bank_unit_interest=$(seth --to-uint256 1000)
+# seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $interestId $bank_unit_interest 
 
-multiplierId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_BANK_PENALTY_MULTIPLIER")))
-bank_penalty_multiplier=$(seth --to-uint256 3)
-seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $multiplierId $bank_penalty_multiplier 
+# multiplierId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_BANK_PENALTY_MULTIPLIER")))
+# bank_penalty_multiplier=$(seth --to-uint256 3)
+# seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $multiplierId $bank_penalty_multiplier 

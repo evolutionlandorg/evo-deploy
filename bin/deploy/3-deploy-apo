@@ -4,63 +4,33 @@ set -e
 
 . $(PWD)/bin/init
 
+lib="apostle"
 # ApostleBaseV2
-APOSTLEBASEV2=$(dappCreate apostle contracts/ApostleBaseV2.sol:ApostleBaseV2)
-
-APOSTLEBASE_PROXY=$(dappProxy src/proxy/ApostleBaseProxy.sol:ApostleBaseProxy)
-info "ApostleBaseProxy created."
-
-seth send $APOSTLEBASE_PROXY "upgradeTo(address)" $APOSTLEBASEV2  
-seth send $APOSTLEBASE_PROXY "initializeContract(address)" $SETTINGSREGISTRY 
-info "ApostleBaseProxy inited."
-
-apostleBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_APOSTLE_BASE")))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $apostleBaseId $APOSTLEBASE_PROXY 
+sig="initializeContract(address)"
+APOSTLEBASE_PROXY=$(deployProxy "$lib" src/proxy/ApostleBaseProxy.sol:ApostleBaseProxy contracts/ApostleBaseV2.sol:ApostleBaseV2 "$sig" "$SETTINGSREGISTRY")
+register "addr" "CONTRACT_APOSTLE_BASE" "$APOSTLEBASE_PROXY"
 seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $APOSTLEBASE_PROXY $(seth --to-hex 2) 
 
 # ApostleClockAuction
-APOSTLECLOCKAUCTION=$(dappCreate apostle contracts/ApostleClockAuction.sol:ApostleClockAuction)
-
-APOSTLECLOCKAUCTION_PROXY=$(dappProxy src/proxy/ApostleClockAuctionProxy.sol:ApostleClockAuctionProxy)
-
-seth send $APOSTLECLOCKAUCTION_PROXY "upgradeTo(address)" $APOSTLECLOCKAUCTION  
-seth send $APOSTLECLOCKAUCTION_PROXY "initializeContract(address)" $SETTINGSREGISTRY 
-clockAuctionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_APOSTLE_AUCTION")))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $clockAuctionId $APOSTLECLOCKAUCTION_PROXY 
+sig="initializeContract(address)"
+APOSTLECLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/ApostleClockAuctionProxy.sol:ApostleClockAuctionProxy contracts/ApostleClockAuction.sol:ApostleClockAuction "$sig" "$SETTINGSREGISTRY")
+register "addr" "CONTRACT_APOSTLE_AUCTION" "$APOSTLECLOCKAUCTION_PROXY"
 
 # Gen0ApostleV2
-GEN0APOSTLEV2=$(dappCreate apostle contracts/Gen0ApostleV2.sol:Gen0ApostleV2)
-
-GEN0APOSTLE_PROXY=$(dappProxy src/proxy/Gen0ApostleProxy.sol:Gen0ApostleProxy)
-
 gen0Limit=$(loadConf ".apostle.gen0Limit")
 operator=$(loadConf ".apostle.operator")
-seth send $GEN0APOSTLE_PROXY "upgradeTo(address)" $GEN0APOSTLEV2  
-seth send $GEN0APOSTLE_PROXY "initializeContract(address,uint256)" $SETTINGSREGISTRY $gen0Limit 
+sig="initializeContract(address,uint256)"
+GEN0APOSTLE_PROXY=$(deployProxy "$lib" src/proxy/Gen0ApostleProxy.sol:Gen0ApostleProxy contracts/Gen0ApostleV2.sol:Gen0ApostleV2 "$SETTINGSREGISTRY" "$sig" "$gen0Limit")
 seth send $GEN0APOSTLE_PROXY "setOperator(address)" $operator
 
 # SiringClockAuctionV2
-SIRINGCLOCKAUCTIONV2=$(dappCreate apostle contracts/SiringClockAuctionV2.sol:SiringClockAuctionV2)
-
-SIRINGCLOCKAUCTION_PROXY=$(dappProxy src/proxy/SiringClockAuctionProxy.sol:SiringClockAuctionProxy)
-
-seth send $SIRINGCLOCKAUCTION_PROXY "upgradeTo(address)" $SIRINGCLOCKAUCTIONV2  
-seth send $SIRINGCLOCKAUCTION_PROXY "initializeContract(address)" $SETTINGSREGISTRY 
-
-siringAuctionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_SIRING_AUCTION")))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $siringAuctionId $SIRINGCLOCKAUCTION_PROXY 
+sig="initializeContract(address)"
+SIRINGCLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/SiringClockAuctionProxy.sol:SiringClockAuctionProxy contracts/SiringClockAuctionV2.sol:SiringClockAuctionV2 "$sig" "$SETTINGSREGISTRY")
+register "addr" "CONTRACT_SIRING_AUCTION" "$SIRINGCLOCKAUCTION_PROXY"
 
 # ApostelSettingIds
-birthfeeid=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUTOBIRTH_FEE")))
-birthFee=$(loadConf ".apostle.birthFee")
-autoBirthFee=$(seth --to-uint256 $(seth --to-wei $birthFee ether))
-seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $birthfeeid $autoBirthFee 
+register "uint" "UINT_AUTOBIRTH_FEE" "$(loadConf ".apostle.birthFee")"
 
-mixTalentId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_MIX_TALENT")))
-maxTalent=$(loadConf ".apostle.mixTalent")
-resourceNeededPerLevel=$(seth --to-uint256 $(seth --to-wei $mixTalent ether))
-seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $mixTalentId $resourceNeededPerLevel 
+register "uint" "UINT_MIX_TALENT" "$(loadConf ".apostle.mixTalent")"
 
-bidWaitingTimeId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_APOSTLE_BID_WAITING_TIME")))
-bidWaitingTime=$(loadConf ".apostle.bidWaitingTime")
-seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $bidWaitingTimeId $bidWaitingTime 
+register "uint" "UINT_APOSTLE_BID_WAITING_TIME" "$(loadConf ".apostle.bidWaitingTime")"

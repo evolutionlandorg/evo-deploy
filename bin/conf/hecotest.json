@@ -2,30 +2,30 @@
     "auth": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
     "common": {
         "encoder": {
-            "chainId": 1,
-            "landId": 1
+            "chainId": 4,
+            "landId": 4
         },
         "tokenOfferCut": 400
     },
     "land": {
-        "operator": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+        "operator": "0x0000000000000000000000000000000000000000",
         "base": {
-            "xLow": -112,
-            "xHigh": -68,
+            "xLow": -67,
+            "xHigh": -23,
             "yLow": -22,
             "yHigh": 22
         },
         "resourcesPool": {
-            "gold": 10439,
-            "wood": 419,
-            "water": 5258,
-            "fire": 12200,
-            "soil": 12200
+            "gold": 8077,
+            "wood": 25440,
+            "water": 5320,
+            "fire": 1060,
+            "soil": 10118
         },
-        "resourceReleaseTime": 1545580800
+        "resourceReleaseTime": 1619328791
     },
     "apostle": {
-        "operator": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+        "operator": "0x0000000000000000000000000000000000000000",
         "gen0Limit": 10000000,
         "birthFee": 50000000000000000000,
         "mixTalent": 5000000000000000000,
@@ -40,13 +40,13 @@
         "refererCut": 2000
     },
     "furnace": {
-        "lpGOLD": "0x9504b4A2d5f2E88fD9a5D30AEe307573EA03Bea0",
-        "lpWOOD": "0xf79e6890D3B78b5E04Ad405376C1064e3DAb0d85",
-        "lpWATER": "0xdf2cdD051EF8835b25231f61dCeb5DF5F3A27274",
-        "lpFIRE": "0xd446E044d62392afED6bA4a40a0Ac8bdB0d91F07",
-        "lpSOIL": "0x81b7b6acE712DD221D584D8fAC13C20fB7EB8B13",
+        "lpGOLD": "0x0000000000000000000000000000000000000000",
+        "lpWOOD": "0x0000000000000000000000000000000000000000",
+        "lpWATER": "0x0000000000000000000000000000000000000000",
+        "lpFIRE": "0x0000000000000000000000000000000000000000",
+        "lpSOIL": "0x0000000000000000000000000000000000000000",
         "itemMineFee": 5000000,
         "itemProtectPeriod": 604800,
-        "drillLuckyBoxReleaseTime": 1606816800
+        "drillLuckyBoxReleaseTime": 1619328791
     }
 }

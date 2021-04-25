@@ -4,67 +4,30 @@ set -e
 
 . $(PWD)/bin/init
 
-SETTINGSREGISTRY=$(dappCreate common-contracts contracts/SettingsRegistry.sol:SettingsRegistry)
+# OBJECTOWNERSHIPV2
 
-# INTERSTELLARENCODERV4 
-CHAIN_ID=$(loadConf ".common.encoder.chainId")
-LAND_ID=$(loadConf ".common.encoder.landId")
-INTERSTELLARENCODERV4=$(dappCreate common-contracts contracts/InterstellarEncoderV4.sol:InterstellarEncoderV4 3 3)
+lib="common-contracts"
 
-interstellarEncoderId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_INTERSTELLAR_ENCODER"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $interstellarEncoderId $INTERSTELLARENCODERV4 
+sig="initializeContract(address)"
+OBJECTOWNERSHIP_PROXY=$(deployProxy "$lib" src/proxy/ObjectOwnerShipProxy.sol:ObjectOwnerShipProxy contracts/ObjectOwnershipV2.sol:ObjectOwnershipV2 "$sig" "$SETTINGSREGISTRY")
+register "addr" "CONTRACT_OBJECT_OWNERSHIP" "$OBJECTOWNERSHIP_PROXY"
 
-# OBJECTOWNERSHIP 
-OBJECTOWNERSHIP=$(dappCreate common-contracts contracts/ObjectOwnershipV2.sol:ObjectOwnershipV2)
-OBJECTOWNERSHIP_PROXY=$(dappProxy src/proxy/ObjectOwnerShipProxy.sol:ObjectOwnerShipProxy)
-
-seth send $OBJECTOWNERSHIP_PROXY "upgradeTo(address)" $OBJECTOWNERSHIP
-seth send $OBJECTOWNERSHIP_PROXY "initializeContract(address)" $SETTINGSREGISTRY
-info "ObjectOwnerShipV2Proxy inited."
-
-objectOwnershipId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_OBJECT_OWNERSHIP"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $objectOwnershipId $OBJECTOWNERSHIP_PROXY 
-
-## TODO::CHECK
 seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
 
 # TokenLocation
-TOKENLOCATION=$(dappCreate common-contracts contracts/TokenLocation.sol:TokenLocation)
-
-TOKENLOCATION_PROXY=$(dappProxy src/proxy/TokenLocationProxy.sol:TokenLocationProxy)
-
-seth send $TOKENLOCATION_PROXY "upgradeTo(address)" $TOKENLOCATION  
-seth send $TOKENLOCATION_PROXY "initializeContract()" 
-info "TokenLocationProxy inited."
-
-tokenLocationId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_TOKEN_LOCATION"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $tokenLocationId $TOKENLOCATION_PROXY 
+sig="initializeContract()"
+TOKENLOCATION_PROXY=$(deployProxy "$lib" src/proxy/TokenLocationProxy.sol:TokenLocationProxy contracts/TokenLocation.sol:TokenLocation "$sig")
+register "addr" "CONTRACT_TOKEN_LOCATION" "$TOKENLOCATION_PROXY"
 
 # TokenUse
-TOKENUSE=$(dappCreate common-contracts contracts/TokenUse.sol:TokenUse)
+sig="initializeContract(address)"
+TOKENUSE_PROXY=$(deployProxy "$lib" src/proxy/TokenUseProxy.sol:TokenUseProxy contracts/TokenUse.sol:TokenUse "$sig" "$SETTINGSREGISTRY")
+register "addr" "CONTRACT_TOKEN_USE" "$TOKENUSE_PROXY"
 
-TOKENUSE_PROXY=$(dappProxy src/proxy/TokenUseProxy.sol:TokenUseProxy)
 
-seth send $TOKENUSE_PROXY "upgradeTo(address)" $TOKENUSE  
-seth send $TOKENUSE_PROXY "initializeContract(address)" $SETTINGSREGISTRY
-info "TokenUseProxy inited."
-
-tokenUseId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_TOKEN_USE"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $tokenUseId $TOKENUSE_PROXY 
-
-cutId=$(seth --to-bytes32 $(seth --from-ascii "UINT_TOKEN_OFFER_CUT"))
-uint_token_offer_cut=$(loadConf ".common.tokenOfferCut")
-seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $cutId $uint_token_offer_cut 
+register "uint" "UINT_TOKEN_OFFER_CUT" "$(loadConf ".common.tokenOfferCut")"
 
 # UserPoints 
-USERPOINTS=$(dappCreate common-contracts contracts/UserPoints.sol:UserPoints)
-
-USERPOINTS_PROXY=$(dappProxy src/proxy/UserPointsProxy.sol:UserPointsProxy)
-
-seth send $USERPOINTS_PROXY "upgradeTo(address)" $USERPOINTS  
-seth send $USERPOINTS_PROXY "initializeContract()" 
-info "UserPointsProxy inited."
-
-userPointsId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_USER_POINTS"))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $userPointsId $USERPOINTS_PROXY 
-
+sig="initializeContract()"
+USERPOINTS_PROXY=$(deployProxy "$lib" src/proxy/UserPointsProxy.sol:UserPointsProxy contracts/UserPoints.sol:UserPoints)
+register "addr" "CONTRACT_USER_POINTS" "$USERPOINTS_PROXY"

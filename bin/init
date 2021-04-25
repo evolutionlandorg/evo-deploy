@@ -77,31 +77,91 @@ if [[ "$DEPLOY_CHAIN?" ]]; then
   esac
 fi
 
+
+deployProxy() {
+  set -e
+  local lib; lib=$1
+  local proxy; proxy=$2
+  local class; class=$3
+  local sig; sig=$4
+  local calldata; calldata=$(seth calldata "$sig" ${@:5})
+  local addr; addr=$(dappCreate "$lib" "$class")
+  local proxyAddr; proxyAddr=$(dappProxy "$proxy" "$addr" "${EVOPROXYADMIN?}" "$calldata")
+  echo "$proxyAddr"
+}
+
+
 dappCreate() {
-    set -e
-    local lib; lib=$1
-    local class; class=$2
-    local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "${@:3}")
-    local name; name=${class#*:}
-    local proxy; proxy=$(toUpper "$name")
-    if test "${proxy%%"PROXY"}" == "PROXY"; then 
-      proxy="${proxy%%"PROXY"}_PROXY"
-    fi
-    addAddress "$proxy" "$addr" >/dev/null
-    echo "$addr"
+  set -e
+  local lib; lib=$1
+  local class; class=$2
+  local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "${@:3}")
+  local name; name=${class#*:}
+  local proxy; proxy=$(toUpper "$name")
+  if test "${proxy%%"PROXY"}" == "PROXY"; then 
+    proxy="${proxy%%"PROXY"}_PROXY"
+  fi
+  addAddress "$proxy" "$addr" >/dev/null
+  info "$proxy deployed at $addr"
+  echo "$addr"
 }
 
 dappProxy() {
-    set -e
-    local class; class=$1
-    local addr; addr=$(DAPP_OUT="./out" dapp create "$class" "${@:2}")
-    local name; name=${class#*:}
-    local proxy; proxy=$(toUpper "$name")
-    if test "${proxy%%"PROXY"}" == "PROXY"; then 
-      proxy="${proxy%%"PROXY"}_PROXY"
-    fi
-    echo "$addr"
+  set -e
+  local class; class=$1
+  local addr; addr=$(DAPP_OUT="./out" dapp create "$class" "${@:2}")
+  local name; name=${class#*:}
+  local proxy; proxy=$(toUpper "$name")
+  if test "${proxy%%"PROXY"}" == "PROXY"; then 
+    proxy="${proxy%%"PROXY"}_PROXY"
+  fi
+  info "$proxy deployed at $addr"
+  echo "$addr"
 }
+
+addressOf() {
+  local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
+  local addr=$(seth call "$SETTINGSREGISTRY" "addressOf(bytes32)(address)" "$id")
+  echo "$(seth --to-checksum-address $addr)"
+}
+
+setAddress() {
+  local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
+  local addr="${2?}"
+  seth send "${SETTINGSREGISTRY?}" "setAddressProperty(bytes32,address)" "$id" "$addr" 
+  if test "$addr" != "$(addressOf $1)"; then 
+    (echo "registry $1 failed!"; exit 1;)
+  fi
+  info "$1 regisered."
+}
+
+uintOf() {
+  local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
+  echo "$(seth call "$SETTINGSREGISTRY" "uintOf(bytes32)(uint256)" "$id")"
+}
+
+setUint() {
+  set -ex
+  local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
+  local addr="${2?}"
+  seth send "${SETTINGSREGISTRY?}" "setUintProperty(bytes32,uint256)" "$id" "$addr" 
+  if test "$addr" != "$(uintOf $1)"; then 
+    (echo "registry $1 failed!"; exit 1;)
+  fi
+  info "$1 regisered."
+}
+
+register() {
+  local t; t="$1"
+  if test "$t" == "addr"; then
+    setAddress "${@:2}"
+  elif test "$t" == "uint"; then
+    setUint "${@:2}"
+  else
+    (echo "registry $2 failed!"; exit 1;)
+  fi
+}
+
 
 loadConf() {
   if [ -z "$1" ]  
