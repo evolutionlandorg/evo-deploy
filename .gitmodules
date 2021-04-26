@@ -28,3 +28,6 @@
 [submodule "lib/staker"]
 	path = lib/staker
 	url = https://github.com/evolutionlandorg/staker
+[submodule "lib/zapper"]
+	path = lib/zapper
+	url = https://github.com/evolutionlandorg/zapper
