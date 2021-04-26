@@ -1,7 +1,7 @@
 .PHONY: all clean test deploy proxy
 .PHONY: pre-4 solc-4 pre-6 solc-6 pre-7 solc-7
 .PHONY:	build-apostle build-common build-land build-market build-token 
-.PHONY: build-furnace build-governance
+.PHONY: build-furnace build-governance build-raffle 
 
 SUBDIRS = apostle common-contracts furnace governance land market-contracts token-contracts
 DAPP_LIB = lib/
@@ -46,6 +46,9 @@ build-furnace:
 
 build-governance:
 	@cd lib/governance && (MAKE)
+
+build-raffle:
+	@cd lib/raffle && (MAKE)
 
 clean   : 
 	source .env && dapp clean
