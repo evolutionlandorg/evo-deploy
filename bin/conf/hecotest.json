@@ -8,7 +8,7 @@
         "tokenOfferCut": 400
     },
     "land": {
-        "operator": "0x0000000000000000000000000000000000000000",
+        "operator": "0xFcC598b3E3575CA937AF7F0E804a8BAb5E92a3f6",
         "base": {
             "xLow": -67,
             "xHigh": -23,
@@ -25,7 +25,7 @@
         "resourceReleaseTime": 1619328791
     },
     "apostle": {
-        "operator": "0x0000000000000000000000000000000000000000",
+        "operator": "0xFcC598b3E3575CA937AF7F0E804a8BAb5E92a3f6",
         "gen0Limit": 10000000,
         "birthFee": "50000000000000000000",
         "mixTalent": "5000000000000000000",
