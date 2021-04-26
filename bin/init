@@ -121,8 +121,12 @@ dappCreate() {
   local class; class=$2
   local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "${@:3}")
   local name; name=${class#*:}
-  addAddress "$(toUpper $name)" "$addr" >/dev/null
-  info "$name deployed at $addr"
+  local proxy; proxy=$(toUpper $name)
+  if test "${proxy:0-5}" == "PROXY"; then
+    proxy="${proxy%%"PROXY"}_PROXY"
+  fi
+  addAddress "$proxy" "$addr" >/dev/null
+  info "$proxy deployed at $addr"
   echo "$addr"
 }
 
