@@ -25,3 +25,6 @@
 [submodule "lib/raffle"]
 	path = lib/raffle
 	url = https://github.com/evolutionlandorg/raffle
+[submodule "lib/staker"]
+	path = lib/staker
+	url = https://github.com/evolutionlandorg/staker
