@@ -48,5 +48,8 @@
         "itemMineFee": 5000000,
         "itemProtectPeriod": 604800,
         "drillLuckyBoxReleaseTime": 1619328791
+    },
+    "raffle": {
+        "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9"
     }
 }

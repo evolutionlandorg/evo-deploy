@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+chain_id=$(loadConf ".common.encoder.chainId")
+supervisor=$(loadConf ".raffle.supervisor")
+sig="initialize(address,address,uint256)"
+RAFFLE_PROXY=$(deployProxy2 raffle src/RaffleProxy.sol:RaffleProxy src/Raffle.sol:Raffle "$sig" "$SETTINGSREGISTRY" "$SUPERVISOR" "$chain_id")
+
+eventId=$(loadConf ".raffle.events.1.eventId")
+toLandId=$(loadConf ".raffle.events.1.toLandId")
+startTime=$(loadConf ".raffle.events.1.startTime")
+endTime=$(loadConf ".raffle.events.1.endTime")
+finalTime=$(loadConf ".raffle.events.1.finalTime")
+expireTime=$(loadConf ".raffle.events.1.expireTime")
+seth send $RAFFLE_PROXY "setEvent(uint256,uint256,uint256,uint256,uint256,uint256)" "$eventId" "$toLandId" "$startTime" "$endTime" "$finalTime" "$expireTime"
+

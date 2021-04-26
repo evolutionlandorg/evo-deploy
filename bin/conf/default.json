@@ -48,5 +48,18 @@
         "itemMineFee": 5000000,
         "itemProtectPeriod": 604800,
         "drillLuckyBoxReleaseTime": 1606816800
+    },
+    "raffle": {
+        "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9",
+        "events": {
+          "1": {
+            "eventId": 1,
+            "toLandId": 3,
+            "startTime": 1618481004,
+            "endTime": 1618781004,
+            "finalTime": 1618802157,
+            "expireTime": 1622253841
+          }
+        }
     }
 }
