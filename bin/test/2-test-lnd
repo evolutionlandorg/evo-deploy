@@ -6,8 +6,8 @@ set -e
 
 owner=0x6E40A3621614B12821A0F184A03798ad505E4758
 landbase="$LANDBASE_PROXY"
-x=$(seth --to-int256 -21)
-y=$(seth --to-int256 25)
+x=$(seth --to-int256 $(loadConf ".land.base.xLow"))
+y=$(seth --to-int256 $(loadConf ".land.base.yLow"))
 attr=0x0000000000000000000000000000000000000000000000010f0400850102005f
 mask=0x0000000000000000000000000000000000000000000000000000000000000000
 seth estimate "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask
