@@ -4,101 +4,12 @@ set -e
 
 . $(PWD)/bin/init
 
+# seth --calldata-decode "assignNewLand(int256,int256,address,uint256,uint256)" 0x3a137196fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffc00000000000000000000000000000000000000000000000000000000000000310000000000000000000000004941f719fb5775edbebdcfb632b10b9f87fc16eb000000000000000000000000000000000000000000000063000300c6000200630000000000000000000000000000000000000000000000000000000000000001 
 
-seth call $GEN0APOSTLE_PROXY "owner()(address)" 
-seth call $GEN0APOSTLE_PROXY "operator()(address)" 
-seth send $GEN0APOSTLE_PROXY "setOperator(address)" 0xFcC598b3E3575CA937AF7F0E804a8BAb5E92a3f6
-
-# APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLE_PROXY,$SIRINGCLOCKAUCTION_PROXY,$PETBASE_PROXY,$TOKENUSE_PROXY])
-# addAddress "APOSTLEBASEV2_AUTHORITY" "$APOSTLEBASEV2_AUTHORITY"
-# seth send $APOSTLEBASE_PROXY "setAuthority(address)" $APOSTLEBASEV2_AUTHORITY
-
-# seth estimate $GEN0APOSTLE_PROXY "createGen0Apostle(uint256,uint256,address)" 1 1 0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
-
-# seth call $OBJECTOWNERSHIPV2_AUTHORITY "ownerOf(uint256)(address)" 0x2a2b00032b0003010000000000000003000000000000000000000000000007e9
-# seth estimate $GEN0APOSTLE_PROXY "createGen0Auction(uint256,uint256,uint256,uint256,uint256,address)" 19073114149690932214419911180275513984393112248062184811971884229801912827905 5000000000000000000000 1000000000000000000000 21600 1614201600 0xd74B642b4d3AFbA64075079D4522EB65Aaf6f3A2
-
-
-seth call $GENESISHOLDER_PROXY "owner()(address)" 
-seth call $GENESISHOLDER_PROXY "operator()(address)" 
-seth send $GENESISHOLDER_PROXY "setOperator(address)" 0xFcC598b3E3575CA937AF7F0E804a8BAb5E92a3f6
-
-# land1=0x2a2b00032b0003010000000000000003000000000000000000000000000007e9
-# encoder=$INTERSTELLARENCODERV4
-# seth call $encoder "getObjectAddress(uint256)(address)" $land1
-# seth call $encoder "getObjectClass(uint256)(uint8)" $land1
-# seth call $encoder "getProducerId(uint256)(uint16)" $land1
-# seth call $encoder "getContractAddress(uint256)(address)" $land1
-# seth call $encoder "getOriginAddress(uint256)(address)" $land1
-# seth call $encoder "getproducerid(uint256)(uint16)" $land1
-
-# revenueId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_REVENUE_POOL")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $revenueId $REVENUEPOOL_PROXY
-
-# seth call $OBJECTOWNERSHIP_PROXY "ownerOf(uint256)(address)" 0x2a2b00032b000302000000000000000300000000000000000000000000000003
-
-# land1=0x2a2b00032b0003010000000000000003000000000000000000000000000007e7
-# apostle1=0x2a2b00032b000302000000000000000300000000000000000000000000000003
-
-# apostleBaseId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_APOSTLE_BASE")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $apostleBaseId $APOSTLEBASE_PROXY 
-# geneId=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_GENE_SCIENCE"))
-# seth call $SETTINGSREGISTRY "addressOf(bytes32)(address)" $geneId 
-# seth estimate $LANDRESOURCE_PROXY "startMining(uint256,uint256,address)" $apostle1 $land1 $TOKEN_ERC20_GOLD
-# seth call $OBJECTOWNERSHIP_PROXY "balanceOf(address)(uint256)" $AUTH
-# seth call $OBJECTOWNERSHIP_PROXY "tokenOfOwnerByIndex(address,uint256)" $AUTH 0
-# seth call $OBJECTOWNERSHIP_PROXY "tokenOfOwnerByIndex(address,uint256)" $AUTH 1
-
-# seth call $CLOCKAUCTION_PROXY "getAuction(uint256)(address,uint256,uint256,uint256,uint256,address,uint128,address,uint256,address)" 0x2a2b00032b0003010000000000000003000000000000000000000000000007e8
-        
-# seth estimate $GENESISHOLDER_PROXY "createAuction(uint256,uint256,uint256,uint256,uint256,address)" 19073114149690932208142809444888833220557322824854518395869528785337878317033 5000000000000000000000 1000000000000000000000 21600 1613941200 0xd74B642b4d3AFbA64075079D4522EB65Aaf6f3A2
-
-
-# seth send -V $(seth --to-wei 2000 ether) 0x322bBC14375044Bec334D97ff597902346b1BAb5 
-# seth call 0x322bBC14375044Bec334D97ff597902346b1BAb5 "balanceOf(address)(uint256)" $AUTH
-# seth estimate 0x322bBC14375044Bec334D97ff597902346b1BAb5 "transfer(address,uint256,bytes)" 0xfc9E6A8932776ee1cb837E07ba2826541710Ec47 2000000000000000000000 0x2a2b00032b0003010000000000000003000000000000000000000000000007e8
-
-# seth --calldata-decode "transfer(address,uint256,bytes)" 0xbe45fd620000000000000000000000002fd6eff8b45fdb585119a431c24e87af898a7219000000000000000000000000000000000000000000000002b5e3af16b1880000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000402a2b00032b0003020000000000000003000000000000000000000000000000182a2b00032b000302000000000000000300000000000000000000000000000006
-
-# birthfeeid=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "UINT_AUTOBIRTH_FEE")))
-# autoBirthFee=$(seth --to-uint256 $(seth --to-wei 50 ether))
-# seth send $SETTINGSREGISTRY "setUintProperty(bytes32,uint256)" $birthfeeid $autoBirthFee 
-
-# seth estimate $TOKEN_ERC20_RING "transfer(address,uint256,bytes)" 0x2fd6Eff8b45fDb585119A431C24E87af898A7219 50000000000000000000 0x2a2b00032b0003020000000000000003000000000000000000000000000000182a2b00032b000302000000000000000300000000000000000000000000000006
-
-# landrsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_LAND_RESOURCE")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $landrsId $LANDRESOURCE_PROXY 
-
-# seth call $REVENUEPOOL_PROXY "registry()(address)"
-
-# pointsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_POINTS_REWARD_POOL")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $pointsId $POINTSREWARDPOOL_PROXY
-
-# contributionId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_CONTRIBUTION_POOL")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $contributionId $AUTH
-
-# devpoolId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_DEV_POOL")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $devpoolId $AUTH
-
-# diviendsId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_DIVIDENDS_POOL")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $diviendsId $SNAPSHOT_PROXY
-
-# seth estimate $POINTSREWARDPOOL_PROXY "playWithSmallTicket()"
-
-# seth estimate $REVENUEPOOL_PROXY "settleToken(address)" $TOKEN_ERC20_RING
-
-
-# geneId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_GENE_SCIENCE")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $geneId $GENESCIENCEV8
-
-# test swap
-# seth estimate 0xC2326B74350A66f88620fb91243E3420a2d31EcE "addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)" 0xd4c2f962b8b94cdd2e0b2e8e765d39f32980a1c1 0x2f6ae7fdbb7c0c613f7923ddce3e5b71afe71f78 0xde0b6b3a7640000 0x1bc16d674ec80000 0x1 0x1 0x735182c782cb8e7806f8903de7913e6880cbf82e 0x6079152b
-
-# LandResourceAuthority
-# LANDRESOURCE_AUTHORITY=$(dapp create LandResourceAuthority [$TOKENUSE_PROXY])
-# seth send $LANDRESOURCE_PROXY "setAuthority(address)" $LANDRESOURCE_AUTHORITY
-# addAddress "LANDRESOURCE_AUTHORITY" "$LANDRESOURCE_AUTHORITY"
-
-
-# seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" 0x1836840bff19997BaF1366d45f2566f35F5e273D $(seth --to-hex 4) 
-# seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" 0xeDa29cA96061509d7Ed58a4eF44e8e8e6d0D4EeC $(seth --to-hex 5) 
+# owner=0x4941f719FB5775EdbEbDCFb632B10b9f87fc16eB
+# landbase="$LANDBASE_PROXY"
+# x=$(seth --to-int256 -4)
+# y=$(seth --to-int256 49)
+# attr=1826228508572579397731
+# mask=1
+# seth estimate -F 0xFcC598b3E3575CA937AF7F0E804a8BAb5E92a3f6 "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask

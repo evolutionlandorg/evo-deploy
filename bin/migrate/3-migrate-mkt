@@ -4,10 +4,16 @@ set -e
 
 . $(PWD)/bin/init
 
-REVENUEPOOLV2=$(dapp create RevenuePoolV2)
-seth send $REVENUEPOOL_PROXY "upgradeTo(address)" $REVENUEPOOLV2  
-if test $(seth call $REVENUEPOOL_PROXY "implementation()(address)") != $REVENUEPOOLV2; then
+# REVENUEPOOLV3=$(dappCreate market-contracts contracts/auction/RevenuePoolV3.sol:RevenuePoolV3)
+# seth send $EVOPROXYADMIN "upgrade(address,address)" $REVENUEPOOL_PROXY $REVENUEPOOLV3
+# if test $(seth call $EVOPROXYADMIN "getProxyImplementation(address)(address)" $REVENUEPOOL_PROXY) != $REVENUEPOOLV3; then
+#   (echo "check migration failed."; exit 1;)
+# fi
+# echo >&2 "${0##*/}: info: migration finished." 
+
+POINTSREWARDPOOLV2=$(dappCreate market-contracts contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2)
+seth send $EVOPROXYADMIN "upgrade(address,address)" $POINTSREWARDPOOL_PROXY $POINTSREWARDPOOLV2
+if test $(seth call $EVOPROXYADMIN "getProxyImplementation(address)(address)" $POINTSREWARDPOOL_PROXY) != $POINTSREWARDPOOLV2; then
   (echo "check migration failed."; exit 1;)
 fi
-addAddress "REVENUEPOOLV2" "$REVENUEPOOLV2"
 echo >&2 "${0##*/}: info: migration finished." 

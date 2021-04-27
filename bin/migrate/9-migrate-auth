@@ -7,4 +7,3 @@ set -e
 # recycle auth
 LANDBASE_AUTHORITY=$(dappCreate land contracts/LandBaseAuthority.sol:LandBaseAuthority [$MYSTERIOUSTREASURE_PROXY])
 seth send $LANDBASE_PROXY "setAuthority(address)" $LANDBASE_AUTHORITY
-

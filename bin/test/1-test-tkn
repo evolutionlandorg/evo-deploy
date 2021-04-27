@@ -22,14 +22,12 @@ set -e
 # seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $shell1
 
 # WCKTON
-TOKEN_ERC20_WKTON=0xcBA4d36532984cbB71EE7E308a5a80D1545C2AE8
+TOKEN_ERC20_WKTON=0xbfE9E136270cE46A2A6a8E8D54718BdAEBEbaA3D
 AUTH=0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
 token balance $TOKEN_ERC20_WKTON $AUTH
-
 KTON_PRECOMPILE=0x0000000000000000000000000000000000000016
 amount=$(seth --to-uint256 $(seth --to-wei 10 ether))
-seth estimate "$KTON_PRECOMPILE" "transfer_and_call(address,uint)" "$TOKEN_ERC20_WKTON" $amount 
-
+seth send -F $AUTH "$KTON_PRECOMPILE" "transfer_and_call(address,uint)" "$TOKEN_ERC20_WKTON" $amount  
 token balance $TOKEN_ERC20_WKTON $AUTH
 
 # WRING

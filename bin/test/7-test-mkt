@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# points check
+devPool=$(loadConf ".market.devPool")
+seth call $USERPOINTS_PROXY "pointsSupply()(uint256)"
+seth call $POINTSREWARDPOOL_PROXY "totalRewardInPool(address)(uint256)" $RING
+token balance $RING $REVENUEPOOL_PROXY  
+token balance $RING $devPool
+token balance $RING $POINTSREWARDPOOL_PROXY
+token balance $RING $SNAPSHOTPROXY
+
+seth send $REVENUEPOOL_PROXY "settleToken(address)" $RING
+
+seth call $USERPOINTS_PROXY "pointsSupply()(uint256)"
+seth call $POINTSREWARDPOOL_PROXY "totalRewardInPool(address)(uint256)" $RING
+token balance $RING $REVENUEPOOL_PROXY  
+token balance $RING $devPool
+token balance $RING $POINTSREWARDPOOL_PROXY
+token balance $RING $SNAPSHOTPROXY

@@ -36,7 +36,8 @@ USERPOINTS_AUTHORITY=$(dappCreate common-contracts contracts/UserPointsAuthority
 seth send $USERPOINTS_PROXY "setAuthority(address)" $USERPOINTS_AUTHORITY
 
 # LandBaseAuthority
-LANDBASE_AUTHORITY=$(dappCreate land contracts/LandBaseAuthority.sol:LandBaseAuthority [$MYSTERIOUSTREASURE_PROXY])
+operator=$(loadConf ".land.operator")
+LANDBASE_AUTHORITY=$(dappCreate land contracts/LandBaseAuthority.sol:LandBaseAuthority [$MYSTERIOUSTREASURE_PROXY,$operator])
 seth send $LANDBASE_PROXY "setAuthority(address)" $LANDBASE_AUTHORITY
 
 # BancorExchangeAuthority
