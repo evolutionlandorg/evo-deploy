@@ -130,6 +130,29 @@ dappCreate() {
   echo "$addr"
 }
 
+dappAuth() {
+  set -e
+  local auth; auth=$1
+  local lib; lib=$2
+  local class; class=$3
+  local wards; wards=$4
+  local sigs; sigs=$5
+  local n=($(echo ${sigs} | tr " " "\n"))
+  local g=$( IFS=$','; echo "${n[*]}")
+  local m=($(echo ${wards} | tr " " "\n"))
+  local s=()
+  for ward in "${m[@]}"; do 
+    s+=("$(seth lookup $ward)")
+  done
+  local l=$( IFS=$','; echo "${s[*]}")
+  local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "[$l]" "[$g]")
+  local name; name="${auth}_${class#*:}"
+  name="$(toUpper $name)"
+  addAddress "$name" "$addr" >/dev/null
+  info "$name deployed at $addr"
+  echo "$addr"
+}
+
 dappProxy() {
   set -e
   local class; class=$1
@@ -196,4 +219,15 @@ loadConf() {
   jq -r "${key}" "$CONFIG_FILE"
 }
 
+loadAuthConf() {
+  if [ -z "$1" ]  
+    then
+      echo "conf: Invalid key"
+      exit 1
+  fi
+  local key; key=$1
+  jq -r "${key}" "$AUTH_CONFIG_FILE"
+}
+
 export CONFIG_FILE="${config_file-PWD/bin/conf/default.json}" 
+export AUTH_CONFIG_FILE="${auth_config_file-PWD/bin/conf/auth.json}" 

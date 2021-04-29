@@ -1,6 +1,58 @@
 {
     "auth": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
     "common": {
+        "tokenLocation": {
+          "auth": {
+            "wards": [
+              "@LANDBASE_PROXY"
+            ],
+            "sigs": [
+              //bytes4(keccak256("setTokenLocationHM(uint256,int256,int256)"))
+              "0x203473b7"
+            ]
+          } 
+        },
+        "tokenUse": {
+          "auth": {
+            "wards": [
+              "@APOSTLEBASE_PROXY",
+              "@LANDRESOURCE_PROXY"
+            ],
+            "sigs": [
+              //bytes4(keccak256("addActivity(uint256,address,uint256)"))
+              "0xfca906d7",
+              //bytes4(keccak256("removeActivity(uint256,address)"))
+              "0x2745b7ef"
+            ]
+          } 
+        },
+        "mintAndBurn": {
+          "auth": {
+            "wards": [
+              "@LANDRESOURCE_PROXY"
+            ],
+            "sigs": [
+              //bytes4(keccak256("mint(address,uint256)"))
+              "0x40c10f19",
+              //bytes4(keccak256("burn(address,uint256)"))
+              "0x9dc29fac"
+            ]
+          } 
+        },
+        "userPoints": {
+          "auth": {
+            "wards": [
+              "@REVENUEPOOL_PROXY",
+              "@POINTSREWARDPOOL_PROXY"
+            ],
+            "sigs": [
+              //bytes4(keccak256("addPoints(address,uint256)"))
+              "0x507cd30f",
+              //bytes4(keccak256("subPoints(address,uint256)"))
+              "0xf3fff9d7"
+            ]
+          } 
+        },
         "encoder": {
             "chainId": 1,
             "landId": 1
@@ -8,6 +60,46 @@
         "tokenOfferCut": 400
     },
     "land": {
+        "base": {
+          "auth": {
+            "wards": [
+              "@MYSTERIOUSTREASURE_PROXY"
+            ],
+            "sigs": [
+              //bytes4(keccak256("setResourceRateAttr(uint256,uint256)"))
+              "0xc8723d75",
+              //bytes4(keccak256("setResourceRate(uint256,address,uint16)"))
+              "0x84d1bfd2",
+              //bytes4(keccak256("setHasBox(uint256,bool)"))
+              "0x9648f78e",
+              //bytes4(keccak256("assignNewLand(int256,int256,address,uint256,uint256)"))
+              "0x3a137196"
+            ]
+          } 
+        },
+        "mysteriousTreasure": {
+          "auth": {
+            "wards": [
+              "@CLOCKAUCTION_PROXY"
+            ],
+            "sigs": []
+          } 
+        },
+        "resource": {
+          "auth": {
+            "wards": [
+              "@TOKENUSE_PROXY"
+            ],
+            "sigs": [
+              //bytes4(keccak256("activityStopped(uint256)"))
+              "0x6086e7f8",
+              //bytes4(keccak256("updateMinerStrengthWhenStop(uint256)"))
+              "0x06b2539f",
+              //bytes4(keccak256("updateMinerStrengthWhenStart(uint256)"))
+              "0x8d57d41a"
+            ]
+          } 
+        },
         "operator": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
         "base": {
             "xLow": -112,
@@ -25,6 +117,42 @@
         "resourceReleaseTime": 1545580800
     },
     "apostle": {
+        "clockAuction": {
+          "auth": {
+            "wards": [
+              "@GEN0APOSTLE_PROXY"
+            ],
+            "sigs": [
+              //bytes4(keccak256("createAuction(uint256,uint256,uint256,uint256,uint256,address)"))
+              "0x6e3630a8"
+            ]
+          } 
+        },
+        "base": {
+          "auth": {
+            "wards": [
+              "@GEN0APOSTLE_PROXY",
+              "@SIRINGCLOCKAUCTION_PROXY",
+              "@TOKENUSE_PROXY"
+            ],
+            "sigs": [
+              //bytes4(keccak256("createApostle(uint256,uint256,uint256,uint256,uint256,address)"))
+              "0xd528ec23",
+              //bytes4(keccak256("breedWithInAuction(uint256,uint256)"))
+              "0xa9653f9e",
+              //bytes4(keccak256("activityAdded(uint256,address,address)"))
+              "0x0bd036d0",
+              //bytes4(keccak256("activityRemoved(uint256,address,address)"))
+              "0x204efa16",
+              //bytes4(keccak256("updateGenesAndTalents(uint256,uint256,uint256)"))
+              "0x00788d52",
+              //bytes4(keccak256("batchUpdate(uint256[],uint256[],uint256[])"))
+              "0xb04fb07c",
+              //bytes4(keccak256("activityStopped(uint256)"))
+              "0x6086e7f8"
+            ]
+          } 
+        },
         "operator": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
         "gen0Limit": 10000000,
         "birthFee": "50000000000000000000",
@@ -32,6 +160,17 @@
         "bidWaitingTime": 600
     },
     "market": {
+        "clockAuction": {
+          "auth": {
+            "wards": [
+              "@GENESISHOLDER_PROXY"
+            ],
+            "sigs": [
+              //bytes4(keccak256("createAuction(uint256,uint256,uint256,uint256,uint256,address)"))
+              "0x6e3630a8"
+            ]
+          } 
+        },
         "contributionPool": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
         "devPool": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
         "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9",

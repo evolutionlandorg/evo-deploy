@@ -5,5 +5,8 @@ set -e
 . $(PWD)/bin/init
 
 # recycle auth
-LANDBASE_AUTHORITY=$(dappCreate land contracts/LandBaseAuthority.sol:LandBaseAuthority [$MYSTERIOUSTREASURE_PROXY])
-seth send $LANDBASE_PROXY "setAuthority(address)" $LANDBASE_AUTHORITY
+operator=$(loadConf ".land.operator")
+seth send $LANDBASE_AUTHORITY "deny(address)" "$operator"
+
+seth send $GEN0APOSTLE_PROXY "setOperator(address)" 0x0000000000000000000000000000000000000000
+seth send $GENESISHOLDER_PROXY "setOperator(address)" 0x0000000000000000000000000000000000000000
