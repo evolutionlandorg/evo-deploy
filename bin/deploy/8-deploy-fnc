@@ -4,21 +4,66 @@ set -e
 
 . $(PWD)/bin/init
 
-(FURNACEPROXYADMIN="$EVOPROXYADMIN" \
-SUPERVISOR=$(loadConf ".market.supervisor") \
-OWNER=$(loadConf ".auth") \
-FURNACE_ITEM_MINE_FEE=$(loadConf ".furnace.itemMineFee") \
-UINT_ITEMBAR_PROTECT_PERIOD=$(loadConf ".furnace.itemProtectPeriod") \
-DRILLLUCKYBOX_RELEASE_TIME=$(loadConf ".furnace.drillLuckyBoxReleaseTime") \
-TOKEN_LP_FIRE_RING="$(loadConf ".furnace.lpFIRE")" \
-TOKEN_LP_GOLD_RING="$(loadConf ".furnace.lpGOLD")" \
-TOKEN_LP_SOIL_RING="$(loadConf ".furnace.lpSOIL")" \
-TOKEN_LP_WATER_RING="$(loadConf ".furnace.lpWATER")" \
-TOKEN_LP_WOOD_RING="$(loadConf ".furnace.lpWOOD")" \
-DAPP_REMAPPINGS="zeppelin-solidity/=lib/zeppelin-solidity/contracts/ \
-ds-auth/=lib/ds-auth/src/ \
-ds-test/=lib/ds-test/src/ \
-ds-math/=lib/ds-math/src/ \
-ds-stop/=lib/ds-stop/src/ \
-ds-note/=lib/ds-stop/lib/ds-note/src/" \
-DAPP_OUT="lib/furnace/out" fnc deploy all)
+lib="furnace"
+
+# drillbase
+sig="initialize(address)"
+DRILLBASE_PROXY=$(deployProxy2 "$lib" src/DrillBaseProxy.sol:DrillBaseProxy src/DrillBase.sol:DrillBase "$sig" "$SETTINGSREGISTRY")
+
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $DRILLBASE_PROXY $(seth --to-hex 4) 
+if test $(seth call $INTERSTELLARENCODERV4 "classAddress2Id(address)(uint8)" $DRILLBASE_PROXY) != 4; then
+  (echo "check classAddress2Id failed."; exit 1;)
+fi
+
+register "addr" "CONTRACT_DRILL_BASE" "$DRILLBASE_PROXY"
+
+# formula
+sig="initialize(address)"
+FORMULA_PROXY=$(deployProxy2 "$lib" src/FormulaProxy.sol:FormulaProxy src/Formula.sol:Formula "$sig" "$SETTINGSREGISTRY")
+register "addr" "CONTRACT_FORMULA" "$FORMULA_PROXY"
+
+# itembase
+sig="initialize(address)"
+ITEMBASE_PROXY=$(deployProxy2 "$lib" src/ItemBaseProxy.sol:ItemBaseProxy src/ItemBase.sol:ItemBase "$sig" "$SETTINGSREGISTRY")
+
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $ITEMBASE_PROXY $(seth --to-hex 5) 
+ITEM_ID=$(seth call $INTERSTELLARENCODERV4 "classAddress2Id(address)(uint8)" $ITEMBASE_PROXY)
+if test "$ITEM_ID"  != 5; then
+  (echo "check classAddress2Id failed."; exit 1;)
+fi
+
+register "addr" "CONTRACT_ITEM_BASE" "$ITEMBASE_PROXY"
+
+# teller
+register "addr" "CONTRACT_LP_GOLD_ERC20_TOKEN" "$TOKEN_LP_GOLD_RING"
+register "addr" "CONTRACT_LP_WOOD_ERC20_TOKEN" "$TOKEN_LP_WOOD_RING"
+register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$TOKEN_LP_WATER_RING"
+register "addr" "CONTRACT_LP_FIRE_ERC20_TOKEN" "$TOKEN_LP_FIRE_RING"
+register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$TOKEN_LP_SOIL_RING"
+
+sig="initialize(address)"
+METADATATELLER_PROXY=$(deployProxy2 "$lib" src/MetaDataTellerProxy.sol:MetaDataTellerProxy src/MetaDataTeller.sol:MetaDataTeller "$sig" "$SETTINGSREGISTRY")
+register "addr" "CONTRACT_METADATA_TELLER" "$METADATATELLER_PROXY"
+
+drill=$(seth --to-bytes32  $(seth --from-ascii "CONTRACT_DRILL_BASE"))
+drillgrade1=$(seth --to-uint16 1)
+rate1=$(seth --to-uint256 1000000)
+seth send $METADATATELLER_PROXY "addInternalTokenMeta(bytes32,uint16,uint256)" $drill $drillgrade1 $rate1
+
+drillgrade2=$(seth --to-uint16 2)
+rate2=$(seth --to-uint256 5000000)
+seth send $METADATATELLER_PROXY "addInternalTokenMeta(bytes32,uint16,uint256)" $drill $drillgrade2 $rate2
+
+drillgrade3=$(seth --to-uint16 3)
+rate3=$(seth --to-uint256 12000000)
+seth send $METADATATELLER_PROXY "addInternalTokenMeta(bytes32,uint16,uint256)" $drill $drillgrade3 $rate3
+
+register "uint" "FURNACE_ITEM_MINE_FEE" "$(loadConf ".furnace.itemMineFee")"
+register "uint" "UINT_ITEMBAR_PROTECT_PERIOD" "$(loadConf ".furnace.itemProtectPeriod")"
+
+# takeback
+supervisor=$(loadConf ".furnace.supervisor")
+DRILLTAKEBACK=$(dappCreate "$lib" src/DrillTakeBack.sol:DrillTakeBack $SETTINGSREGISTRY $supervisor $(seth --to-uint256 $(seth rpc net_version)))
+
+timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
+DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBox.sol:DrillLuckyBox $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
