@@ -4,56 +4,69 @@ set -e
 
 . $(PWD)/bin/init
 
+# ownership
+# allowlist=($LANDBASE_PROXY $APOSTLEBASE_PROXY $ERC721BRIDGE_PROXY $DRILLBASE_PROXY $ITEMBASE_PROXY)
+wards=$(loadAuthConf ".common.objectOwnership.wards | .[]")
+sigs=$(loadAuthConf ".common.objectOwnership.sigs | .[]")
+OBJECTOWNERSHIPV4_AUTHORITY=$(dappAuth "ObjectOwnership" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$OBJECTOWNERSHIP_PROXY" "$OBJECTOWNERSHIPV4_AUTHORITY"
+
+# dillbase
+wards=$(loadAuthConf ".furnace.drillBase.wards | .[]")
+sigs=$(loadAuthConf ".furnace.drillBase.sigs | .[]")
+DRILLBASE_AUTHORITY=$(dappAuth "DrillBase" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$DRILLBASE_PROXY" "$DRILLBASE_AUTHORITY"
+
 # TokenLocationAuthority
 wards=$(loadAuthConf ".common.tokenLocation.wards | .[]")
 sigs=$(loadAuthConf ".common.tokenLocation.sigs | .[]")
-TOKENLOCATION_AUTHORITY=$(dappAuth "TokenLocation" common-contracts Authority "$wards" "$sigs" )
-seth send $TOKENLOCATION_PROXY "setAuthority(address)" $TOKENLOCATION_AUTHORITY
+TOKENLOCATION_AUTHORITY=$(dappAuth "TokenLocation" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs" )
+setAuth "$TOKENLOCATION_PROXY" "$TOKENLOCATION_AUTHORITY"
 
 # TokenUseAuthority
 wards=$(loadAuthConf ".common.tokenUse.wards | .[]")
 sigs=$(loadAuthConf ".common.tokenUse.sigs | .[]")
-TOKENUSE_AUTHORITY=$(dappAuth "TokenUse" common-contracts Authority "$wards" "$sigs")
-seth send $TOKENUSE_PROXY "setAuthority(address)" $TOKENUSE_AUTHORITY
+TOKENUSE_AUTHORITY=$(dappAuth "TokenUse" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$TOKENUSE_PROXY" "$TOKENUSE_AUTHORITY"
 
 # MintAndBurnAuthority
 wards=$(loadAuthConf ".common.mintAndBurn.wards | .[]")
 sigs=$(loadAuthConf ".common.mintAndBurn.sigs | .[]")
-MINTANDBURN_AUTHORITY_ELEMENT=$(dappAuth "MintAndBurn" common-contracts Authority "$wards" "$sigs")
+MINTANDBURN_AUTHORITY_ELEMENT=$(dappAuth "MintAndBurn" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
 
-seth send $TOKEN_ERC20_GOLD "setAuthority(address)" $MINTANDBURN_AUTHORITY_ELEMENT
-seth send $TOKEN_ERC20_WOOD "setAuthority(address)" $MINTANDBURN_AUTHORITY_ELEMENT
-seth send $TOKEN_ERC20_WATER "setAuthority(address)" $MINTANDBURN_AUTHORITY_ELEMENT
-seth send $TOKEN_ERC20_FIRE "setAuthority(address)" $MINTANDBURN_AUTHORITY_ELEMENT
-seth send $TOKEN_ERC20_SOIL "setAuthority(address)" $MINTANDBURN_AUTHORITY_ELEMENT
+setAuth "$TOKEN_ERC20_GOLD" "$MINTANDBURN_AUTHORITY_ELEMENT"
+setAuth "$TOKEN_ERC20_WOOD" "$MINTANDBURN_AUTHORITY_ELEMENT"
+setAuth "$TOKEN_ERC20_WATER" "$MINTANDBURN_AUTHORITY_ELEMENT"
+setAuth "$TOKEN_ERC20_FIRE" "$MINTANDBURN_AUTHORITY_ELEMENT"
+setAuth "$TOKEN_ERC20_SOIL" "$MINTANDBURN_AUTHORITY_ELEMENT"
 
 # # ClockAuctionAuthority
 wards=$(loadAuthConf ".apostle.clockAuction.wards | .[]")
 sigs=$(loadAuthConf ".apostle.clockAuction.sigs | .[]")
-CLOCKAUCTION_AUTHORITY_APOSTLE=$(dappAuth "ApostleClockAuction" common-contracts Authority "$wards" "$sigs")
-seth send $APOSTLECLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY_APOSTLE
+CLOCKAUCTION_AUTHORITY_APOSTLE=$(dappAuth "ApostleClockAuction" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$APOSTLECLOCKAUCTION_PROXY" "$CLOCKAUCTION_AUTHORITY_APOSTLE"
 
 # ApostleBaseAuthorityV2
 # Pet
 # APOSTLEBASEV2_AUTHORITY=$(dapp create ApostleBaseAuthorityV2 [$GEN0APOSTLE_PROXY,$SIRINGCLOCKAUCTION_PROXY,$PETBASE_PROXY,$TOKENUSE_PROXY])
 wards=$(loadAuthConf ".apostle.base.wards | .[]")
 sigs=$(loadAuthConf ".apostle.base.sigs | .[]")
-APOSTLEBASEV2_AUTHORITY=$(dappAuth "ApostleBase" common-contracts Authority "$wards" "$sigs")
-seth send $APOSTLEBASE_PROXY "setAuthority(address)" $APOSTLEBASEV2_AUTHORITY
+APOSTLEBASEV2_AUTHORITY=$(dappAuth "ApostleBase" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$APOSTLEBASE_PROXY" "$APOSTLEBASEV2_AUTHORITY"
 
 # UserPointsAuthority
 wards=$(loadAuthConf ".common.userPoints.wards | .[]")
 sigs=$(loadAuthConf ".common.userPoints.sigs | .[]")
-USERPOINTS_AUTHORITY=$(dappAuth "UserPoints" common-contracts Authority "$wards" "$sigs")
-seth send $USERPOINTS_PROXY "setAuthority(address)" $USERPOINTS_AUTHORITY
+USERPOINTS_AUTHORITY=$(dappAuth "UserPoints" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$USERPOINTS_PROXY" "$USERPOINTS_AUTHORITY"
 
 # LandBaseAuthority
 operator=$(loadConf ".land.operator")
 wards=$(loadAuthConf ".land.base.wards | .[]")
 sigs=$(loadAuthConf ".land.base.sigs | .[]")
-LANDBASE_AUTHORITY=$(dappAuth "LandBase" common-contracts Authority "$wards" "$sigs")
-seth send $LANDBASEAUTHORITY "rely(address)" "$operator"
-seth send $LANDBASE_PROXY "setAuthority(address)" $LANDBASE_AUTHORITY
+LANDBASE_AUTHORITY=$(dappAuth "LandBase" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+seth send $LANDBASE_AUTHORITY "rely(address)" "$operator"
+setAuth "$LANDBASE_PROXY" "$LANDBASE_AUTHORITY"
 
 # BancorExchangeAuthority
 # BANCOREXCHANGE_AUTHORITY=$(dapp create BancorExchangeAuthority [$CLOCKAUCTION_PROXY])
@@ -62,8 +75,8 @@ seth send $LANDBASE_PROXY "setAuthority(address)" $LANDBASE_AUTHORITY
 # ClockAuctionAuthority
 wards=$(loadAuthConf ".market.clockAuction.wards | .[]")
 sigs=$(loadAuthConf ".market.clockAuction.sigs | .[]")
-CLOCKAUCTION_AUTHORITY_MARKET=$(dappAuth "LandClockAuction" common-contracts Authority "$wards" "$sigs")
-seth send $CLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY_MARKET
+CLOCKAUCTION_AUTHORITY_MARKET=$(dappAuth "LandClockAuction" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$CLOCKAUCTION_PROXY" "$CLOCKAUCTION_AUTHORITY_MARKET"
 
 # # UserRolesAuthority
 # USERROLES_AUTHORITY=$(dapp create UserRolesAuthority [$ROLESUPDATER])
@@ -74,12 +87,6 @@ seth send $CLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY_MA
 # MINTANDBURN_AUTHORITY_KTON=$(dapp create MintAndBurnAuthority [$GRINGOTTSBANK_PROXY,$DIVIDENDPOOL_PROXY])
 # addAddress "MINTANDBURN_AUTHORITY_KTON" "$MINTANDBURN_AUTHORITY_KTON"
 # seth send $TOKEN_ERC20_KTON "setAuthority(address)" $MINTANDBURN_AUTHORITY_KTON
-
-# ObjectOwnershipAuthorityV2
-# Pet
-# OBJECTOWNERSHIPV2_AUTHORITY=$(dapp create src/common-contracts/ObjectOwnershipAuthorityV2.f.sol:ObjectOwnershipAuthorityV2 [$LANDBASE_PROXY,$APOSTLEBASE_PROXY,$ERC721BRIDGE_PROXY])
-# addAddress "OBJECTOWNERSHIPV2_AUTHORITY" "$OBJECTOWNERSHIPV2_AUTHORITY"
-# seth send $OBJECTOWNERSHIP_PROXY "setAuthority(address)" $OBJECTOWNERSHIPV2_AUTHORITY 
 
 # Pet
 # # ERC721AdaptorAuthority
@@ -96,14 +103,12 @@ seth send $CLOCKAUCTION_PROXY "setAuthority(address)" $CLOCKAUCTION_AUTHORITY_MA
 # MysteriousTreasure
 wards=$(loadAuthConf ".land.mysteriousTreasure.wards | .[]")
 sigs=$(loadAuthConf ".land.mysteriousTreasure.sigs | .[]")
-MYSTERIOUSTREASURE_AUTHORITY=$(dappAuth "MysteriousTreasure" common-contracts Authority "$wards" "$sigs")
-seth send $MYSTERIOUSTREASURE_PROXY "setAuthority(address)" $MYSTERIOUSTREASURE_AUTHORITY
+MYSTERIOUSTREASURE_AUTHORITY=$(dappAuth "MysteriousTreasure" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$MYSTERIOUSTREASURE_PROXY" "$MYSTERIOUSTREASURE_AUTHORITY"
 
 
 # # LandResourceAuthority
 wards=$(loadAuthConf ".land.resource.wards | .[]")
 sigs=$(loadAuthConf ".land.resource.sigs | .[]")
-LANDRESOURCE_AUTHORITY=$(dappAuth "LandResource" common-contracts Authority "$wards" "$sigs")
-seth send $LANDRESOURCE_PROXY "setAuthority(address)" $LANDRESOURCE_AUTHORITY
-
-
+LANDRESOURCE_AUTHORITY=$(dappAuth "LandResource" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$LANDRESOURCE_PROXY" "$LANDRESOURCE_AUTHORITY"

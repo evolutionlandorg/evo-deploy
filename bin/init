@@ -146,6 +146,21 @@ dappAuth() {
   done
   local l=$( IFS=$','; echo "${s[*]}")
   local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "[$l]" "[$g]")
+
+  for w in "${m[@]}"; do
+    if test "${#s[@]}" == 0; then
+      if test "$(seth call "$addr" "canCall(address,address,bytes4)(bool)" "$w" "0x0000000000000000000000000000000000000000" "0x00000000")" != true; then
+        (echo "checkAuth $addr 0x00000000 failed"; exit 1;)
+      fi
+    else
+      for sig in "${n[@]}"; do
+        if test "$(seth call "$addr" "canCall(address,address,bytes4)(bool)" "$w" "0x0000000000000000000000000000000000000000" "$sig")" != true; then
+          (echo "checkAuth $addr $sig failed"; exit 1;)
+        fi
+      done
+    fi
+  done
+
   local name; name="${auth}_${class#*:}"
   name="$(toUpper $name)"
   addAddress "$name" "$addr" >/dev/null
@@ -168,14 +183,14 @@ dappProxy() {
 addressOf() {
   local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
   local addr=$(seth call "$SETTINGSREGISTRY" "addressOf(bytes32)(address)" "$id")
-  echo "$(seth --to-checksum-address $addr)"
+  echo "$addr"
 }
 
 setAddress() {
   local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
   local addr="${2?}"
   seth send "${SETTINGSREGISTRY?}" "setAddressProperty(bytes32,address)" "$id" "$addr" 
-  if test "$addr" != "$(addressOf $1)"; then 
+  if test "$(seth --to-checksum-address $addr)" != "$(addressOf $1)"; then 
     (echo "registry $1 failed!"; exit 1;)
   fi
   info "$1 regisered."
@@ -195,6 +210,22 @@ setUint() {
     (echo "registry $1 failed!"; exit 1;)
   fi
   info "$1 regisered."
+}
+
+authOf() {
+  local proxy="${1?}";
+  local auth=$(seth call $proxy "authority()(address)");
+  echo "$auth"
+}
+
+setAuth() {
+  set -e
+  local proxy="${1?}";
+  local auth="${2?}";
+  seth send "$proxy" "setAuthority(address)" "$auth" 
+  if test "$(seth --to-checksum-address $auth)" != "$(authOf $proxy)"; then 
+    (echo "$proxy setAuthority ${auth} failed!"; exit 1;)
+  fi
 }
 
 register() {
@@ -229,5 +260,5 @@ loadAuthConf() {
   jq -r "${key}" "$AUTH_CONFIG_FILE"
 }
 
-export CONFIG_FILE="${config_file-PWD/bin/conf/default.json}" 
-export AUTH_CONFIG_FILE="${auth_config_file-PWD/bin/conf/auth.json}" 
+export CONFIG_FILE="${config_file-${PWD}/bin/conf/default.json}" 
+export AUTH_CONFIG_FILE="${auth_config_file-${PWD}/bin/conf/auth.json}" 
