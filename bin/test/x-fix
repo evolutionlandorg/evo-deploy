@@ -13,3 +13,8 @@ set -e
 # attr=1826228508572579397731
 # mask=1
 # seth estimate -F 0xFcC598b3E3575CA937AF7F0E804a8BAb5E92a3f6 "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask
+
+wards=$(loadAuthConf ".land.mysteriousTreasure.wards | .[]")
+sigs=$(loadAuthConf ".land.mysteriousTreasure.sigs | .[]")
+MYSTERIOUSTREASURE_AUTHORITY=$(dappAuth "MysteriousTreasure" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$MYSTERIOUSTREASURE_PROXY" "$MYSTERIOUSTREASURE_AUTHORITY"
