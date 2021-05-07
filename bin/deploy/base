@@ -17,3 +17,6 @@ INTERSTELLARENCODERV4=$(dappCreate common-contracts contracts/InterstellarEncode
 register "addr" "CONTRACT_INTERSTELLAR_ENCODER" "$INTERSTELLARENCODERV4"
 info "InterstellarEncoderV4 created."
 
+owners=$(loadConf ".multiSigWallet.owners")
+required=$(loadConf ".multiSigWallet.required")
+MultiSigWallet=$(dappCreate common-contracts contracts/MultiSigWallet.sol:MultiSigWallet $owners $required)

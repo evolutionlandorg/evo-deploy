@@ -189,6 +189,9 @@ addressOf() {
 setAddress() {
   local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
   local addr="${2?}"
+  if [[ $addr = @* ]]; then 
+    addr=$(seth lookup "$addr")
+  fi
   seth send "${SETTINGSREGISTRY?}" "setAddressProperty(bytes32,address)" "$id" "$addr" 
   if test "$(seth --to-checksum-address $addr)" != "$(addressOf $1)"; then 
     (echo "registry $1 failed!"; exit 1;)

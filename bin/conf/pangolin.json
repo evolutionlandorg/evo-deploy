@@ -1,5 +1,13 @@
 {
     "auth": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+    "multiSigWallet": {
+        "owners": [
+           "0x00e3993566b34e5367d1c602439997bd08c11ff7",
+           "0x52386be2397e8eac26298f733b390684203fb580",
+           "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec"
+        ],
+        "required": 2
+    },
     "common": {
         "encoder": {
             "chainId": 3,
@@ -32,8 +40,8 @@
         "bidWaitingTime": 600
     },
     "market": {
-        "contributionPool": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
-        "devPool": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+        "contributionPool": "@MULTISIGWALLET",
+        "devPool": "@MULTISIGWALLET",
         "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9",
         "auctionCut": 400,
         "bidWaitingTime": 1800,

@@ -1,4 +1,4 @@
-.PHONY: all clean test deploy proxy
+.PHONY: all clean test deploy proxy flat
 .PHONY: pre-4 solc-4 pre-5 solc-5 pre-6 solc-6 pre-7 solc-7
 .PHONY:	build-apostle build-common build-land build-market build-token 
 .PHONY: build-furnace build-governance build-raffle  build-staker build-zapper
@@ -68,5 +68,7 @@ clean   :
 	done
 
 test    : dapp test
+flat 	:
+	@source .env && dapp flat
 deploy  : 
 	make all && bash bin/deploy/deploy-all

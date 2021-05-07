@@ -14,7 +14,15 @@ set -e
 # mask=1
 # seth estimate -F 0xFcC598b3E3575CA937AF7F0E804a8BAb5E92a3f6 "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask
 
-wards=$(loadAuthConf ".land.mysteriousTreasure.wards | .[]")
-sigs=$(loadAuthConf ".land.mysteriousTreasure.sigs | .[]")
-MYSTERIOUSTREASURE_AUTHORITY=$(dappAuth "MysteriousTreasure" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
-setAuth "$MYSTERIOUSTREASURE_PROXY" "$MYSTERIOUSTREASURE_AUTHORITY"
+# owners=$(loadConf ".multiSigWallet.owners | .[]")
+# n=($(echo ${owners} | tr " " "\n"))
+# n=(0x0f14341A7f464320319025540E8Fe48Ad0fe5aec 0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6 0xFcC598b3E3575CA937AF7F0E804a8BAb5E92a3f6 0xfF542BbB954E836f2fA1F2f53D5444aF36a701Ee)
+# g=$( IFS=$','; echo "${n[*]}")
+# required=$(loadConf ".multiSigWallet.required")
+# MultiSigWallet=$(dappCreate common-contracts contracts/MultiSigWallet.sol:MultiSigWallet [$g] $required)
+
+# contributionPool=$(loadConf ".market.contributionPool")
+# register "addr" "CONTRACT_CONTRIBUTION_POOL" "$contributionPool"
+
+# devPool=$(loadConf ".market.devPool")
+# register "addr" "CONTRACT_DEV_POOL" "$devPool"

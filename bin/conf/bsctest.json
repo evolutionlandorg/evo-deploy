@@ -11,25 +11,25 @@
     },
     "common": {
         "encoder": {
-            "chainId": 4,
-            "landId": 4
+            "chainId": 5,
+            "landId": 5
         },
         "tokenOfferCut": 400
     },
     "land": {
         "operator": "0xFcC598b3E3575CA937AF7F0E804a8BAb5E92a3f6",
         "base": {
-            "xLow": -67,
-            "xHigh": -23,
-            "yLow": -22,
-            "yHigh": 22
+            "xLow": 0,
+            "xHigh": 0,
+            "yLow": 0,
+            "yHigh": 0 
         },
         "resourcesPool": {
-            "gold": 8077,
-            "wood": 25440,
-            "water": 5320,
-            "fire": 1060,
-            "soil": 10118
+            "gold": 0,
+            "wood": 0,
+            "water": 0,
+            "fire": 0,
+            "soil": 0
         },
         "resourceReleaseTime": 1619328791
     },
