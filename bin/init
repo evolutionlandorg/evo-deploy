@@ -119,7 +119,7 @@ dappCreate() {
   set -e
   local lib; lib=$1
   local class; class=$2
-  local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "${@:3}")
+  local addr; addr=$(DAPP_ROOT="$DAPP_LIB/$lib" dapp create "$class" "${@:3}")
   local name; name=${class#*:}
   local proxy; proxy=$(toUpper $name)
   if test "${proxy:0-5}" == "PROXY"; then
@@ -145,7 +145,7 @@ dappAuth() {
     s+=("$(seth lookup $ward)")
   done
   local l=$( IFS=$','; echo "${s[*]}")
-  local addr; addr=$(DAPP_OUT="$DAPP_LIB/$lib/out" dapp create "$class" "[$l]" "[$g]")
+  local addr; addr=$(DAPP_ROOT="$DAPP_LIB/$lib" dapp create "$class" "[$l]" "[$g]")
 
   for w in "${m[@]}"; do
     if test "${#s[@]}" == 0; then
@@ -171,7 +171,7 @@ dappAuth() {
 dappProxy() {
   set -e
   local class; class=$1
-  local addr; addr=$(DAPP_OUT="./out" dapp create "$class" "${@:2}")
+  local addr; addr=$(dapp create "$class" "${@:2}")
   local name; name=${class#*:}
   local proxy; proxy=$(toUpper "$name")
   proxy="${proxy%%"PROXY"}_PROXY"
