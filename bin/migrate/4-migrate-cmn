@@ -4,8 +4,16 @@ set -e
 
 . $(PWD)/bin/init
 
-INTERSTELLARENCODERV4=$(dapp create InterstellarEncoderV4)
-addAddress "INTERSTELLARENCODERV4" "$INTERSTELLARENCODERV4"
+# INTERSTELLARENCODERV4=$(dapp create InterstellarEncoderV4)
+# addAddress "INTERSTELLARENCODERV4" "$INTERSTELLARENCODERV4"
 
-interstellarEncoderId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_INTERSTELLAR_ENCODER")))
-seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $interstellarEncoderId $INTERSTELLARENCODERV4 
+# interstellarEncoderId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_INTERSTELLAR_ENCODER")))
+# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $interstellarEncoderId $INTERSTELLARENCODERV4 
+
+lib="common-contracts"
+TOKENUSE=$(dappCreate "$lib" contracts/TokenUse.sol:TokenUse)
+seth send $EVOPROXYADMIN "upgrade(address,address)" $TOKENUSE_PROXY $TOKENUSE
+if test $(seth call $EVOPROXYADMIN "getProxyImplementation(address)(address)" $TOKENUSE_PROXY) != $TOKENUSE; then
+  (echo "check migration failed."; exit 1;)
+fi
+echo >&2 "${0##*/}: info: migration finished." 
