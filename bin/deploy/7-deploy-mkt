@@ -17,25 +17,26 @@ TAKEBACK_RING=$(dappCreate "$lib" contracts/id/TakeBack.sol:TakeBack $TOKEN_ERC2
 
 TAKEBAK_NFT=$(dappCreate "$lib" contracts/id/TakeBackNFT.sol:TakeBackNFT $SUPERVISOR $networkId)
 
-# ClockAuctionV2
+# ClockAuctionV3
 sig="initializeContract(address)"
-CLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/ClockAuctionProxy.sol:ClockAuctionProxy contracts/auction/ClockAuctionV2.sol:ClockAuctionV2 "$sig" "$SETTINGSREGISTRY")
+CLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/ClockAuctionProxy.sol:ClockAuctionProxy contracts/auction/ClockAuctionV3.sol:ClockAuctionV3 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_CLOCK_AUCTION" "$CLOCKAUCTION_PROXY"
 
-# GenesisHolder
+# GenesisHolderV2
 operator=$(loadConf ".land.operator")
 sig="initializeContract(address)"
-GENESISHOLDER_PROXY=$(deployProxy "$lib" src/proxy/GenesisHolderProxy.sol:GenesisHolderProxy contracts/auction/GenesisHolder.sol:GenesisHolder "$sig" "$SETTINGSREGISTRY")
+GENESISHOLDER_PROXY=$(deployProxy "$lib" src/proxy/GenesisHolderProxy.sol:GenesisHolderProxy contracts/auction/GenesisHolderV2.sol:GenesisHolderV2 "$sig" "$SETTINGSREGISTRY")
 seth send $GENESISHOLDER_PROXY "setOperator(address)" $operator
+register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"
 
 # RevenuePoolV3
 sig="initializeContract(address)"
 REVENUEPOOL_PROXY=$(deployProxy "$lib" src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy contracts/auction/RevenuePoolV3.sol:RevenuePoolV3 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_REVENUE_POOL" "$REVENUEPOOL_PROXY"
 
-# PointsRewardPool
+# PointsRewardPoolV2
 sig="initializeContract(address)"
-POINTSREWARDPOOL_PROXY=$(deployProxy "$lib" src/proxy/PointsRewardPoolProxy.sol:PointsRewardPoolProxy contracts/auction/PointsRewardPool.sol:PointsRewardPool "$sig" "$SETTINGSREGISTRY")
+POINTSREWARDPOOL_PROXY=$(deployProxy "$lib" src/proxy/PointsRewardPoolProxy.sol:PointsRewardPoolProxy contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$sig" "$SETTINGSREGISTRY")
 info "PointsRewardPoolProxy created."
 register "addr" "CONTRACT_POINTS_REWARD_POOL" "$POINTSREWARDPOOL_PROXY"
 

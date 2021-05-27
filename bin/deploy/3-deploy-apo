@@ -5,27 +5,28 @@ set -e
 . $(PWD)/bin/init
 
 lib="apostle"
-# ApostleBaseV2
+# ApostleBaseV3
 sig="initializeContract(address)"
-APOSTLEBASE_PROXY=$(deployProxy "$lib" src/proxy/ApostleBaseProxy.sol:ApostleBaseProxy contracts/ApostleBaseV2.sol:ApostleBaseV2 "$sig" "$SETTINGSREGISTRY")
+APOSTLEBASE_PROXY=$(deployProxy "$lib" src/proxy/ApostleBaseProxy.sol:ApostleBaseProxy contracts/ApostleBaseV3.sol:ApostleBaseV3 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_APOSTLE_BASE" "$APOSTLEBASE_PROXY"
 seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $APOSTLEBASE_PROXY $(seth --to-hex 2) 
 
 # ApostleClockAuction
 sig="initializeContract(address)"
-APOSTLECLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/ApostleClockAuctionProxy.sol:ApostleClockAuctionProxy contracts/ApostleClockAuction.sol:ApostleClockAuction "$sig" "$SETTINGSREGISTRY")
+APOSTLECLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/ApostleClockAuctionProxy.sol:ApostleClockAuctionProxy contracts/ApostleClockAuctionV2.sol:ApostleClockAuctionV2 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_APOSTLE_AUCTION" "$APOSTLECLOCKAUCTION_PROXY"
 
-# Gen0ApostleV2
+# Gen0ApostleV3
 gen0Limit=$(loadConf ".apostle.gen0Limit")
 operator=$(loadConf ".apostle.operator")
 sig="initializeContract(address,uint256)"
-GEN0APOSTLE_PROXY=$(deployProxy "$lib" src/proxy/Gen0ApostleProxy.sol:Gen0ApostleProxy contracts/Gen0ApostleV2.sol:Gen0ApostleV2 "$sig" "$SETTINGSREGISTRY" "$gen0Limit")
+GEN0APOSTLE_PROXY=$(deployProxy "$lib" src/proxy/Gen0ApostleProxy.sol:Gen0ApostleProxy contracts/Gen0ApostleV3.sol:Gen0ApostleV3 "$sig" "$SETTINGSREGISTRY" "$gen0Limit")
 seth send $GEN0APOSTLE_PROXY "setOperator(address)" $operator
+register "addr" "CONTRACT_GEN0_APOSTLE" "$GEN0APOSTLE_PROXY"
 
-# SiringClockAuctionV2
+# SiringClockAuctionV3
 sig="initializeContract(address)"
-SIRINGCLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/SiringClockAuctionProxy.sol:SiringClockAuctionProxy contracts/SiringClockAuctionV2.sol:SiringClockAuctionV2 "$sig" "$SETTINGSREGISTRY")
+SIRINGCLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/SiringClockAuctionProxy.sol:SiringClockAuctionProxy contracts/SiringClockAuctionV3.sol:SiringClockAuctionV3 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_SIRING_AUCTION" "$SIRINGCLOCKAUCTION_PROXY"
 
 # ApostelSettingIds

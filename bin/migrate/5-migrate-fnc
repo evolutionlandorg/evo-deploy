@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="furnace"
+
+timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
+DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))

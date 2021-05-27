@@ -11,6 +11,7 @@ config-init() {
     exit 1
   fi
   export ADDRESSES_FILE=$path
+  echo $path
   local exports
   exports=$(cat $path | jq -r ".deploy_data // . | \
     to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]")
@@ -166,6 +167,19 @@ dappAuth() {
   addAddress "$name" "$addr" >/dev/null
   info "$name deployed at $addr"
   echo "$addr"
+}
+
+dappUpgrade() {
+  set -e
+  local lib; lib=$1
+  local class; class=$2
+  local proxy; proxy=$3
+  newImp=$(dappCreate "$lib" "$class" )
+  seth send "$EVOPROXYADMIN" "upgrade(address,address)" "$proxy" "$newImp" 
+  if test $(seth call "$EVOPROXYADMIN" "getProxyImplementation(address)(address)" "$proxy") != "$newImp"; then
+    (info "${class#*:} check migration failed."; exit 1;)
+  fi
+  info "${class#*:} migration finished." 
 }
 
 dappProxy() {

@@ -66,4 +66,4 @@ supervisor=$(loadConf ".furnace.supervisor")
 DRILLTAKEBACK=$(dappCreate "$lib" src/DrillTakeBack.sol:DrillTakeBack $SETTINGSREGISTRY $supervisor $(seth --to-uint256 $(seth rpc net_version)))
 
 timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
-DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBox.sol:DrillLuckyBox $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
+DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))

@@ -4,10 +4,12 @@ set -e
 
 . $(PWD)/bin/init
 
-APOSTLEBASEV2=$(dapp create ApostleBaseV2)
-seth send $APOSTLEBASE_PROXY "upgradeTo(address)" $APOSTLEBASEV2
-if test $(seth call $APOSTLEBASE_PROXY "implementation()(address)") != $APOSTLEBASEV2; then
-  (echo "check migration failed."; exit 1;)
-fi
-addAddress "APOSTLEBASEV2" "$APOSTLEBASEV2"
-echo >&2 "${0##*/}: info: migration finished." 
+lib="apostle"
+dappUpgrade "$lib" contracts/ApostleBaseV3.sol:ApostleBaseV3 "$APOSTLEBASE_PROXY"
+
+dappUpgrade "$lib" contracts/ApostleClockAuctionV2.sol:ApostleClockAuctionV2 "$APOSTLECLOCKAUCTION_PROXY"
+
+dappUpgrade "$lib" contracts/Gen0ApostleV3.sol:Gen0ApostleV3 "$GEN0APOSTLE_PROXY"
+register "addr" "CONTRACT_GEN0_APOSTLE" "$GEN0APOSTLE_PROXY"
+
+dappUpgrade "$lib" contracts/SiringClockAuctionV3.sol:SiringClockAuctionV3 "$SIRINGCLOCKAUCTION_PROXY"

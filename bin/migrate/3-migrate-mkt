@@ -4,16 +4,12 @@ set -e
 
 . $(PWD)/bin/init
 
-# REVENUEPOOLV3=$(dappCreate market-contracts contracts/auction/RevenuePoolV3.sol:RevenuePoolV3)
-# seth send $EVOPROXYADMIN "upgrade(address,address)" $REVENUEPOOL_PROXY $REVENUEPOOLV3
-# if test $(seth call $EVOPROXYADMIN "getProxyImplementation(address)(address)" $REVENUEPOOL_PROXY) != $REVENUEPOOLV3; then
-#   (echo "check migration failed."; exit 1;)
-# fi
-# echo >&2 "${0##*/}: info: migration finished." 
+lib="market-contracts"
+dappUpgrade "$lib" contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$POINTSREWARDPOOL_PROXY"
 
-POINTSREWARDPOOLV2=$(dappCreate market-contracts contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2)
-seth send $EVOPROXYADMIN "upgrade(address,address)" $POINTSREWARDPOOL_PROXY $POINTSREWARDPOOLV2
-if test $(seth call $EVOPROXYADMIN "getProxyImplementation(address)(address)" $POINTSREWARDPOOL_PROXY) != $POINTSREWARDPOOLV2; then
-  (echo "check migration failed."; exit 1;)
-fi
-echo >&2 "${0##*/}: info: migration finished." 
+dappUpgrade "$lib" contracts/auction/RevenuePoolV3.sol:RevenuePoolV3 "$REVENUEPOOL_PROXY"
+
+dappUpgrade "$lib" contracts/auction/GenesisHolderV2.sol:GenesisHolderV2 "$GENESISHOLDER_PROXY"
+register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"
+
+dappUpgrade "$lib" contracts/auction/ClockAuctionV3.sol:ClockAuctionV3 "$CLOCKAUCTION_PROXY"
