@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+owner=0xcC5E48BEb33b83b8bD0D9d9A85A8F6a27C51F5C5
+to=0xf422673CB7a673f595852f7B00906408A0b073db
+id=149
+
+for i in {1..5}; do
+  seth send -F "$owner" "$CK" "mint(address,uint256)" "$to" "$(($id+$i))"
+done
