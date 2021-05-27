@@ -13,3 +13,8 @@ dappUpgrade "$lib" contracts/auction/GenesisHolderV2.sol:GenesisHolderV2 "$GENES
 register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"
 
 dappUpgrade "$lib" contracts/auction/ClockAuctionV3.sol:ClockAuctionV3 "$CLOCKAUCTION_PROXY"
+
+networkId=$(seth --to-uint256 $(seth rpc net_version))
+SUPERVISOR=$(loadConf ".market.supervisor")
+# TakeBack-ring
+TAKEBACK_RING=$(dappCreate "$lib" contracts/id/TakeBack.sol:TakeBack $TOKEN_ERC20_RING $SUPERVISOR $networkId)
