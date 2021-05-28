@@ -4,11 +4,5 @@ set -e
 
 . $(PWD)/bin/init
 
-# INTERSTELLARENCODERV4=$(dapp create InterstellarEncoderV4)
-# addAddress "INTERSTELLARENCODERV4" "$INTERSTELLARENCODERV4"
-
-# interstellarEncoderId=$(seth --to-bytes32 $(seth --to-hex $(seth --from-ascii "CONTRACT_INTERSTELLAR_ENCODER")))
-# seth send $SETTINGSREGISTRY "setAddressProperty(bytes32,address)" $interstellarEncoderId $INTERSTELLARENCODERV4 
-
 lib="common-contracts"
 dappUpgrade "$lib" contracts/TokenUseV2.sol:TokenUseV2 "$TOKENUSE_PROXY"
