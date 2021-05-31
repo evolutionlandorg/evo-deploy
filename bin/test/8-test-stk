@@ -4,8 +4,8 @@ set -e
 
 . $(PWD)/bin/init
 
-# amount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
-# seth send "$TOKEN_ERC20_RING" "mint(uint256)" "$amount"
+amount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
+seth send "$TOKEN_ERC20_RING" "mint(uint256)" "$amount"
 
 # for i in {0..5}; do
 #   stakingToken=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" $i) 

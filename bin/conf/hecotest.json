@@ -49,11 +49,11 @@
         "refererCut": 2000
     },
     "furnace": {
-        "lpGOLD": "0x2151D63857d8901Ae033b91d606b4872A73d37C1",
-        "lpWOOD": "0x1471F80860FFd888a9D7aE303AA6d63B1f8400D3",
-        "lpWATER": "0x55147feb88bB5628A17ABE1050255570EC900290",
-        "lpFIRE": "0x320EE1db2EC78Fb9953a2c72E150867FEb99C133",
-        "lpSOIL": "0xbeB11E8E45ed8bF81fd1dEd7c42b654803559a3d",
+        "lpGOLD": "0xaa3616Cf90B82fAA88a3a0e5a705a96a6ea75030",
+        "lpWOOD": "0x786754872d4D994B8975f4012f47b4C5551544F3",
+        "lpWATER": "0x6836123396Eef3bdC83bb8297eBF8396e2F9001d",
+        "lpFIRE": "0x04571F18BB7F0Bd7754EDC4Aab8D6671A05A22Fe",
+        "lpSOIL": "0x712c0C2d01295EA53B84D89F112E24bfEd4D307F",
         "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9",
         "itemMineFee": 5000000,
         "itemProtectPeriod": 604800,
@@ -63,6 +63,6 @@
         "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9"
     },
     "staker": {
-        "lpWETH": "0xCD7B2F750d6aC704c1bD59466d783C71Fb162004"
+        "lpWETH": "0x0e149833dd115F8637ec85D51033f77fB7603DF3"
     }
 }

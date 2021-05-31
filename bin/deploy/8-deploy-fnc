@@ -35,11 +35,11 @@ fi
 register "addr" "CONTRACT_ITEM_BASE" "$ITEMBASE_PROXY"
 
 # teller
-register "addr" "CONTRACT_LP_GOLD_ERC20_TOKEN" "$(loadConf ".furnace.lpGOLD")"
-register "addr" "CONTRACT_LP_WOOD_ERC20_TOKEN" "$(loadConf ".furnace.lpWOOD")"
-register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
-register "addr" "CONTRACT_LP_FIRE_ERC20_TOKEN" "$(loadConf ".furnace.lpFIRE")"
-register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$(loadConf ".furnace.lpSOIL")"
+# register "addr" "CONTRACT_LP_GOLD_ERC20_TOKEN" "$(loadConf ".furnace.lpGOLD")"
+# register "addr" "CONTRACT_LP_WOOD_ERC20_TOKEN" "$(loadConf ".furnace.lpWOOD")"
+# register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
+# register "addr" "CONTRACT_LP_FIRE_ERC20_TOKEN" "$(loadConf ".furnace.lpFIRE")"
+# register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$(loadConf ".furnace.lpSOIL")"
 
 sig="initialize(address)"
 METADATATELLER_PROXY=$(deployProxy2 "$lib" src/MetaDataTellerProxy.sol:MetaDataTellerProxy src/MetaDataTeller.sol:MetaDataTeller "$sig" "$SETTINGSREGISTRY")

@@ -17,4 +17,4 @@ set -e
 . $(PWD)/bin/deploy/9-deploy-auth
 # . $(PWD)/bin/deploy/10-deploy-registry
 . $(PWD)/bin/deploy/11-deploy-gov
-. $(PWD)/bin/deploy/13-deploy-stk
+# . $(PWD)/bin/deploy/13-deploy-stk
