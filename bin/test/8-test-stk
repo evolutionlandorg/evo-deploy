@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# amount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
+# seth send "$TOKEN_ERC20_RING" "mint(uint256)" "$amount"
+
+# for i in {0..5}; do
+#   stakingToken=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" $i) 
+#   seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $stakingToken 
+# done
+
+# STAKINGTOKEN=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" 0) 
+# STAKING_LP_GOLD_RING=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $STAKINGTOKEN)
+
+# seth send $TOKEN_LP_GOLD_RING "approve(address,uint256)" $STAKING_LP_GOLD_RING $(seth --to-int256 -1) 
+# stake=$(seth --to-uint256 $(seth --to-wei 1 ether))
+# seth send $STAKING_LP_GOLD_RING "stake(uint256)" $stake
+
+rewardAmount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
+seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
+
+seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
+
