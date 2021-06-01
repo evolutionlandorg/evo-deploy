@@ -37,3 +37,12 @@ seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $shell1
 # TO=0x0000000000000000000000000000000000000015
 # 0x8cbf52d3e8a22ecf6a03a49ce77ebba46220262f4d0ee7566aa741e69ee23839(2rMRC7MACm9UhTr5k1qDx7LmkgXu158CCr619ZYZjXBgTXr2)
 # seth send -V "$(seth --to-wei 1 ether)" "$TO" "0x8cbf52d3e8a22ecf6a03a49ce77ebba46220262f4d0ee7566aa741e69ee23839"
+
+# tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO" "RING" "KTON")
+# register "addr" "CONTRACT_GOLD_ERC20_TOKEN" "$GOLD"
+# register "addr" "CONTRACT_WOOD_ERC20_TOKEN" "$WOOD"
+# register "addr" "CONTRACT_WATER_ERC20_TOKEN" "$HHO"
+# register "addr" "CONTRACT_FIRE_ERC20_TOKEN" "$FIRE"
+# register "addr" "CONTRACT_SOIL_ERC20_TOKEN" "$SIOO"
+# register "addr" "CONTRACT_RING_ERC20_TOKEN" "$RING"
+# register "addr" "CONTRACT_KTON_ERC20_TOKEN" "$KTON"
