@@ -4,4 +4,4 @@ set -e
 . $(PWD)/bin/migrate/2-migrate-apo
 . $(PWD)/bin/migrate/3-migrate-mkt
 . $(PWD)/bin/migrate/4-migrate-cmn
-. $(PWD)/bin/migrate/5-migrate-fnc
+# . $(PWD)/bin/migrate/5-migrate-fnc

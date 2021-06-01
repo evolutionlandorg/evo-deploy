@@ -1,5 +1,6 @@
 /out
 /flat
+/tmp
 .DS_Store
 .dapprc
 .sethrc
