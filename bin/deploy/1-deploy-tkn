@@ -4,7 +4,8 @@ set -e
 
 . $(PWD)/bin/init
 
-tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO" "RING" "KTON")
+tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO")
+# tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO" "RING" "KTON")
 
 for token in "${tokens[@]}"; do
     address=$(dappCreate token-contracts "src/${token}.sol:${token}")

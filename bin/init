@@ -65,23 +65,7 @@ fi
 
 if [[ "$SETH_CHAIN?" ]]; then  
   case "$SETH_CHAIN" in
-    ropsten)
-      config-init "${PWD}/bin/addr/${SETH_CHAIN}.json";
-      config_file="${PWD}/bin/conf/${SETH_CHAIN}.json";
-      ;;
-    pangolin)
-      config-init "${PWD}/bin/addr/${SETH_CHAIN}.json";
-      config_file="${PWD}/bin/conf/${SETH_CHAIN}.json";
-      ;;
-    crab)
-      config-init "${PWD}/bin/addr/${SETH_CHAIN}.json";
-      config_file="${PWD}/bin/conf/${SETH_CHAIN}.json";
-      ;;
-    hecotest)
-      config-init "${PWD}/bin/addr/${SETH_CHAIN}.json";
-      config_file="${PWD}/bin/conf/${SETH_CHAIN}.json";
-      ;;
-    bsctest)
+    ropsten|pangolin|crab|heco|hecotest|bsc|bsctest)
       config-init "${PWD}/bin/addr/${SETH_CHAIN}.json";
       config_file="${PWD}/bin/conf/${SETH_CHAIN}.json";
       ;;
