@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# ERC721Adaptor
+seth send $INTERSTELLARENCODERV3 -F $OWNER "registerNewOwnershipContract(address,uint8)" $CK $(seth --to-hex 2) 
+seth send $ERC721BRIDGE_PROXY -F $OWNER "registerAdaptor(address,address)" $CK $ERC721ADAPTOR_PROXY
+info "CK registry finished."

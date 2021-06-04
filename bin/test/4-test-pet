@@ -6,8 +6,12 @@ set -e
 
 owner=0xcC5E48BEb33b83b8bD0D9d9A85A8F6a27C51F5C5
 to=0xf422673CB7a673f595852f7B00906408A0b073db
-id=149
+gene=0
 
-for i in {1..5}; do
-  seth send -F "$owner" "$CK" "mint(address,uint256)" "$to" "$(($id+$i))"
+# for i in {1..5}; do
+#   seth send "$CK" "createPromoKitty(uint256,address)" "$(($gene+$i))" "$to"
+# done
+
+for i in {1..3}; do
+  seth send -F "$owner" "$CK" "transfer(address,uint256)" "$to" "$(($gene+$i))" 
 done

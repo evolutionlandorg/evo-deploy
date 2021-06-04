@@ -9,18 +9,17 @@ set -e
 
 # # # test mint
 amount=$(seth --to-uint256 $(seth --to-wei 30000000 ether))
-# # tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
-# tokens=("RING")
-# for token in "${tokens[@]}"; do
-#   seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(uint256)" "$amount"
-# done
-
-
-seth send "$TOKEN_ERC20_RING" "mint(uint256)" "$amount"
 shell1=0x735182c782CB8e7806F8903dE7913e6880CbF82E
-seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $shell1
-seth send "$TOKEN_ERC20_RING" "transfer(address,uint)" $shell1 $amount 
-seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $shell1
+tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
+for token in "${tokens[@]}"; do
+  seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(address,uint256)" $shell1 "$amount"
+done
+
+
+# seth send "$TOKEN_ERC20_RING" "mint(uint256)" "$amount"
+# seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $shell1
+# seth send "$TOKEN_ERC20_RING" "transfer(address,uint)" $shell1 $amount 
+# seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $shell1
 
 # WCKTON
 # TOKEN_ERC20_WKTON=0xbfE9E136270cE46A2A6a8E8D54718BdAEBEbaA3D

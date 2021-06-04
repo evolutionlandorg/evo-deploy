@@ -8,7 +8,7 @@ lib="apostle"
 
 # ERC721Bridge
 sig="initializeContract(address)"
-ERC721BRIDGE_PROXY=$(deployProxy common-contracts src/proxy/ERC721BridgeProxy.sol:ERC721BridgeProxy contracts/ERC721Bridge.sol:ERC721Bridge "$sig" "$SETTINGSREGISTRY")
+ERC721BRIDGE_PROXY=$(deployProxy common-contracts src/proxy/ERC721BridgeProxy.sol:ERC721BridgeProxy contracts/ERC721BridgeV2.sol:ERC721BridgeV2 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_ERC721_BRIDGE" "$ERC721BRIDGE_PROXY"
 
 # ERC721Adaptor
