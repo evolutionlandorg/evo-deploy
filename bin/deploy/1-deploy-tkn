@@ -21,6 +21,8 @@ for token in "${tokens[@]}"; do
     register "addr" "$id" "$address"
 done
 
+register "addr" "CONTRACT_RING_ERC20_TOKEN" "$TOKEN_ERC20_RING"
+
 # wring=$(dappCreate token-contracts src/WCRING.sol:WCRING)
 # addAddress "TOKEN_ERC20_WRING" $wring
 
