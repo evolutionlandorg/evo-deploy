@@ -123,7 +123,7 @@
 }
 ```
 
-### Heco Testnet
+### Heco Mainnet
 ```json
 {
   "EVOPROXYADMIN": "0x0050F880c35c31c13BFd9cBb7D28AafaEcA3abd2",
