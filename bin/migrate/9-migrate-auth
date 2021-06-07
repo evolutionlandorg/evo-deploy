@@ -11,13 +11,11 @@ set -e
 # seth send $GEN0APOSTLE_PROXY "setOperator(address)" 0x0000000000000000000000000000000000000000
 # seth send $GENESISHOLDER_PROXY "setOperator(address)" 0x0000000000000000000000000000000000000000
 
-# MintAndBurnAuthority
-wards=$(loadAuthConf ".common.mintAndBurn.wards | .[]")
-sigs=$(loadAuthConf ".common.mintAndBurn.sigs | .[]")
-MINTANDBURN_AUTHORITY_ELEMENT=$(dappAuth "MintAndBurn" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+# change operator
+landOperator=$(loadConf ".land.operator")
+seth send $LANDBASE_AUTHORITY "rely(address)" "$landOperator"
+seth send $GENESISHOLDER_PROXY "setOperator(address)" $landOperator
 
-setAuth "$TOKEN_ERC20_GOLD" "$MINTANDBURN_AUTHORITY_ELEMENT"
-setAuth "$TOKEN_ERC20_WOOD" "$MINTANDBURN_AUTHORITY_ELEMENT"
-setAuth "$TOKEN_ERC20_WATER" "$MINTANDBURN_AUTHORITY_ELEMENT"
-setAuth "$TOKEN_ERC20_FIRE" "$MINTANDBURN_AUTHORITY_ELEMENT"
-setAuth "$TOKEN_ERC20_SOIL" "$MINTANDBURN_AUTHORITY_ELEMENT"
+apoOperator=$(loadConf ".apostle.operator")
+seth send $GEN0APOSTLE_PROXY "setOperator(address)" $apoOperator
+
