@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+register "uint" "UINT_AUCTION_BID_WAITING_TIME" 300
+
+register "uint" "UINT_APOSTLE_BID_WAITING_TIME" 300
