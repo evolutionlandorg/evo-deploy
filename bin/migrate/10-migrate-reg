@@ -4,6 +4,8 @@ set -e
 
 . $(PWD)/bin/init
 
-register "uint" "UINT_AUCTION_BID_WAITING_TIME" 300
+# register "uint" "UINT_AUCTION_BID_WAITING_TIME" 300
+register "uint" "UINT_APOSTLE_BID_WAITING_TIME" "$(loadConf ".apostle.bidWaitingTime")"
 
-register "uint" "UINT_APOSTLE_BID_WAITING_TIME" 300
+# register "uint" "UINT_APOSTLE_BID_WAITING_TIME" 300
+register "uint" "UINT_AUCTION_BID_WAITING_TIME" "$(loadConf ".market.bidWaitingTime")"

@@ -38,14 +38,14 @@
         "gen0Limit": 10000000,
         "birthFee": "50000000000000000000",
         "mixTalent": "5000000000000000000",
-        "bidWaitingTime": 600
+        "bidWaitingTime": 300
     },
     "market": {
         "contributionPool": "@MULTISIGWALLET",
         "devPool": "@MULTISIGWALLET",
         "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9",
         "auctionCut": 400,
-        "bidWaitingTime": 1800,
+        "bidWaitingTime": 300,
         "refererCut": 2000
     },
     "furnace": {
