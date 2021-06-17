@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+drill=$(seth --to-bytes32  $(seth --from-ascii "CONTRACT_DRILL_BASE"))
+drillgrade0=$(seth --to-uint16 0)
+rate0=$(seth --to-uint256 1000000)
+seth send $METADATATELLER_PROXY "addInternalTokenMeta(bytes32,uint16,uint256)" $drill $drillgrade0 $rate0
+
