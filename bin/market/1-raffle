@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+path="${PWD}/bin/market/raffle.json"
+
+class=1
+ids=$(jq -r ". | keys_unsorted[]" "$path")
+for id in $ids;do
+  to=$(jq -r '.["'${id}'"] | values' "$path")
+  echo "sending land [$id] to [$to]"
+  tokenId=$(evo cmn-enc enc "$class" "$id" --chain "${SETH_CHAIN?}")
+  evo mkt-gen claim "${tokenId?}"
+  echo "claimed $id"
+  evo cmn-tkn transferFrom "${ETH_FROM?}" "${to?}" "${tokenId?}"
+  echo "sent land [$id] to [$to]"
+done
+
