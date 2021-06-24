@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# owners=$(loadConf ".multiSigWallet.owners | .[]")
+# required=$(loadConf ".multiSigWallet.required")
+# n=($(echo ${owners} | tr " " "\n"))
+# g=$( IFS=$','; echo "${n[*]}")
+# MultiSigWallet=$(dappCreate common-contracts contracts/MultiSigWallet.sol:MultiSigWallet [$g] $required)
+
+register "addr" "CONTRACT_CONTRIBUTION_POOL" 0x0cCC42dd95a33CD9c6aE9A4160c360D364C33CBC
