@@ -9,11 +9,12 @@ set -e
 
 id=$(seth --to-uint256 2)
 value=$(seth --to-uint256 2)
+to=0xa1511E5C683A007056CAa1d9A8D6A37464826280
 # seth call "$POLKAPET" "balanceOf(address,uint256)" $AUTH $id
-seth call "$POLKAPET" "balanceOf(address,uint256)(uint256)"  0xf422673CB7a673f595852f7B00906408A0b073db $id
+seth call "$POLKAPET" "balanceOf(address,uint256)(uint256)"  $to $id
 # seth send "$POLKAPET" "safeTransferFrom(address,address,uint256,uint256,bytes)" "$AUTH" "$ERC721BRIDGE_PROXY" "$id" "$value" "0x00"
 
-# seth send "$POLKAPET" "mint(address,uint256,uint256,bytes)" "0xf422673CB7a673f595852f7B00906408A0b073db" "$id" 5000 "0x00"
+seth send "$POLKAPET" "mint(address,uint256,uint256,bytes)" "$to" "$id" 5 "0x00"
 
 ## bridge out
 

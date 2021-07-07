@@ -5,13 +5,13 @@ set -e
 . $(PWD)/bin/init
 
 owner=0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
-to=0xf422673CB7a673f595852f7B00906408A0b073db
+to=0xa1511E5C683A007056CAa1d9A8D6A37464826280
 gene=39
 
 for i in {1..2}; do
-  seth send "$CK" "createPromoKitty(uint256,address)" "$(($gene+$i))" "$owner"
+  seth send "$CK" "createPromoKitty(uint256,address)" "$(($gene+$i))" "$to"
 done
 
-for i in {1..2}; do
-  seth send -F "$owner" "$CK" "transfer(address,uint256)" "$to" "$(($gene+$i))" 
-done
+# for i in {1..2}; do
+#   seth send -F "$owner" "$CK" "transfer(address,uint256)" "$to" "$(($gene+$i))" 
+# done
