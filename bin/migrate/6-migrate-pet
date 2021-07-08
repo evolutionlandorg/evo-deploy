@@ -5,6 +5,15 @@ set -e
 . $(PWD)/bin/init
 
 # ERC721Adaptor
-seth send $INTERSTELLARENCODERV3 -F $OWNER "registerNewOwnershipContract(address,uint8)" $CK $(seth --to-hex 2) 
-seth send $ERC721BRIDGE_PROXY -F $OWNER "registerAdaptor(address,address)" $CK $ERC721ADAPTOR_PROXY
-info "CK registry finished."
+# seth send $INTERSTELLARENCODERV3 -F $OWNER "registerNewOwnershipContract(address,uint8)" $CK $(seth --to-hex 2) 
+# seth send $ERC721BRIDGE_PROXY -F $OWNER "registerAdaptor(address,address)" $CK $ERC721ADAPTOR_PROXY
+# info "CK registry finished."
+
+lib="common-contracts"
+ERC721ADAPTOR=$(dappCreate "$lib" contracts/ERC721Adaptor.sol:ERC721Adaptor)
+seth send -F $OWNER $ERC721ADAPTOR_PROXY "upgradeTo(address)" $ERC721ADAPTOR
+if test $(seth call $ERC721ADAPTOR_PROXY "implementation()(address)") != $ERC721ADAPTOR; then
+  (echo "check migration failed."; exit 1;)
+fi
+
+seth send -F $OWNER $ERC721ADAPTOR_PROXY "changeOrininNft(address)" $CK 
