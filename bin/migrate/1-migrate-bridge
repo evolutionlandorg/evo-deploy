@@ -11,13 +11,15 @@ if test $(seth call $ERC721BRIDGE_PROXY "implementation()(address)") != $ERC721B
   (echo "check migration failed."; exit 1;)
 fi
 
-# productId=$(seth --to-uint16 259)
-# POLKAPETADAPTOR=$(dapp create PolkaPetAdaptor ${SETTINGSREGISTRY?} ${POLKAPET?} $productId)
-# echo >&2 "${0##*/}: info: PolkaPetAdaptor created."
+productId=$(seth --to-uint16 259)
+POLKAPETADAPTOR=$(dappCreate "$lib" contracts/PolkaPetAdaptor.sol:PolkaPetAdaptor ${SETTINGSREGISTRY?} ${POLKAPET?} $productId)
+echo >&2 "${0##*/}: info: PolkaPetAdaptor created."
 
-# addAddress "POLKAPETADAPTOR" "$POLKAPETADAPTOR"
+POLKAPETADAPTOR_AUTHORITY=$(dappCreate "$lib" contracts/PolkaPetAdaptorAuthority.sol:PolkaPetAdaptorAuthority [$ERC721BRIDGE_PROXY])
+seth send "$POLKAPETADAPTOR" "setAuthority(address)" "$POLKAPETADAPTOR_AUTHORITY" 
+echo >&2 "${0##*/}: info: PolkaPetAdaptorAuthority created."
 
-# seth send -F $OWNER $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $POLKAPET $POLKAPETADAPTOR
+seth send -F $OWNER $ERC721BRIDGE_PROXY "registerAdaptor(address,address)" $POLKAPET $POLKAPETADAPTOR
 
-# seth send -F $OWNER $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $POLKAPET $(seth --to-hex 5) 
-# echo >&2 "${0##*/}: info: migration finished." 
+seth send -F $OWNER $INTERSTELLARENCODERV3 "registerNewOwnershipContract(address,uint8)" $POLKAPET $(seth --to-hex 5) 
+echo >&2 "${0##*/}: info: migration finished." 

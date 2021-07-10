@@ -19,7 +19,7 @@ p() { printf "%-7s %-20s\n" "$1" "$2"; }
 # done
 
 # tie old ck pet
-apostle1=0x2a010001010001020000000000000001000000000000000000000000000000a4
+apostle1=0x2a01000101000102000000000000000100000000000000000000000000000077
 strength () {
   land=0x2a0100010100010100000000000000010000000000000000000000000000011e
   resource=0xC5C0f115C05dd10625A5d4d0fAf284100AD56E68
@@ -29,10 +29,13 @@ strength () {
 # seth send $CK "createPromoKitty(uint256,address)" 1 $AUTH
 # ckpet=$(seth call $CK "totalSupply()(uint256)")
 # echo $ckpet
-ckpet=51
+ckpet=53
 
-mirrorTokenId=0x2a01000101000203800000000000010000000000000000000000000000000033
-# 2a01000101000203800000000000010000000000000000000000000000000035
+tp=$(seth call $PETBASE_PROXY "getTiedPet(uint256,uint256)" $apostle1 0)
+echo $tp
+
+# mirrorTokenId=0x2a01000101000203800000000000010000000000000000000000000000000035
+
 # p "Before" $(strength)
 # seth estimate $PETBASE_PROXY "bridgeInAndTie(address,uint256,uint256)" $CK $ckpet $apostle1
 # seth send $PETBASE_PROXY "bridgeInAndTie(address,uint256,uint256)" $CK $ckpet $apostle1
