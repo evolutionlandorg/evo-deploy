@@ -31,8 +31,8 @@ strength () {
 # echo $ckpet
 ckpet=53
 
-tp=$(seth call $PETBASE_PROXY "getTiedPet(uint256,uint256)" $apostle1 0)
-echo $tp
+# tp=$(seth call $PETBASE_PROXY "getTiedPet(uint256,uint256)" $apostle1 0)
+# echo $tp
 
 # mirrorTokenId=0x2a01000101000203800000000000010000000000000000000000000000000035
 
