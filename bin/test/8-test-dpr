@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+
+p() { printf "%-66s %-66s\n" "$1" "$2"; }
+
+# darwinia pr
+ids=(
+"0x2a0400010400010100000000000000040000000000000000000000000000047d"
+"0x2a0400010400010100000000000000040000000000000000000000000000068d"
+  )
+
+addrs=(
+"0x9428E55418755b2F902D3B1f898A871AB5634182"
+"0x429f13e4ec5E57c9AE2388c5020E372F73fe168A"
+  )
+
+# # claim land from genesis holder
+# for id in "${ids[@]}"; do
+#   echo $id
+#   evo mkt-gen claim $id --chain heco
+# done
+
+from=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
+for index in {0..1}; do
+  to="${addrs[$index]}"
+  id="${ids[$index]}"
+  p "$id" "$to" 
+  # evo cmn-tkn transferFrom "$from" "$to" "$id" --chain heco
+done
+
