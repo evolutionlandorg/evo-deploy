@@ -44,3 +44,6 @@ set -e
 # register "addr" "CONTRACT_RING_ERC20_TOKEN" "$TOKEN_ERC20_RING"
 
 # seth send "$POLKAPETADAPTOR" "setTokenIDAuth(uint256,bool)" 20 true
+
+# seth send "$ERC721BRIDGE_PROXY" "registerAdaptor"
+

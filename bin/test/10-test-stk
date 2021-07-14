@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -ex
+
+. $(PWD)/bin/init
+
+STAKINGTOKEN=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" 0) 
+STAKING_LP_GOLD_RING=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $STAKINGTOKEN)
+
+# verify
+(cd "lib/staker" && dapp --use solc:0.5.16 verify-contract src/StakingRewards.sol:StakingRewards $STAKING_LP_GOLD_RING $STAKINGREWARDSFACTORY $TOKEN_ERC20_RING $STAKINGTOKEN)
+
+# print staking reward contracts
+for i in {0..5}; do
+  stakingToken=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" $i) 
+  seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $stakingToken 
+done
+
+# set duration
+seth send $STAKINGREWARDSFACTORY "setRewardsDuration(uint256)" $((90*86400))
+
+# recover
+seth send $TOKEN_ERC20_GOLD "transfer(address,uint256)" $STAKING_LP_GOLD_RING $(seth --to-wei 1 ether)
+seth send $STAKINGREWARDSFACTORY "recoverERC20(address)" $TOKEN_ERC20_GOLD
+
+# notify
+seth send $STAKINGTOKEN "approve(address,uint256)" $STAKING_LP_GOLD_RING $(seth --to-int256 -1) 
+stake=$(seth --to-uint256 $(seth --to-wei 1 ether))
+seth send $STAKING_LP_GOLD_RING "stake(uint256)" $stake
+
+# only test
+# rewardAmount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
+# seth send "$TOKEN_ERC20_RING" "mint(uint256)" "$amount"
+
+seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
+
+seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
+

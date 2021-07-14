@@ -4,7 +4,21 @@ set -e
 
 . $(PWD)/bin/init
 
-lib="furnace"
+# lib="furnace"
+# timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
+# DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
 
-timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
-DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
+# teller
+# register "addr" "CONTRACT_LP_GOLD_ERC20_TOKEN" "$(loadConf ".furnace.lpGOLD")"
+# register "addr" "CONTRACT_LP_WOOD_ERC20_TOKEN" "$(loadConf ".furnace.lpWOOD")"
+# register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
+# register "addr" "CONTRACT_LP_FIRE_ERC20_TOKEN" "$(loadConf ".furnace.lpFIRE")"
+# register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$(loadConf ".furnace.lpSOIL")"
+
+
+CONTRACT_LP_ELEMENT_TOKEN=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_LP_ELEMENT_TOKEN"))
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpGOLD")" 1
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWOOD")" 2
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWATER")" 3
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpFIRE")" 4
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpSOIL")" 5

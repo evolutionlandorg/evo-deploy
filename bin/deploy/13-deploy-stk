@@ -16,8 +16,8 @@ TOKEN_LP_WATER_RING="$(loadConf ".furnace.lpWATER")"
 TOKEN_LP_WOOD_RING="$(loadConf ".furnace.lpWOOD")" 
 TOKEN_LP_WETH_RING="$(loadConf ".staker.lpWETH")" 
 stakingTokens=("$TOKEN_LP_GOLD_RING" "$TOKEN_LP_WOOD_RING" "$TOKEN_LP_WATER_RING" "$TOKEN_LP_FIRE_RING" "$TOKEN_LP_SOIL_RING" "$TOKEN_LP_WETH_RING")
-echo $stakingTokens
 for stakingToken in "${stakingTokens[@]}"; do
+  echo $stakingToken
   seth send $STAKINGREWARDSFACTORY "deploy(address)" "$stakingToken" 
 done
 

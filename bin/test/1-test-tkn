@@ -8,13 +8,13 @@ set -e
 # seth send "$TOKEN_ERC20_RING" "changeCap(uint256)" "$cap"
 
 # # # test mint
-amount=$(seth --to-uint256 $(seth --to-wei 100000 ether))
+amount=$(seth --to-uint256 $(seth --to-wei 1000000 ether))
 shell1=0x735182c782CB8e7806F8903dE7913e6880CbF82E
 xuelei=0x245B4775082C144C22a4874B0fBa8c70c510c5AE
-# tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
-tokens=("RING" "KTON")
+tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
+# tokens=("RING" "KTON")
 for token in "${tokens[@]}"; do
-  seth send -F $OWNER "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(address,uint256)" $xuelei "$amount"
+  seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(address,uint256)" $ETH_FROM "$amount"
 done
 
 
