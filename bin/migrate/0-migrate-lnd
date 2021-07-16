@@ -4,19 +4,20 @@ set -e
 
 . $(PWD)/bin/init
 
-# LANDBASE=$(dapp create LandBase)
-# echo >&2 "${0##*/}: info: LandBase created."
-# seth send $LANDBASE_PROXY "upgradeTo(address)" $LANDBASE
-# if test $(seth call $LANDBASE_PROXY "implementation()(address)") != $LANDBASE; then
-#   (echo "check migration failed."; exit 1;)
-# fi
-# addAddress "LANDBASE" "$LANDBASE"
-# echo >&2 "${0##*/}: info: migration finished." 
-
+# ropsten
 lib="land"
 LANDRESOURCEV6=$(dappCreate "$lib" contracts/LandResourceV6.sol:LandResourceV6)
-seth send $EVOPROXYADMIN "upgrade(address,address)" $LANDRESOURCE_PROXY $LANDRESOURCEV6
-if test $(seth call $EVOPROXYADMIN "getProxyImplementation(address)(address)" $LANDRESOURCE_PROXY) != $LANDRESOURCEV6; then
+seth send -F $OWNER  $LANDRESOURCE_PROXY "upgradeTo(address)" $LANDRESOURCEV6
+if test $(seth call $LANDRESOURCE_PROXY "implementation()(address)") != $LANDRESOURCEV6; then
   (echo "check migration failed."; exit 1;)
 fi
 echo >&2 "${0##*/}: info: migration finished." 
+
+# heco
+# lib="land"
+# LANDRESOURCEV6=$(dappCreate "$lib" contracts/LandResourceV6.sol:LandResourceV6)
+# seth send $EVOPROXYADMIN "upgrade(address,address)" $LANDRESOURCE_PROXY $LANDRESOURCEV6
+# if test $(seth call $EVOPROXYADMIN "getProxyImplementation(address)(address)" $LANDRESOURCE_PROXY) != $LANDRESOURCEV6; then
+#   (echo "check migration failed."; exit 1;)
+# fi
+# echo >&2 "${0##*/}: info: migration finished." 
