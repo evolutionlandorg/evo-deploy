@@ -5,9 +5,11 @@ set -e
 . $(PWD)/bin/init
 
 rewardsToken=$TOKEN_ERC20_RING
-stakingRewardsGenesis=$(seth block "latest" timestamp)
-stakingRewardsGenesis=$(bc <<< "$stakingRewardsGenesis + 3 * 60")
+# stakingRewardsGenesis=$(seth block "latest" timestamp)
+# stakingRewardsGenesis=$(bc <<< "$stakingRewardsGenesis + 3 * 60")
+stakingRewardsGenesis=1626746400
 STAKINGREWARDSFACTORY=$(dappCreate staker src/StakingRewardsFactory.sol:StakingRewardsFactory "$rewardsToken" "$stakingRewardsGenesis")
+sleep 3s
 
 TOKEN_LP_FIRE_RING="$(loadConf ".furnace.lpFIRE")" 
 TOKEN_LP_GOLD_RING="$(loadConf ".furnace.lpGOLD")" 
@@ -19,5 +21,6 @@ stakingTokens=("$TOKEN_LP_GOLD_RING" "$TOKEN_LP_WOOD_RING" "$TOKEN_LP_WATER_RING
 for stakingToken in "${stakingTokens[@]}"; do
   echo $stakingToken
   seth send $STAKINGREWARDSFACTORY "deploy(address)" "$stakingToken" 
+  sleep 3s
 done
 

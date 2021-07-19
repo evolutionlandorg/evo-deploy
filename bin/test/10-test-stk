@@ -6,8 +6,8 @@ set -e
 
 p() { printf "%-7s %-20s\n" "$1" "$2"; }
 
-STAKINGTOKEN=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" 0) 
-STAKING_LP_GOLD_RING=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $STAKINGTOKEN)
+# STAKINGTOKEN=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" 0) 
+# STAKING_LP_GOLD_RING=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $STAKINGTOKEN)
 
 # verify
 # (cd "lib/staker" && dapp --use solc:0.5.16 verify-contract src/StakingRewards.sol:StakingRewards $STAKING_LP_GOLD_RING $STAKINGREWARDSFACTORY $TOKEN_ERC20_RING $STAKINGTOKEN)
@@ -15,12 +15,14 @@ STAKING_LP_GOLD_RING=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoBySta
 # set duration
 # seth send $STAKINGREWARDSFACTORY "setRewardsDuration(uint256)" $((90*86400))
 
-# recover
-# seth send $TOKEN_ERC20_GOLD "transfer(address,uint256)" $STAKING_LP_GOLD_RING $(seth --to-wei 1 ether)
-# seth send $STAKINGREWARDSFACTORY "recoverERC20(address)" $TOKEN_ERC20_GOLD
+# sleep 1s
 
-# seth send $TOKEN_ERC20_GOLD "transfer(address,uint256)" $STAKINGREWARDSFACTORY $(seth --to-wei 1 ether)
-# seth send $STAKINGREWARDSFACTORY "recover(address)" $TOKEN_ERC20_GOLD
+# recover
+# seth send $TOKEN_ERC20_SOIL "transfer(address,uint256)" $STAKING_LP_GOLD_RING $(seth --to-wei 0.01 ether)
+# seth send $STAKINGREWARDSFACTORY "recoverERC20(address)" $TOKEN_ERC20_SOIL
+
+# seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $(seth --to-wei 0.01 ether)
+# seth send $STAKINGREWARDSFACTORY "recover(address)" $TOKEN_ERC20_RING
 
 # print staking reward contracts
 # for i in {0..5}; do
@@ -30,19 +32,33 @@ STAKING_LP_GOLD_RING=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoBySta
 #   p "reward" "$rw"
 #   # stake
 #   seth send $st "approve(address,uint256)" $rw $(seth --to-int256 -1) 
-#   amount=$(seth --to-uint256 $(seth --to-wei 1 ether))
+#   sleep 3s
+#   amount=$(seth --to-uint256 $(seth --to-wei 0.00001 ether))
 #   seth send $rw "stake(uint256)" $amount
+#   sleep 3s
 # done
 
-# notify
-# rewardAmount=$(seth --to-uint256 $(seth --to-wei 600000 ether))
-
-# seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
-
-# seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
+# # notify
+rewardAmount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
+seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
+sleep 3s
+seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
+sleep 3s
 
 # external notify
 # externalReward=$(seth --to-uint256 $(seth --to-wei 100000 ether))
 # seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $externalReward
+# sleep 1s
 # seth send $STAKINGREWARDSFACTORY "notifyRewardAmount(address,uint256)" $STAKINGTOKEN $externalReward
+# sleep 1s
 
+
+# for i in {0..5}; do
+#   st=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" $i) 
+#   p "staking" "$st"
+#   rw=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $st)
+#   p "reward" "$rw"
+#   # exit
+#   seth send $rw "exit()"
+#   sleep 3s
+# done
