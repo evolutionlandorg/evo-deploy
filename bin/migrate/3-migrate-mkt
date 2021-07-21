@@ -5,16 +5,28 @@ set -e
 . $(PWD)/bin/init
 
 lib="market-contracts"
+
+# seth send "$REVENUEPOOL_PROXY" "settleToken(address)" "$TOKEN_ERC20_RING"
+
+register "addr" "CONTRACT_DIVIDENDS_POOL" "$STAKINGREWARDSFACTORY"
+
 dappUpgrade "$lib" contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$POINTSREWARDPOOL_PROXY"
 
 dappUpgrade "$lib" contracts/auction/RevenuePoolV3.sol:RevenuePoolV3 "$REVENUEPOOL_PROXY"
 
-dappUpgrade "$lib" contracts/auction/GenesisHolderV2.sol:GenesisHolderV2 "$GENESISHOLDER_PROXY"
-register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"
+# # test
+# seth send "$TOKEN_ERC20_RING" "approve(address,uint256)" $REVENUEPOOL_PROXY $(seth --to-int256 -1) 
 
-dappUpgrade "$lib" contracts/auction/ClockAuctionV3.sol:ClockAuctionV3 "$CLOCKAUCTION_PROXY"
+# seth send "$REVENUEPOOL_PROXY" "reward(address,uint256,address)" "$TOKEN_ERC20_RING" "$(seth --to-wei 20 ether)" "0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6"
 
-networkId=$(seth --to-uint256 $(seth rpc net_version))
-SUPERVISOR=$(loadConf ".market.supervisor")
-# TakeBack-ring
-TAKEBACK_RING=$(dappCreate "$lib" contracts/id/TakeBack.sol:TakeBack $TOKEN_ERC20_RING $SUPERVISOR $networkId)
+# seth send "$REVENUEPOOL_PROXY" "settleToken(address)" "$TOKEN_ERC20_RING"
+
+# dappUpgrade "$lib" contracts/auction/GenesisHolderV2.sol:GenesisHolderV2 "$GENESISHOLDER_PROXY"
+# register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"
+
+# dappUpgrade "$lib" contracts/auction/ClockAuctionV3.sol:ClockAuctionV3 "$CLOCKAUCTION_PROXY"
+
+# networkId=$(seth --to-uint256 $(seth rpc net_version))
+# SUPERVISOR=$(loadConf ".market.supervisor")
+# # TakeBack-ring
+# TAKEBACK_RING=$(dappCreate "$lib" contracts/id/TakeBack.sol:TakeBack $TOKEN_ERC20_RING $SUPERVISOR $networkId)
