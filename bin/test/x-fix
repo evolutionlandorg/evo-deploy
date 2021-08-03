@@ -46,4 +46,3 @@ set -e
 # seth send "$POLKAPETADAPTOR" "setTokenIDAuth(uint256,bool)" 20 true
 
 # seth send "$ERC721BRIDGE_PROXY" "registerAdaptor"
-
