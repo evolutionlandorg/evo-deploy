@@ -46,12 +46,12 @@ METADATATELLER_PROXY=$(deployProxy2 "$lib" src/MetaDataTellerProxy.sol:MetaDataT
 register "addr" "CONTRACT_METADATA_TELLER" "$METADATATELLER_PROXY"
 
 ##TODO calc lp address
-CONTRACT_LP_ELEMENT_TOKEN=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_LP_ELEMENT_TOKEN"))
-seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpGOLD")" 1
-seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWOOD")" 2
-seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWATER")" 3
-seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpFIRE")" 4
-seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpSOIL")" 5
+# CONTRACT_LP_ELEMENT_TOKEN=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_LP_ELEMENT_TOKEN"))
+# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpGOLD")" 1
+# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWOOD")" 2
+# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWATER")" 3
+# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpFIRE")" 4
+# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpSOIL")" 5
 
 drill=$(seth --to-bytes32  $(seth --from-ascii "CONTRACT_DRILL_BASE"))
 drillgrade1=$(seth --to-uint16 1)

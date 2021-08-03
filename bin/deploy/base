@@ -18,8 +18,14 @@ INTERSTELLARENCODERV4=$(dappCreate common-contracts contracts/InterstellarEncode
 register "addr" "CONTRACT_INTERSTELLAR_ENCODER" "$INTERSTELLARENCODERV4"
 info "InterstellarEncoderV4 created."
 
-owners=$(loadConf ".multiSigWallet.owners | .[]")
-required=$(loadConf ".multiSigWallet.required")
+owners=$(loadConf ".multiSigWalletContribution.owners | .[]")
+required=$(loadConf ".multiSigWalletContribution.required")
 n=($(echo ${owners} | tr " " "\n"))
 g=$( IFS=$','; echo "${n[*]}")
-MultiSigWallet=$(dappCreate common-contracts contracts/MultiSigWallet.sol:MultiSigWallet [$g] $required)
+multiSigWalletContribution=$(dappCreate common-contracts contracts/MultiSigWalletContribution.sol:MultiSigWalletContribution [$g] $required)
+
+owners=$(loadConf ".multiSigWalletDev.owners | .[]")
+required=$(loadConf ".multiSigWalletDev.required")
+n=($(echo ${owners} | tr " " "\n"))
+g=$( IFS=$','; echo "${n[*]}")
+multiSigWalletDev=$(dappCreate common-contracts contracts/MultiSigWalletDev.sol:MultiSigWalletDev [$g] $required)
