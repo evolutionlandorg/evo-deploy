@@ -7,18 +7,31 @@ set -e
 # cap=$(seth --to-uint256 $(seth --to-wei 100000000000000 ether))
 # seth send "$TOKEN_ERC20_RING" "changeCap(uint256)" "$cap"
 
-# # # test mint
-amount=$(seth --to-uint256 $(seth --to-wei 1000000 ether))
-shell1=0x735182c782CB8e7806F8903dE7913e6880CbF82E
-xuelei=0x245B4775082C144C22a4874B0fBa8c70c510c5AE
-jay=0xf422673CB7a673f595852f7B00906408A0b073db
-tiny=0xa1511E5C683A007056CAa1d9A8D6A37464826280
-tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
-# tokens=("RING" "KTON")
-for token in "${tokens[@]}"; do
-  seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(address,uint256)" "$tiny" "$amount"
-done
+# test mint
+# amount=$(seth --to-uint256 $(seth --to-wei 3000000 ether))
+# shell1=0x735182c782CB8e7806F8903dE7913e6880CbF82E
+# xuelei=0x245B4775082C144C22a4874B0fBa8c70c510c5AE
+# jay=0xf422673CB7a673f595852f7B00906408A0b073db
+# tiny=0xa1511E5C683A007056CAa1d9A8D6A37464826280
+# tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
+# # tokens=("RING" "KTON")
+# for token in "${tokens[@]}"; do
+#   seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(address,uint256)" "$tiny" "$amount"
+# done
 
+# polygon mint
+addrs=(
+0xa1511E5C683A007056CAa1d9A8D6A37464826280
+0xf422673CB7a673f595852f7B00906408A0b073db
+0x735182c782CB8e7806F8903dE7913e6880CbF82E
+0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
+0x01D95D2Ba934245FE9bd4088181701Cc0e621D20
+  )
+amount=$(seth --to-uint256 $(seth --to-wei 300000 ether))
+for addr in "${addrs[@]}"; do
+  seth send "$TOKEN_ERC20_RING" "deposit(address,bytes)" "$addr" "$amount"
+  seth send "$TOKEN_ERC20_KTON" "deposit(address,bytes)" "$addr" "$amount"
+done
 
 # seth send "$TOKEN_ERC20_RING" "mint(uint256)" "$amount"
 # seth call "$TOKEN_ERC20_RING" "balanceOf(address)(uint256)" $shell1
