@@ -5,11 +5,20 @@ set -e
 . $(PWD)/bin/init
 
 lib="apostle"
-dappUpgrade "$lib" contracts/ApostleBaseV3.sol:ApostleBaseV3 "$APOSTLEBASE_PROXY"
+# ropsten
+APOSTLEBASEV4=$(dappCreate "$lib" contracts/ApostleBaseV4.sol:ApostleBaseV4)
+seth send -F $OWNER  $APOSTLEBASE_PROXY "upgradeTo(address)" $APOSTLEBASEV4
+if test $(seth call $APOSTLEBASE_PROXY "implementation()(address)") != $APOSTLEBASEV4; then
+  (echo "check migration failed."; exit 1;)
+fi
+echo >&2 "${0##*/}: info: migration finished." 
 
-dappUpgrade "$lib" contracts/ApostleClockAuctionV2.sol:ApostleClockAuctionV2 "$APOSTLECLOCKAUCTION_PROXY"
+# heco
+# dappUpgrade "$lib" contracts/ApostleBaseV4.sol:ApostleBaseV4 "$APOSTLEBASE_PROXY"
 
-dappUpgrade "$lib" contracts/Gen0ApostleV3.sol:Gen0ApostleV3 "$GEN0APOSTLE_PROXY"
-register "addr" "CONTRACT_GEN0_APOSTLE" "$GEN0APOSTLE_PROXY"
+# dappUpgrade "$lib" contracts/ApostleClockAuctionV2.sol:ApostleClockAuctionV2 "$APOSTLECLOCKAUCTION_PROXY"
 
-dappUpgrade "$lib" contracts/SiringClockAuctionV3.sol:SiringClockAuctionV3 "$SIRINGCLOCKAUCTION_PROXY"
+# dappUpgrade "$lib" contracts/Gen0ApostleV3.sol:Gen0ApostleV3 "$GEN0APOSTLE_PROXY"
+# register "addr" "CONTRACT_GEN0_APOSTLE" "$GEN0APOSTLE_PROXY"
+
+# dappUpgrade "$lib" contracts/SiringClockAuctionV3.sol:SiringClockAuctionV3 "$SIRINGCLOCKAUCTION_PROXY"
