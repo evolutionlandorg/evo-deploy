@@ -30,7 +30,7 @@ p() { printf "%-7s %-20s\n" "$1" "$2"; }
 #   p "staking" "$st"
 #   rw=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $st)
 #   p "reward" "$rw"
-#   # stake
+#   stake
 #   seth send $st "approve(address,uint256)" $rw $(seth --to-int256 -1) 
 #   sleep 3s
 #   amount=$(seth --to-uint256 $(seth --to-wei 0.00001 ether))
@@ -38,7 +38,7 @@ p() { printf "%-7s %-20s\n" "$1" "$2"; }
 #   sleep 3s
 # done
 
-# # notify
+# notify
 rewardAmount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
 seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
 sleep 3s
