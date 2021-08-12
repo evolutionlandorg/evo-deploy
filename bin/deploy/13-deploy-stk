@@ -5,9 +5,9 @@ set -e
 . $(PWD)/bin/init
 
 rewardsToken=$TOKEN_ERC20_RING
-# stakingRewardsGenesis=$(seth block "latest" timestamp)
-# stakingRewardsGenesis=$(bc <<< "$stakingRewardsGenesis + 3 * 60")
-stakingRewardsGenesis=1626746400
+stakingRewardsGenesis=$(seth block "latest" timestamp)
+stakingRewardsGenesis=$(bc <<< "$stakingRewardsGenesis + 1 * 60")
+# stakingRewardsGenesis=1626746400
 STAKINGREWARDSFACTORY=$(dappCreate staker src/StakingRewardsFactory.sol:StakingRewardsFactory "$rewardsToken" "$stakingRewardsGenesis")
 sleep 3s
 
