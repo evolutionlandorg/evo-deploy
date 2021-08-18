@@ -5,14 +5,14 @@ set -e
 . $(PWD)/bin/init
 
 # ropsten
-lib="land"
-LANDRESOURCEV6=$(dappCreate "$lib" contracts/LandResourceV6.sol:LandResourceV6)
-seth send -F $OWNER  $LANDRESOURCE_PROXY "upgradeTo(address)" $LANDRESOURCEV6
-if test $(seth call $LANDRESOURCE_PROXY "implementation()(address)") != $LANDRESOURCEV6; then
-  (echo "check migration failed."; exit 1;)
-fi
-echo >&2 "${0##*/}: info: migration finished." 
+# lib="land"
+# LANDRESOURCEV6=$(dappCreate "$lib" contracts/LandResourceV6.sol:LandResourceV6)
+# seth send -F $OWNER  $LANDRESOURCE_PROXY "upgradeTo(address)" $LANDRESOURCEV6
+# if test $(seth call $LANDRESOURCE_PROXY "implementation()(address)") != $LANDRESOURCEV6; then
+#   (echo "check migration failed."; exit 1;)
+# fi
+# echo >&2 "${0##*/}: info: migration finished." 
 
 # heco
-# lib="land"
-# dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
+lib="land"
+dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
