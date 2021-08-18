@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="raffle"
+
+dappUpgrade "$lib" src/Raffle.sol:Raffle "$RAFFLE_PROXY"
+
+register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"

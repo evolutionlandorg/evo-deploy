@@ -9,6 +9,8 @@ supervisor=$(loadConf ".raffle.supervisor")
 sig="initialize(address,address,uint256)"
 RAFFLE_PROXY=$(deployProxy2 raffle src/RaffleProxy.sol:RaffleProxy src/Raffle.sol:Raffle "$sig" "$SETTINGSREGISTRY" "$supervisor" "$chain_id")
 
+register "addr" "CONTRACT_DIVIDENDS_POOL" "$SNAPSHOT_PROXY"
+
 # eventId=$(loadConf ".raffle.events.1.eventId")
 # toLandId=$(loadConf ".raffle.events.1.toLandId")
 # startTime=$(loadConf ".raffle.events.1.startTime")
