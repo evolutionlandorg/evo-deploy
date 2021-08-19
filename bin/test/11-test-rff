@@ -12,13 +12,10 @@ set -e
 # expireTime=$(loadConf ".raffle.events.1.expireTime")
 
 # event 2
-# eventId=2
-# toLandId=5
-# startTime=1628560800
-# endTime=1629250200
-# finalTime=1629252000
-# expireTime=1629259200
-# seth send $RAFFLE_PROXY "setEvent(uint256,uint256,uint256,uint256,uint256,uint256)" "$eventId" "$toLandId" "$startTime" "$endTime" "$finalTime" "$expireTime"
-
-register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"
-
+eventId=2
+toLandId=5
+startTime=1628560800
+endTime=1629250200
+finalTime=1629252000
+expireTime=1629270000
+seth send $RAFFLE_PROXY "setEvent(uint256,uint256,uint256,uint256,uint256,uint256)" "$eventId" "$toLandId" "$startTime" "$endTime" "$finalTime" "$expireTime"

@@ -6,7 +6,8 @@ set -e
 
 p() { printf "%-7s %-20s\n" "$1" "$2"; }
 
-# STAKINGTOKEN=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" 0) 
+STAKINGTOKEN=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" 1) 
+echo $STAKINGTOKEN
 # STAKING_LP_GOLD_RING=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $STAKINGTOKEN)
 
 # verify
@@ -39,18 +40,18 @@ p() { printf "%-7s %-20s\n" "$1" "$2"; }
 # done
 
 # notify
-rewardAmount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
-seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
-sleep 3s
-seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
-sleep 3s
+# rewardAmount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
+# seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
+# sleep 3s
+# seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
+# sleep 3s
 
 # external notify
-# externalReward=$(seth --to-uint256 $(seth --to-wei 100000 ether))
+externalReward=$(seth --to-uint256 $(seth --to-wei 100000 ether))
 # seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $externalReward
-# sleep 1s
-# seth send $STAKINGREWARDSFACTORY "notifyRewardAmount(address,uint256)" $STAKINGTOKEN $externalReward
-# sleep 1s
+sleep 1s
+seth send $STAKINGREWARDSFACTORY "notifyRewardAmount(address,uint256)" $STAKINGTOKEN $externalReward
+sleep 1s
 
 
 # for i in {0..5}; do
