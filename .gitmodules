@@ -31,3 +31,6 @@
 [submodule "lib/zapper"]
 	path = lib/zapper
 	url = https://github.com/evolutionlandorg/zapper
+[submodule "lib/multicall"]
+	path = lib/multicall
+	url = https://github.com/evolutionlandorg/multicall
