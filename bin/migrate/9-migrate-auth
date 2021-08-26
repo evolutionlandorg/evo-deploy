@@ -20,5 +20,4 @@ set -e
 # seth send $GEN0APOSTLE_PROXY "setOperator(address)" $apoOperator
 
 # tmp
-seth send $GENESISHOLDER_PROXY "setOperator(address)" 0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
-
+# seth send $GENESISHOLDER_PROXY "setOperator(address)" 0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6

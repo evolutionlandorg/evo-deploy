@@ -1,7 +1,8 @@
 .PHONY: all clean test deploy proxy flat
 .PHONY: pre-4 solc-4 pre-5 solc-5 pre-6 solc-6 pre-7 solc-7
 .PHONY:	build-apostle build-common build-land build-market build-token 
-.PHONY: build-furnace build-governance build-raffle  build-staker build-zapper
+.PHONY: build-staker build-multicall build-zapper
+.PHONY: build-furnace build-governance build-raffle
 
 SUBDIRS = apostle common-contracts furnace governance land market-contracts token-contracts
 DAPP_LIB = lib/
@@ -22,7 +23,7 @@ pre-7:
 
 solc-4: build-apostle build-common build-land build-market build-token
 
-solc-5: build-staker build-zapper
+solc-5: build-staker build-multicall build-zapper
 
 solc-6: build-furnace proxy
 
@@ -57,6 +58,9 @@ build-raffle:
 
 build-staker:
 	@cd lib/staker && (MAKE)
+
+build-multicall:
+	@cd lib/multicall && (MAKE)
 
 build-zapper:
 	@cd lib/zapper && (MAKE)

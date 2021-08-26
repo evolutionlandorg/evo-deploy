@@ -6,7 +6,7 @@ set -e
 
 sig="initialize(address,address,address)"
 SNAPSHOT_PROXY=$(deployProxy2 governance contracts/SnapshotProxy.sol:SnapshotProxy contracts/EvolutionTeller.sol:EvolutionTeller "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_KTON" "$TOKEN_ERC20_RING")
-register "addr" "CONTRACT_DIVIDENDS_POOL" "$SNAPSHOT_PROXY"
+# register "addr" "CONTRACT_DIVIDENDS_POOL" "$SNAPSHOT_PROXY"
 
 seth send $SNAPSHOT_PROXY "addRewardDistribution(address)" $REVENUEPOOL_PROXY
 if test "$(seth call $SNAPSHOT_PROXY "rewardDistributions(address)(bool)" $REVENUEPOOL_PROXY)" != true; then

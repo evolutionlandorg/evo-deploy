@@ -4,7 +4,6 @@ set -e
 
 . $(PWD)/bin/init
 
-# evo lnd-mst unbox 0x2a04000104000101000000000000000400000000000000000000000000000768 --chain heco
 
 p() { printf "%-66s %-66s\n" "$1" "$2"; }
 
@@ -57,12 +56,16 @@ chain=mumbai
 for (( i=0; i<${#ids[@]}; i++ ));
 do
   id="${ids[$i]}"
-  # p "$id" "$(evo lnd-bas box $id --chain heco)" 
+  # p "$id" "$(evo lnd-bas box $id --chain $chain)" 
   echo "$id"
-  # evo cmn-tkn owner $id --chain heco
-  # evo cmn-loc getHM $id --chain heco
-  evo lnd-bas setBox $id true --chain $chain
-  evo lnd-bas box $id --chain $chain
+  # evo cmn-tkn owner $id --chain $chain 
+  echo "######## Locatoin ############"
+  evo cmn-loc getHM $id --chain $chain
+  echo "########## Rate ##############"
+  evo lnd-bas rra $id --chain $chain
+  # evo lnd-mst unbox $id --chain $chain 
+  # evo lnd-bas setBox $id true --chain $chain
+  # evo lnd-bas box $id --chain $chain
   # sleep 3s
 done
 

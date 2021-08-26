@@ -1,0 +1,75 @@
+{
+    "auth": "0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6",
+    "multiSigWalletContribution": {
+        "owners": [
+           "0x00e3993566b34e5367d1c602439997bd08c11ff7",
+           "0x52386be2397e8eac26298f733b390684203fb580",
+           "0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6"
+        ],
+        "required": 2
+    },
+    "multiSigWalletDev": {
+        "owners": [
+           "0x00e3993566b34e5367d1c602439997bd08c11ff7",
+           "0x52386be2397e8eac26298f733b390684203fb580",
+           "0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6"
+        ],
+        "required": 2
+    },
+    "common": {
+        "encoder": {
+            "chainId": 5,
+            "landId": 5
+        },
+        "tokenOfferCut": 400
+    },
+    "land": {
+        "operator": "0x01D95D2Ba934245FE9bd4088181701Cc0e621D20",
+        "base": {
+            "xLow": 23,
+            "xHigh": 67,
+            "yLow": -22,
+            "yHigh": 22 
+        },
+        "resourcesPool": {
+            "gold": 11690,
+            "wood": 7862,
+            "water": 12336,
+            "fire": 13572,
+            "soil": 14097
+        },
+        "resourceReleaseTime": 1629964800
+    },
+    "apostle": {
+        "operator": "0x01D95D2Ba934245FE9bd4088181701Cc0e621D20",
+        "gen0Limit": 10000000,
+        "birthFee": "50000000000000000000",
+        "mixTalent": "5000000000000000000",
+        "bidWaitingTime": 600
+    },
+    "market": {
+        "contributionPool": "@MULTISIGWALLETCONTRIBUTION",
+        "devPool": "@MULTISIGWALLETDEV",
+        "supervisor": "0x536DeaCEdC6E972822b9e78571786B5a6dd10c8A",
+        "auctionCut": 400,
+        "bidWaitingTime": 1800,
+        "refererCut": 2000
+    },
+    "furnace": {
+        "lpGOLD": "0x0000000000000000000000000000000000000000",
+        "lpWOOD": "0x0000000000000000000000000000000000000000",
+        "lpWATER": "0x0000000000000000000000000000000000000000",
+        "lpFIRE": "0x0000000000000000000000000000000000000000",
+        "lpSOIL": "0x0000000000000000000000000000000000000000",
+        "supervisor": "0x536DeaCEdC6E972822b9e78571786B5a6dd10c8A",
+        "itemMineFee": 5000000,
+        "itemProtectPeriod": 604800,
+        "drillLuckyBoxReleaseTime": 1627783200
+    },
+    "raffle": {
+        "supervisor": "0x536DeaCEdC6E972822b9e78571786B5a6dd10c8A"
+    },
+    "staker": {
+        "lpWETH": "0x0000000000000000000000000000000000000000"
+    }
+}

@@ -53,6 +53,7 @@ register "addr" "CONTRACT_METADATA_TELLER" "$METADATATELLER_PROXY"
 # seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpFIRE")" 4
 # seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpSOIL")" 5
 
+# 0 class drill rate
 drill=$(seth --to-bytes32  $(seth --from-ascii "CONTRACT_DRILL_BASE"))
 drillgrade1=$(seth --to-uint16 1)
 rate1=$(seth --to-uint256 1000000)

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="multicall"
+
+dappCreate "$lib" src/Multicall2.sol:Multicall2 
