@@ -63,6 +63,7 @@ do
   evo cmn-loc getHM $id --chain $chain
   echo "########## Rate ##############"
   evo lnd-bas rra $id --chain $chain
+  # evo lnd-bas setBox $id true --chain $chain
   # evo lnd-mst unbox $id --chain $chain 
   # evo lnd-bas setBox $id true --chain $chain
   # evo lnd-bas box $id --chain $chain

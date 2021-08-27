@@ -14,5 +14,19 @@ set -e
 # echo >&2 "${0##*/}: info: migration finished." 
 
 # heco
-lib="land"
-dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
+# lib="land"
+# dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
+
+
+gold=$(loadConf ".land.resourcesPool.gold")
+wood=$(loadConf ".land.resourcesPool.wood")
+water=$(loadConf ".land.resourcesPool.water")
+fire=$(loadConf ".land.resourcesPool.fire")
+earth=$(loadConf ".land.resourcesPool.soil")
+resources=($gold $wood $water $fire $earth)
+
+for i in {0..4}; do
+  rs="${resources[$i]}"
+  echo "$i" "$rs"
+  seth send $MYSTERIOUSTREASURE_PROXY "setResourcePool(uint,uint)" "$i" "$rs"
+done

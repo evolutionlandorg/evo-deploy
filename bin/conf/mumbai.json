@@ -34,11 +34,11 @@
             "yHigh": 22 
         },
         "resourcesPool": {
-            "gold": 22655,
-            "wood": 11004,
-            "water": 22258,
-            "fire": 13572,
-            "soil": 16801
+            "gold": 3333,
+            "wood": 7595,
+            "water": 4504,
+            "fire": 14315,
+            "soil": 13885
         },
         "resourceReleaseTime": 1627783200
     },
