@@ -14,9 +14,9 @@ lib="apostle"
 # echo >&2 "${0##*/}: info: migration finished." 
 
 # heco
-dappUpgrade "$lib" contracts/ApostleBaseV4.sol:ApostleBaseV4 "$APOSTLEBASE_PROXY"
+# dappUpgrade "$lib" contracts/ApostleBaseV4.sol:ApostleBaseV4 "$APOSTLEBASE_PROXY"
 
-# dappUpgrade "$lib" contracts/ApostleClockAuctionV2.sol:ApostleClockAuctionV2 "$APOSTLECLOCKAUCTION_PROXY"
+dappUpgrade "$lib" contracts/ApostleClockAuctionV2.sol:ApostleClockAuctionV2 "$APOSTLECLOCKAUCTION_PROXY"
 
 # dappUpgrade "$lib" contracts/Gen0ApostleV3.sol:Gen0ApostleV3 "$GEN0APOSTLE_PROXY"
 # register "addr" "CONTRACT_GEN0_APOSTLE" "$GEN0APOSTLE_PROXY"
