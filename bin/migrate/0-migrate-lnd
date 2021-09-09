@@ -4,8 +4,9 @@ set -e
 
 . $(PWD)/bin/init
 
+lib="land"
+
 # ropsten
-# lib="land"
 # LANDRESOURCEV6=$(dappCreate "$lib" contracts/LandResourceV6.sol:LandResourceV6)
 # seth send -F $OWNER  $LANDRESOURCE_PROXY "upgradeTo(address)" $LANDRESOURCEV6
 # if test $(seth call $LANDRESOURCE_PROXY "implementation()(address)") != $LANDRESOURCEV6; then
@@ -14,19 +15,18 @@ set -e
 # echo >&2 "${0##*/}: info: migration finished." 
 
 # heco
-# lib="land"
-# dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
+dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
 
 
-gold=$(loadConf ".land.resourcesPool.gold")
-wood=$(loadConf ".land.resourcesPool.wood")
-water=$(loadConf ".land.resourcesPool.water")
-fire=$(loadConf ".land.resourcesPool.fire")
-earth=$(loadConf ".land.resourcesPool.soil")
-resources=($gold $wood $water $fire $earth)
+# gold=$(loadConf ".land.resourcesPool.gold")
+# wood=$(loadConf ".land.resourcesPool.wood")
+# water=$(loadConf ".land.resourcesPool.water")
+# fire=$(loadConf ".land.resourcesPool.fire")
+# earth=$(loadConf ".land.resourcesPool.soil")
+# resources=($gold $wood $water $fire $earth)
 
-for i in {0..4}; do
-  rs="${resources[$i]}"
-  echo "$i" "$rs"
-  seth send $MYSTERIOUSTREASURE_PROXY "setResourcePool(uint,uint)" "$i" "$rs"
-done
+# for i in {0..4}; do
+#   rs="${resources[$i]}"
+#   echo "$i" "$rs"
+#   seth send $MYSTERIOUSTREASURE_PROXY "setResourcePool(uint,uint)" "$i" "$rs"
+# done

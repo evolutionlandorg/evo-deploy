@@ -8,11 +8,11 @@ lib="market-contracts"
 
 # seth send "$REVENUEPOOL_PROXY" "settleToken(address)" "$TOKEN_ERC20_RING"
 
-register "addr" "CONTRACT_DIVIDENDS_POOL" "$STAKINGREWARDSFACTORY"
+# register "addr" "CONTRACT_DIVIDENDS_POOL" "$STAKINGREWARDSFACTORY"
 
 dappUpgrade "$lib" contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$POINTSREWARDPOOL_PROXY"
 
-dappUpgrade "$lib" contracts/auction/RevenuePoolV3.sol:RevenuePoolV3 "$REVENUEPOOL_PROXY"
+# dappUpgrade "$lib" contracts/auction/RevenuePoolV3.sol:RevenuePoolV3 "$REVENUEPOOL_PROXY"
 
 # # test
 # seth send "$TOKEN_ERC20_RING" "approve(address,uint256)" $REVENUEPOOL_PROXY $(seth --to-int256 -1) 
