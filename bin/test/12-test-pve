@@ -9,7 +9,7 @@ apo1=0x2a0400010400010200000000000000040000000000000000000000000000020c
 
 land=0x2a04000104000101000000000000000400000000000000000000000000000272
 # seth send $PVEENTRY_PROXY "join(uint256)" "$apo1"
-# seth send $PVEENTRY_PROXY "join(uint256)" "$apo0"
+seth send $PVEENTRY_PROXY "join(uint256)" "$apo0"
 # seth send $LANDRESOURCE_PROXY "startMining(uint256,uint256,address)" $apo0 $land $TOKEN_ERC20_GOLD
-# seth send $PVEENTRY_PROXY "exit(uint256)" "$apo0"
+seth send $PVEENTRY_PROXY "exit(uint256)" "$apo0"
 # seth send $PVEENTRY_PROXY "evict(uint256)" "$apo0"

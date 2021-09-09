@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="pve"
+
+dappUpgrade "$lib" src/PveEntry.sol:PveEntry "$PVEENTRY_PROXY"
