@@ -15,4 +15,5 @@ PVEENTRY_AUTHORITY=$(dappAuth "PveEntry" common-contracts contracts/Authority.so
 setAuth "$PVEENTRY_PROXY" "$PVEENTRY_AUTHORITY"
 
 seth send "$TOKENUSE_AUTHORITY" "rely(address)" "$PVEENTRY_PROXY"
+
 register "addr" "CONTRACT_PVE_ENTRY" "$PVEENTRY_PROXY"
