@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="pve"
+
+sig="initialize(address)"
+PVEENTRY_PROXY=$(deployProxy "$lib" src/proxy/PveEntryProxy.sol:PveEntryProxy src/PveEntry.sol:PveEntry "$sig" "$SETTINGSREGISTRY")
+
+wards=$(loadAuthConf ".pve.pveEntry.wards | .[]")
+sigs=$(loadAuthConf ".pve.pveEntry.sigs | .[]")
+PVEENTRY_AUTHORITY=$(dappAuth "PveEntry" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$PVEENTRY_PROXY" "$PVEENTRY_AUTHORITY"
+
+seth send "$TOKENUSE_AUTHORITY" "rely(address)" "$PVEENTRY_PROXY"
+register "addr" "CONTRACT_PVE_ENTRY" "$PVEENTRY_PROXY"
