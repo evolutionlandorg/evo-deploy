@@ -4,38 +4,39 @@ set -e
 
 p() { printf "%-66s %-66s\n" "$1" "$2"; }
 
-# darwinia pr event 3
-ids=(
-"0x2a04000104000101000000000000000400000000000000000000000000000743"
-"0x2a04000104000101000000000000000400000000000000000000000000000322"
-"0x2a0400010400010100000000000000040000000000000000000000000000024d"
-"0x2a040001040001010000000000000004000000000000000000000000000000d0"
-"0x2a040001040001010000000000000004000000000000000000000000000000be"
+locs=(
+29,-1
+66,17
+32,13
+24,10
   )
 
-addrs=(
-"0xec384b763895918c20A3E39Bd74207b53B51E6fd"
-"0xec384b763895918c20A3E39Bd74207b53B51E6fd"
-"0xec384b763895918c20A3E39Bd74207b53B51E6fd"
-"0xec384b763895918c20A3E39Bd74207b53B51E6fd"
-"0xec384b763895918c20A3E39Bd74207b53B51E6fd"
-  )
-
+chain=polygon
 # claim land from genesis holder
-# for id in "${ids[@]}"; do
-#   echo $id
-#   evo mkt-gen claim $id --chain heco
-#   sleep 3s
-# done
-
-from=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
-for (( i=0; i<${#ids[@]}; i++ ));
-do
-  to="${addrs[$i]}"
-  id="${ids[$i]}"
-  p "$id" "$to" 
-  # evo cmn-tkn owner $id --chain heco
-  evo cmn-tkn transferFrom "$from" "$to" "$id" --chain heco
-  sleep 3s
+for loc in "${locs[@]}"; do
+  locarray=(`echo $loc | tr ',' ' '`)
+  x="${locarray[0]}"
+  y="${locarray[1]}"
+  echo $x $y
+  landId=$(evo lnd-bas loc $(seth --to-int256 $x) $(seth --to-int256 $y) --chain $chain)
+  echo $landId
+  evo mkt-gen claim $landId --chain $chain
+  evo cmn-tkn owner $landId --chain $chain
+  # evo lnd-mst unbox $landId --chain $chain
+  sleep 1s
 done
 
+# echo "------------------------------------------------------------------"
+
+from=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
+to=0x11D2df6A2303f278Ab9dc200D29479E5E8e81B86
+for loc in "${locs[@]}"; do
+  locarray=(`echo $loc | tr ',' ' '`)
+  x="${locarray[0]}"
+  y="${locarray[1]}"
+  echo $x $y
+  landId=$(evo lnd-bas loc $(seth --to-int256 $x) $(seth --to-int256 $y) --chain $chain)
+  p "$landId" "$to"
+  evo cmn-tkn transferFrom "$from" "$to" "$landId" --chain $chain
+  sleep 1s
+done
