@@ -55,6 +55,10 @@ register "addr" "CONTRACT_METADATA_TELLER" "$METADATATELLER_PROXY"
 
 # 0 class drill rate
 drill=$(seth --to-bytes32  $(seth --from-ascii "CONTRACT_DRILL_BASE"))
+drillgrade0=$(seth --to-uint16 0)
+rate0=$(seth --to-uint256 1000000)
+seth send $METADATATELLER_PROXY "addInternalTokenMeta(bytes32,uint16,uint256)" $drill $drillgrade0 $rate0
+
 drillgrade1=$(seth --to-uint16 1)
 rate1=$(seth --to-uint256 1000000)
 seth send $METADATATELLER_PROXY "addInternalTokenMeta(bytes32,uint16,uint256)" $drill $drillgrade1 $rate1
