@@ -4,6 +4,7 @@ set -e
 
 . $(PWD)/bin/init
 
+RING=$TOKEN_ERC20_RING
 # points check
 # devPool=$(loadConf ".market.devPool")
 # seth call $USERPOINTS_PROXY "pointsSupply()(uint256)"
@@ -13,7 +14,7 @@ set -e
 # token balance $RING $POINTSREWARDPOOL_PROXY
 # token balance $RING $SNAPSHOTPROXY
 
-# seth send $REVENUEPOOL_PROXY "settleToken(address)" $RING
+seth send $REVENUEPOOL_PROXY "settleToken(address)" $RING
 
 # seth call $USERPOINTS_PROXY "pointsSupply()(uint256)"
 # seth call $POINTSREWARDPOOL_PROXY "totalRewardInPool(address)(uint256)" $RING
@@ -23,8 +24,8 @@ set -e
 # token balance $RING $SNAPSHOTPROXY
 
 # seth send $TOKEN_ERC20_RING "approve(address,uint256)" $REVENUEPOOL_PROXY $(seth --to-int256 -1)
-seth send $REVENUEPOOL_PROXY "reward(address,uint256,address)" $TOKEN_ERC20_RING $(seth --to-wei 110000 ether) $ETH_FROM
+# seth send $REVENUEPOOL_PROXY "reward(address,uint256,address)" $TOKEN_ERC20_RING $(seth --to-wei 110000 ether) $ETH_FROM
 
-seth send $POINTSREWARDPOOL_PROXY "playWithSmallTicket()"
-seth send $POINTSREWARDPOOL_PROXY "playWithLargeTicket()"
+# seth send $POINTSREWARDPOOL_PROXY "playWithSmallTicket()"
+# seth send $POINTSREWARDPOOL_PROXY "playWithLargeTicket()"
 

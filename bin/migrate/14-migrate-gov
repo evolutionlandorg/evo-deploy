@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="governance"
+
+dappUpgrade "$lib" contracts/EvolutionTeller.sol:EvolutionTeller "$SNAPSHOT_PROXY"
