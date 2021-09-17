@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -e
+
+p() { printf "%-44s %-66s\n" "$1" "$2"; }
+
+addrs=(
+0x0f00A6D5824C256EB3403D69E3d68d977Ea473b5
+0xBF44162160De5A72D16264592B182e2fE30Cf07A
+0x8306D7B380AdA3F71b1d0B53b39F9d8319C08832
+  )
+
+amounts=(
+2000
+500
+500
+  )
+
+
+ring=0x9C1C23E60B72Bc88a043bf64aFdb16A02540Ae8f
+for (( i=0; i<${#addrs[@]}; i++ ));
+do
+  to="${addrs[$i]}"
+  amount="${amounts[$i]}"
+  p "$to" "$amount" 
+  token transfer $ring  $to $(seth --to-wei $amount ether)
+  sleep 3s
+done
+

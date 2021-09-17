@@ -5,10 +5,6 @@ set -e
 p() { printf "%-66s %-66s\n" "$1" "$2"; }
 
 locs=(
-29,-1
-66,17
-32,13
-24,10
   )
 
 chain=polygon
@@ -26,10 +22,10 @@ for loc in "${locs[@]}"; do
   sleep 1s
 done
 
-# echo "------------------------------------------------------------------"
+echo "------------------------------------------------------------------"
 
 from=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
-to=0x11D2df6A2303f278Ab9dc200D29479E5E8e81B86
+to=0x0f00A6D5824C256EB3403D69E3d68d977Ea473b5
 for loc in "${locs[@]}"; do
   locarray=(`echo $loc | tr ',' ' '`)
   x="${locarray[0]}"
