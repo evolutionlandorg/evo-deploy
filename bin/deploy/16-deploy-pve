@@ -7,13 +7,13 @@ set -e
 lib="pve"
 
 sig="initialize(address)"
-PVEENTRY_PROXY=$(deployProxy "$lib" src/proxy/PveEntryProxy.sol:PveEntryProxy src/PveEntry.sol:PveEntry "$sig" "$SETTINGSREGISTRY")
+PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/PveTeamProxy.sol:PveTeamProxy src/PveTeam.sol:PveTeam "$sig" "$SETTINGSREGISTRY")
 
-wards=$(loadAuthConf ".pve.pveEntry.wards | .[]")
-sigs=$(loadAuthConf ".pve.pveEntry.sigs | .[]")
+wards=$(loadAuthConf ".pve.team.wards | .[]")
+sigs=$(loadAuthConf ".pve.team.sigs | .[]")
 PVEENTRY_AUTHORITY=$(dappAuth "PveEntry" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
 setAuth "$PVEENTRY_PROXY" "$PVEENTRY_AUTHORITY"
 
 seth send "$TOKENUSE_AUTHORITY" "rely(address)" "$PVEENTRY_PROXY"
 
-register "addr" "CONTRACT_PVE_ENTRY" "$PVEENTRY_PROXY"
+# register "addr" "CONTRACT_TEAM_ENTRY" "$PVETEAM_PROXY"

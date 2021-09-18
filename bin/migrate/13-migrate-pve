@@ -6,4 +6,4 @@ set -e
 
 lib="pve"
 
-dappUpgrade "$lib" src/PveEntry.sol:PveEntry "$PVEENTRY_PROXY"
+dappUpgrade "$lib" src/PveTeam.sol:PveTeam "$PVETEAM_PROXY"
