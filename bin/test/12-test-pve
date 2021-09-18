@@ -14,4 +14,5 @@ seth send $PVETEAM_PROXY "join(uint256,uint256)" 0 "$apo0"
 seth send $PVETEAM_PROXY "join(uint256,uint256)" 1 "$apo2"
 # seth send $LANDRESOURCE_PROXY "startMining(uint256,uint256,address)" $apo0 $land $TOKEN_ERC20_GOLD
 seth send $PVETEAM_PROXY "exit(uint256)" "$apo0"
+seth send $PVETEAM_PROXY "exit(uint256)" "$apo2"
 # seth send $PVETEAM_PROXY "evict(uint256)" "$apo0"
