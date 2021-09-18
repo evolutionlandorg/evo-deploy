@@ -11,9 +11,9 @@ PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/PveTeamProxy.sol:PveTeamProxy src/P
 
 wards=$(loadAuthConf ".pve.team.wards | .[]")
 sigs=$(loadAuthConf ".pve.team.sigs | .[]")
-PVEENTRY_AUTHORITY=$(dappAuth "PveEntry" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
-setAuth "$PVEENTRY_PROXY" "$PVEENTRY_AUTHORITY"
+PVETEAM_AUTHORITY=$(dappAuth "PveEntry" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$PVETEAM_PROXY" "$PVETEAM_AUTHORITY"
 
-seth send "$TOKENUSE_AUTHORITY" "rely(address)" "$PVEENTRY_PROXY"
+seth send "$TOKENUSE_AUTHORITY" "rely(address)" "$PVETEAM_PROXY"
 
 # register "addr" "CONTRACT_TEAM_ENTRY" "$PVETEAM_PROXY"
