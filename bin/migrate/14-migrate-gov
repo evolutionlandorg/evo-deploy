@@ -7,3 +7,8 @@ set -e
 lib="governance"
 
 dappUpgrade "$lib" contracts/EvolutionTeller.sol:EvolutionTeller "$SNAPSHOT_PROXY"
+
+# seth send $SNAPSHOT_PROXY "addRewardDistribution(address)" 0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
+# if test "$(seth call $SNAPSHOT_PROXY "rewardDistributions(address)(bool)" 0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6)" != true; then
+#   (echo "addRewardDistribution failed!"; exit 1)
+# fi
