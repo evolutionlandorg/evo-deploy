@@ -12,7 +12,7 @@ lib="land"
 # if test $(seth call $LANDRESOURCE_PROXY "implementation()(address)") != $LANDRESOURCEV6; then
 #   (echo "check migration failed."; exit 1;)
 # fi
-# echo >&2 "${0##*/}: info: migration finished." 
+# echo >&2 "${0##*/}: info: migration finished."
 
 # heco
 dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
