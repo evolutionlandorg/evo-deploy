@@ -31,7 +31,7 @@
             "xLow": 23,
             "xHigh": 67,
             "yLow": -22,
-            "yHigh": 22 
+            "yHigh": 22
         },
         "resourcesPool": {
             "gold": 3333,
@@ -72,6 +72,7 @@
         "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9"
     },
     "staker": {
-        "lpWETH": "0x90A6Ab74fb1170dD9AB82C037F39DE8336A20A39"
+        "lpWETH": "0x90A6Ab74fb1170dD9AB82C037F39DE8336A20A39",
+        "lpKTON": "0x585754dA3dd1bD42Cc58e8e7a2cD75BE8492ADD7"
     }
 }
