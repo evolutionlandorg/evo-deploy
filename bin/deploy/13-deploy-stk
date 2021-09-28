@@ -5,26 +5,32 @@ set -e
 . $(PWD)/bin/init
 
 rewardsToken=$TOKEN_ERC20_RING
-# stakingRewardsGenesis=$(seth block "latest" timestamp)
-# stakingRewardsGenesis=$(bc <<< "$stakingRewardsGenesis + 1 * 60")
-# # stakingRewardsGenesis=1626746400
+stakingRewardsGenesis=$(seth block "latest" timestamp)
+stakingRewardsGenesis=$(bc <<< "$stakingRewardsGenesis + 1 * 60")
+# stakingRewardsGenesis=1626746400
 # STAKINGREWARDSFACTORY=$(dappCreate staker src/StakingRewardsFactory.sol:StakingRewardsFactory "$rewardsToken" "$stakingRewardsGenesis")
 
-# TOKEN_LP_FIRE_RING="$(loadConf ".furnace.lpFIRE")"
-# TOKEN_LP_GOLD_RING="$(loadConf ".furnace.lpGOLD")"
-# TOKEN_LP_SOIL_RING="$(loadConf ".furnace.lpSOIL")"
-# TOKEN_LP_WATER_RING="$(loadConf ".furnace.lpWATER")"
-# TOKEN_LP_WOOD_RING="$(loadConf ".furnace.lpWOOD")"
-# TOKEN_LP_WETH_RING="$(loadConf ".staker.lpWETH")"
-# stakingTokens=("$TOKEN_LP_GOLD_RING" "$TOKEN_LP_WOOD_RING" "$TOKEN_LP_WATER_RING" "$TOKEN_LP_FIRE_RING" "$TOKEN_LP_SOIL_RING" "$TOKEN_LP_WETH_RING")
-# for stakingToken in "${stakingTokens[@]}"; do
-#   echo $stakingToken
-#   seth send $STAKINGREWARDSFACTORY "deploy(address)" "$stakingToken"
-#   # sleep 3s
-# done
-
-
-# register "addr" "CONTRACT_DIVIDENDS_POOL" "$STAKINGREWARDSFACTORY"
-
+TOKEN_LP_FIRE_RING="$(loadConf ".furnace.lpFIRE")"
+TOKEN_LP_GOLD_RING="$(loadConf ".furnace.lpGOLD")"
+TOKEN_LP_SOIL_RING="$(loadConf ".furnace.lpSOIL")"
+TOKEN_LP_WATER_RING="$(loadConf ".furnace.lpWATER")"
+TOKEN_LP_WOOD_RING="$(loadConf ".furnace.lpWOOD")"
+TOKEN_LP_WETH_RING="$(loadConf ".staker.lpWETH")"
 TOKEN_LP_WETH_KTON="$(loadConf ".staker.lpKTON")"
-seth send $STAKINGREWARDSFACTORY "deploy(address)" "$TOKEN_LP_WETH_KTON"
+stakingTokens=("$TOKEN_LP_GOLD_RING" "$TOKEN_LP_WOOD_RING" "$TOKEN_LP_WATER_RING" "$TOKEN_LP_FIRE_RING" "$TOKEN_LP_SOIL_RING" "$TOKEN_LP_WETH_RING" "$TOKEN_LP_WETH_KTON")
+for stakingToken in "${stakingTokens[@]}"; do
+  echo $stakingToken
+  seth send $STAKINGREWARDSFACTORY "deploy(address)" "$stakingToken"
+  sleep 5s
+done
+
+# set duration
+seth send $STAKINGREWARDSFACTORY "setRewardsDuration(uint256)" $((120*86400))
+
+# give revenue auth
+# wards=$(loadAuthConf ".staker.factory.wards | .[]")
+# sigs=$(loadAuthConf ".staker.factory.sigs | .[]")
+# STAKINGREWARDSFACTORY_AUTHORITY=$(dappAuth "STAKINGREWARDSFACTORY" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+# setAuth "$STAKINGREWARDSFACTORY" "$STAKINGREWARDSFACTORY_AUTHORITY"
+
+# seth send "$STAKINGREWARDSFACTORY_AUTHORITY" "rely(address)" "$REVENUEPOOL_PROXY"

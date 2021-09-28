@@ -6,8 +6,8 @@ set -e
 
 p() { printf "%-7s %-20s\n" "$1" "$2"; }
 
-STAKINGTOKEN=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" 6)
-echo $STAKINGTOKEN
+# STAKINGTOKEN=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" 1)
+# echo $STAKINGTOKEN
 # STAKING_LP_GOLD_RING=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $STAKINGTOKEN)
 
 # verify
@@ -26,12 +26,12 @@ echo $STAKINGTOKEN
 # seth send $STAKINGREWARDSFACTORY "recover(address)" $TOKEN_ERC20_RING
 
 # print staking reward contracts
-# for i in {0..5}; do
+# for i in {0..6}; do
 #   st=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" $i)
 #   p "staking" "$st"
 #   rw=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $st)
 #   p "reward" "$rw"
-#   stake
+#   # stake
 #   seth send $st "approve(address,uint256)" $rw $(seth --to-int256 -1)
 #   sleep 3s
 #   amount=$(seth --to-uint256 $(seth --to-wei 0.00001 ether))
@@ -41,17 +41,17 @@ echo $STAKINGTOKEN
 
 # notify
 # rewardAmount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
+rewardAmount=$(seth --to-uint256 $(seth --to-wei 1029602.859376741915976890 ether))
 # seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
-# sleep 3s
-# seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
-# sleep 3s
+seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
+sleep 3s
 
 # external notify
-externalReward=$(seth --to-uint256 $(seth --to-wei 100000 ether))
-seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $externalReward
-sleep 1s
-seth send $STAKINGREWARDSFACTORY "notifyRewardAmount(address,uint256)" $STAKINGTOKEN $externalReward
-sleep 1s
+# externalReward=$(seth --to-uint256 $(seth --to-wei 100000 ether))
+# seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $externalReward
+# sleep 1s
+# seth send $STAKINGREWARDSFACTORY "notifyRewardAmount(address,uint256)" $STAKINGTOKEN $externalReward
+# sleep 1s
 
 
 # for i in {0..5}; do

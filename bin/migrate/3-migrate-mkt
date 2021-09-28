@@ -10,15 +10,24 @@ lib="market-contracts"
 
 # register "addr" "CONTRACT_DIVIDENDS_POOL" "$STAKINGREWARDSFACTORY"
 
-register "addr" "CONTRACT_DIVIDENDS_POOL" "$SNAPSHOT_PROXY"
-register "addr" "CONTRACT_FARM_POOL" "$STAKINGREWARDSFACTORY"
+# register "addr" "CONTRACT_DIVIDENDS_POOL" "$SNAPSHOT_PROXY"
+# register "addr" "CONTRACT_FARM_POOL" "$STAKINGREWARDSFACTORY"
 
 # dappUpgrade "$lib" contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$POINTSREWARDPOOL_PROXY"
 
-# dappUpgrade "$lib" contracts/auction/RevenuePoolV5.sol:RevenuePoolV5 "$REVENUEPOOL_PROXY"
+# give revenue auth
+wards=$(loadAuthConf ".staker.factory.wards | .[]")
+sigs=$(loadAuthConf ".staker.factory.sigs | .[]")
+STAKINGREWARDSFACTORY_AUTHORITY=$(dappAuth "STAKINGREWARDSFACTORY" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$STAKINGREWARDSFACTORY" "$STAKINGREWARDSFACTORY_AUTHORITY"
+
+seth send "$STAKINGREWARDSFACTORY_AUTHORITY" "rely(address)" "$REVENUEPOOL_PROXY"
+
+dappUpgrade "$lib" contracts/auction/RevenuePoolV5.sol:RevenuePoolV5 "$REVENUEPOOL_PROXY"
+
 
 # # test
-# seth send "$TOKEN_ERC20_RING" "approve(address,uint256)" $REVENUEPOOL_PROXY $(seth --to-int256 -1) 
+# seth send "$TOKEN_ERC20_RING" "approve(address,uint256)" $REVENUEPOOL_PROXY $(seth --to-int256 -1)
 
 # seth send "$REVENUEPOOL_PROXY" "reward(address,uint256,address)" "$TOKEN_ERC20_RING" "$(seth --to-wei 20 ether)" "0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6"
 
