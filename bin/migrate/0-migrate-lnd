@@ -15,7 +15,11 @@ lib="land"
 # echo >&2 "${0##*/}: info: migration finished."
 
 # heco
+# donwgrade
 dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
+
+# upgrade
+# dappUpgrade "landrs" src/LandRSCore.sol:LandRSCore "$LANDRESOURCE_PROXY"
 
 
 # gold=$(loadConf ".land.resourcesPool.gold")
