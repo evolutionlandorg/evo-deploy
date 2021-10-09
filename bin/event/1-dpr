@@ -5,18 +5,12 @@ set -e
 p() { printf "%-66s %-66s\n" "$1" "$2"; }
 
 locs=(
-34,-13
-60,-10
-30,22
-42,21
-41,13
-49,18
+66,-20
+39,7
+65,-10
   )
 
 addrs=(
-0xb861f3ba538cea2774b09f043d55d31224262199
-0xb861f3ba538cea2774b09f043d55d31224262199
-0xb861f3ba538cea2774b09f043d55d31224262199
 0xb861f3ba538cea2774b09f043d55d31224262199
 0xb861f3ba538cea2774b09f043d55d31224262199
 0xd8125d0f1e44468a3ede84648db579df3fd4cc64
@@ -26,6 +20,7 @@ export SETH_ASYNC=yes
 chain=polygon
 from=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
 nonce=$(seth nonce $from --chain $chain)
+# echo "nonce: ${nonce}"
 # claim land from genesis holder
 # for loc in "${locs[@]}"; do
 #   locarray=(`echo $loc | tr ',' ' '`)
@@ -34,12 +29,13 @@ nonce=$(seth nonce $from --chain $chain)
 #   echo $x $y
 #   landId=$(evo lnd-bas loc $(seth --to-int256 $x) $(seth --to-int256 $y) --chain $chain)
 #   echo $landId
-#   nonce=$(( ${nonce} + 1 ))
 #   export ETH_NONCE=$nonce
 #   evo mkt-gen claim $landId --chain $chain
+#   nonce=$(( ${nonce} + 1 ))
 #   # evo cmn-tkn owner $landId --chain $chain
 #   # evo lnd-mst unbox $landId --chain $chain
 # done
+# echo "nonce: ${nonce}"
 
 echo "------------------------------------------------------------------"
 
