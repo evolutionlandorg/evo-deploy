@@ -5,15 +5,11 @@ set -e
 p() { printf "%-44s %-66s\n" "$1" "$2"; }
 
 addrs=(
-0x0f00A6D5824C256EB3403D69E3d68d977Ea473b5
-0xBF44162160De5A72D16264592B182e2fE30Cf07A
-0x8306D7B380AdA3F71b1d0B53b39F9d8319C08832
+0x35532A376C173664E48583f0d05a2e34Ea583971
   )
 
 amounts=(
-2000
-500
-500
+10000
   )
 
 
@@ -22,8 +18,7 @@ for (( i=0; i<${#addrs[@]}; i++ ));
 do
   to="${addrs[$i]}"
   amount="${amounts[$i]}"
-  p "$to" "$amount" 
+  p "$to" "$amount"
   token transfer $ring  $to $(seth --to-wei $amount ether)
-  sleep 3s
 done
 

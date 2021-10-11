@@ -16,12 +16,21 @@ lib="land"
 
 # heco
 # donwgrade
-dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
+# dappUpgrade "$lib" contracts/LandResourceV6.sol:LandResourceV6 "$LANDRESOURCE_PROXY"
 
 # upgrade
-# dappUpgrade "landrs" src/LandRSCore.sol:LandRSCore "$LANDRESOURCE_PROXY"
+# CONTRACT_LANDRS_APOSTLE=$(dappCreate "landrs" src/LandRSApostle.sol:LandRSApostle)
+# register "addr" "CONTRACT_LANDRS_APOSTLE" "$CONTRACT_LANDRS_APOSTLE"
 
+# CONTRACT_LANDRS_MINE=$(dappCreate "landrs" src/LandRSMine.sol:LandRSMine)
+# register "addr" "CONTRACT_LANDRS_MINE" "$CONTRACT_LANDRS_MINE"
 
+# CONTRACT_LANDRS_BAR=$(dappCreate "landrs" src/LandRSBar.sol:LandRSBar)
+# register "addr" "CONTRACT_LANDRS_BAR" "$CONTRACT_LANDRS_BAR"
+
+dappUpgrade "landrs" src/LandRSCore.sol:LandRSCore "$LANDRESOURCE_PROXY"
+
+# mysterioustreasure
 # gold=$(loadConf ".land.resourcesPool.gold")
 # wood=$(loadConf ".land.resourcesPool.wood")
 # water=$(loadConf ".land.resourcesPool.water")
