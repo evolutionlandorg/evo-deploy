@@ -30,13 +30,13 @@ set -e
 # seth send $METADATATELLER_PROXY "addInternalTokenMeta(bytes32,uint16,uint256)" $drill $drillgrade3 $rate3
 
 # 2 class
-# CONTRACT_LP_ELEMENT_TOKEN=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_LP_ELEMENT_TOKEN"))
-# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpGOLD")" 1
-# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWOOD")" 2
-# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWATER")" 3
-# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpFIRE")" 4
-# seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpSOIL")" 5
+CONTRACT_LP_ELEMENT_TOKEN=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_LP_ELEMENT_TOKEN"))
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpGOLD")" 1
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWOOD")" 2
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWATER")" 3
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpFIRE")" 4
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpSOIL")" 5
 
 # change drillLuckyBoxReleaseTime
-timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
-seth send "$DRILLLUCKYBOXV2" "setBeginTime(uint256)" $timestamp
+# timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
+# seth send "$DRILLLUCKYBOXV2" "setBeginTime(uint256)" $timestamp
