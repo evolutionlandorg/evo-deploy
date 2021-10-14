@@ -23,7 +23,7 @@ setAuth "$STAKINGREWARDSFACTORY" "$STAKINGREWARDSFACTORY_AUTHORITY"
 
 seth send "$STAKINGREWARDSFACTORY_AUTHORITY" "rely(address)" "$REVENUEPOOL_PROXY"
 
-dappUpgrade "$lib" contracts/auction/RevenuePoolV5.sol:RevenuePoolV5 "$REVENUEPOOL_PROXY"
+dappUpgrade "$lib" contracts/auction/RevenuePoolV6.sol:RevenuePoolV6 "$REVENUEPOOL_PROXY"
 
 
 # # test
