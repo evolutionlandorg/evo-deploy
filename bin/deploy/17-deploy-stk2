@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+rewardsToken=$TOKEN_ERC20_RING
+stakingToken="$(loadConf ".staker.lpDUSD")"
+
+
+STAKINGREWARDS_DUSD=$(dappCreate staker src/StakingRewardsSingle.sol:StakingRewardsSingle "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec" "$rewardsToken" "$stakingToken")
+
+# set duration
+seth send $STAKINGREWARDS_DUSD "setRewardsDuration(uint256)" $((30*86400))
+
+rewardAmount=$(seth --to-uint256 $(seth --to-wei 125000 ether))
+seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDS_DUSD $rewardAmount
+sleep 3s
+seth send $STAKINGREWARDS_DUSD "notifyRewardAmount(uint256)" $rewardAmount
+sleep 3s
