@@ -62,6 +62,7 @@
         "supervisor": "0x536DeaCEdC6E972822b9e78571786B5a6dd10c8A"
     },
     "staker": {
-        "lpWETH": "0x55C643AcA8b4cBaB1dBA05393fc0687bFbb9A98d"
+        "lpWETH": "0x55C643AcA8b4cBaB1dBA05393fc0687bFbb9A98d",
+        "lpDUSD": "0xcdB3FC40BC0D97A930f0D6F6f776CEfdb29C92b0"
     }
 }
