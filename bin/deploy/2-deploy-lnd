@@ -13,7 +13,7 @@ yHigh=$(seth --to-int256 $(loadConf ".land.base.yHigh"))
 sig="initializeContract(address,int256,int256,int256,int256)"
 LANDBASE_PROXY=$(deployProxy "$lib" src/proxy/LandBaseProxy.sol:LandBaseProxy contracts/LandBaseV2.sol:LandBaseV2 "$sig" "$SETTINGSREGISTRY" "$xLow" "$xHigh" "$yLow" "$yHigh")
 
-seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $LANDBASE_PROXY $(seth --to-hex 1) 
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $LANDBASE_PROXY $(seth --to-hex 1)
 register "addr" "CONTRACT_LAND_BASE" "$LANDBASE_PROXY"
 
 

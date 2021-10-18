@@ -14,7 +14,7 @@ register "addr" "CONTRACT_OBJECT_OWNERSHIP" "$OBJECTOWNERSHIP_PROXY"
 
 seth send $OBJECTOWNERSHIP_PROXY "setBaseTokenURI(string)" '"https://www.evolution.land/api/nft/metadata/"'
 
-seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1) 
+seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1)
 
 # TokenLocation
 sig="initializeContract()"
@@ -29,7 +29,7 @@ register "addr" "CONTRACT_TOKEN_USE" "$TOKENUSE_PROXY"
 
 register "uint" "UINT_TOKEN_OFFER_CUT" "$(loadConf ".common.tokenOfferCut")"
 
-# UserPoints 
+# UserPoints
 sig="initializeContract()"
 USERPOINTS_PROXY=$(deployProxy "$lib" src/proxy/UserPointsProxy.sol:UserPointsProxy contracts/UserPoints.sol:UserPoints "$sig")
 register "addr" "CONTRACT_USER_POINTS" "$USERPOINTS_PROXY"

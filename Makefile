@@ -31,7 +31,7 @@ solc-6: build-furnace build-raffle build-pve build-landrs proxy
 solc-7: build-governance
 
 proxy:
-	@source .env && dapp build
+	@source .env && dapp --use solc:0.6.7 build
 
 build-apostle:
 	@cd lib/apostle && (MAKE)

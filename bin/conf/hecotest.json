@@ -65,5 +65,8 @@
     "staker": {
         "lpWETH": "0x0e149833dd115F8637ec85D51033f77fB7603DF3",
         "lpDUSD": "0x8d9C7F55dB6f9BCc49559dF9608503E017303279"
+    },
+    "pve": {
+        "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9"
     }
 }
