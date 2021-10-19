@@ -14,8 +14,7 @@ rewardsToken=$TOKEN_ERC20_RING
 # seth send $STAKINGREWARDS_DUSD "setRewardsDuration(uint256)" $((30*86400))
 
 STAKINGREWARDS_DUSD=$STAKINGREWARDSSINGLE
-# rewardAmount=$(seth --to-uint256 $(seth --to-wei 125000 ether))
-rewardAmount=$(seth --to-uint256 $(seth --to-wei 10 ether))
+rewardAmount=$(seth --to-uint256 $(seth --to-wei 125000 ether))
 seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDS_DUSD $rewardAmount
 sleep 3s
 seth send $STAKINGREWARDS_DUSD "notifyRewardAmount(uint256)" $rewardAmount
