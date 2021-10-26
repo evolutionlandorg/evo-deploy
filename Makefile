@@ -80,6 +80,6 @@ clean   :
 
 test    : dapp test
 flat	:
-	@source .env && dapp flat
+	@source .env && dapp --use solc:0.6.7 flat
 deploy  :
 	make all && bash bin/deploy/deploy-all

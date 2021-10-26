@@ -8,5 +8,5 @@ lib="pve"
 
 # dappUpgrade "$lib" src/PveTeam.sol:PveTeam "$PVETEAM_PROXY"
 
-dappUpgrade "$lib" src/Material.sol:Material "$MATERIAL_PROXY"
-# dappUpgrade "$lib" src/MaterialTakeBack.sol:MaterialTakeBack "$MATERIALTAKEBACK_PROXY"
+# dappUpgrade "$lib" src/Material.sol:Material "$MATERIAL_PROXY"
+dappUpgrade "$lib" src/MaterialTakeBack.sol:MaterialTakeBack "$MATERIALTAKEBACK_PROXY"
