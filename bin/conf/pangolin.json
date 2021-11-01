@@ -1,10 +1,20 @@
 {
     "auth": "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
-    "multiSigWallet": {
+    "multiSigWalletContribution": {
         "owners": [
            "0x00e3993566b34e5367d1c602439997bd08c11ff7",
            "0x52386be2397e8eac26298f733b390684203fb580",
-           "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec"
+           "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+           "0xfF542BbB954E836f2fA1F2f53D5444aF36a701Ee"
+        ],
+        "required": 2
+    },
+    "multiSigWalletDev": {
+        "owners": [
+           "0x00e3993566b34e5367d1c602439997bd08c11ff7",
+           "0x52386be2397e8eac26298f733b390684203fb580",
+           "0x0f14341A7f464320319025540E8Fe48Ad0fe5aec",
+           "0xfF542BbB954E836f2fA1F2f53D5444aF36a701Ee"
         ],
         "required": 2
     },

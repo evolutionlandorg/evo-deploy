@@ -13,11 +13,11 @@ set -e
 
 # change operator
 landOperator=$(loadConf ".land.operator")
-# seth send $LANDBASE_AUTHORITY "rely(address)" "$landOperator"
+seth send $LANDBASE_AUTHORITY "rely(address)" "$landOperator"
 seth send $GENESISHOLDER_PROXY "setOperator(address)" $landOperator
 
-# apoOperator=$(loadConf ".apostle.operator")
-# seth send $GEN0APOSTLE_PROXY "setOperator(address)" $apoOperator
+apoOperator=$(loadConf ".apostle.operator")
+seth send $GEN0APOSTLE_PROXY "setOperator(address)" $apoOperator
 
 # tmp
 # seth send $GENESISHOLDER_PROXY "setOperator(address)" 0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6

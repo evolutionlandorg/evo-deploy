@@ -11,7 +11,7 @@ info "EVOProxyAdmin created."
 SETTINGSREGISTRY=$(dappCreate common-contracts contracts/SettingsRegistry.sol:SettingsRegistry)
 info "SettingsRegistry created."
 
-# INTERSTELLARENCODERV4 
+# INTERSTELLARENCODERV4
 chain_id=$(loadConf ".common.encoder.chainId")
 land_id=$(loadConf ".common.encoder.landId")
 INTERSTELLARENCODERV4=$(dappCreate common-contracts contracts/InterstellarEncoderV4.sol:InterstellarEncoderV4 $chain_id $land_id)
