@@ -47,7 +47,8 @@
         "gen0Limit": 10000000,
         "birthFee": "50000000000000000000",
         "mixTalent": "5000000000000000000",
-        "bidWaitingTime": 300
+        "bidWaitingTime": 300,
+        "changeClassFee": "500000000000000000000"
     },
     "market": {
         "contributionPool": "@MULTISIGWALLET",

@@ -22,3 +22,5 @@ register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
 
 # apo
 dappUpgrade "apostle" contracts/ApostleBaseV5.sol:ApostleBaseV5 "$APOSTLEBASE_PROXY"
+
+register "uint" "UINT_CHANGECLASS_FEE" "$(loadConf ".apostle.changeClassFee")"

@@ -7,8 +7,18 @@ set -e
 lib="pve"
 
 # dappUpgrade "$lib" src/PveTeam.sol:PveTeam "$PVETEAM_PROXY"
-seth send $PVETEAM_PROXY "setLock(uint256)" 86400
-seth call $PVETEAM_PROXY "lock()(uint256)"
+# seth send $PVETEAM_PROXY "setLock(uint256)" 86400
+# seth call $PVETEAM_PROXY "lock()(uint256)"
 
 # dappUpgrade "$lib" src/Material.sol:Material "$MATERIAL_PROXY"
 # dappUpgrade "$lib" src/MaterialTakeBack.sol:MaterialTakeBack "$MATERIALTAKEBACK_PROXY"
+
+# dappUpgrade "$lib" src/CraftBase.sol:CraftBase "$CRAFTBASE_PROXY"
+
+# CODEX_SWORD=$(dappCreate "pve" src/codex/codex-sword.sol:CodexSword)
+# register "addr" "CONTRACT_SWORD_CODEX" "$CODEX_SWORD"
+
+# CODEX_SHIELD=$(dappCreate "pve" src/codex/codex-shield.sol:CodexShield)
+# register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
+
+register "uint" "UINT_CHANGECLASS_FEE" "$(loadConf ".apostle.changeClassFee")"
