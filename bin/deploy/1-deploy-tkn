@@ -24,7 +24,7 @@ done
 register "addr" "CONTRACT_RING_ERC20_TOKEN" "$TOKEN_ERC20_RING"
 register "addr" "CONTRACT_KTON_ERC20_TOKEN" "$TOKEN_ERC20_KTON"
 
-# wring=$(dappCreate token-contracts src/WCRING.sol:WCRING)
+# wring=$(dappCreate token-contracts src/WCRAB.sol:WCRAB)
 # addAddress "TOKEN_ERC20_WRING" $wring
 
 # wkton=$(dappCreate token-contracts src/WCKTON.sol:WCKTON)
