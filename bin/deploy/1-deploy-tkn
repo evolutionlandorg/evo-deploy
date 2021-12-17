@@ -4,28 +4,28 @@ set -e
 
 . $(PWD)/bin/init
 
-tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO")
+# tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO")
 # tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO" "RING" "KTON")
 
-for token in "${tokens[@]}"; do
-    address=$(dappCreate token-contracts "src/${token}.sol:${token}")
-    setting=$token
-    if [[ "$setting" = "HHO" ]]; then
-      setting="WATER"
-    fi
-    if [[ "$setting" = "SIOO" ]]; then
-      setting="SOIL"
-    fi
-    addAddress "TOKEN_ERC20_$setting" "$address"
-    id="CONTRACT_${setting}_ERC20_TOKEN"
-    register "addr" "$id" "$address"
-done
+# for token in "${tokens[@]}"; do
+#     address=$(dappCreate token-contracts "src/${token}.sol:${token}")
+#     setting=$token
+#     if [[ "$setting" = "HHO" ]]; then
+#       setting="WATER"
+#     fi
+#     if [[ "$setting" = "SIOO" ]]; then
+#       setting="SOIL"
+#     fi
+#     addAddress "TOKEN_ERC20_$setting" "$address"
+#     id="CONTRACT_${setting}_ERC20_TOKEN"
+#     register "addr" "$id" "$address"
+# done
 
-register "addr" "CONTRACT_RING_ERC20_TOKEN" "$TOKEN_ERC20_RING"
-register "addr" "CONTRACT_KTON_ERC20_TOKEN" "$TOKEN_ERC20_KTON"
+# register "addr" "CONTRACT_RING_ERC20_TOKEN" "$TOKEN_ERC20_RING"
+# register "addr" "CONTRACT_KTON_ERC20_TOKEN" "$TOKEN_ERC20_KTON"
 
-# wring=$(dappCreate token-contracts src/WCRAB.sol:WCRAB)
-# addAddress "TOKEN_ERC20_WRING" $wring
+wring=$(dappCreate token-contracts src/WCRAB.sol:WCRAB)
+addAddress "TOKEN_ERC20_WCRAB" $wring
 
 # wkton=$(dappCreate token-contracts src/WCKTON.sol:WCKTON)
 # addAddress "TOKEN_ERC20_WKTON" $wkton

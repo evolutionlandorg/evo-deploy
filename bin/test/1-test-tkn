@@ -8,16 +8,16 @@ set -e
 # seth send "$TOKEN_ERC20_RING" "changeCap(uint256)" "$cap"
 
 # test mint
-amount=$(seth --to-uint256 $(seth --to-wei 3000000 ether))
-shell1=0x735182c782CB8e7806F8903dE7913e6880CbF82E
+# amount=$(seth --to-uint256 $(seth --to-wei 3000000 ether))
+# shell1=0x735182c782CB8e7806F8903dE7913e6880CbF82E
 # xuelei=0x245B4775082C144C22a4874B0fBa8c70c510c5AE
 # jay=0xf422673CB7a673f595852f7B00906408A0b073db
 # tiny=0xa1511E5C683A007056CAa1d9A8D6A37464826280
-tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
+# tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
 # tokens=("RING" "KTON")
-for token in "${tokens[@]}"; do
-  seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(address,uint256)" "$shell1" "$amount"
-done
+# for token in "${tokens[@]}"; do
+#   seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(address,uint256)" "$shell1" "$amount"
+# done
 
 # polygon mint
 # addrs=(
@@ -50,7 +50,10 @@ done
 # token balance $TOKEN_ERC20_WKTON $AUTH
 
 # WRING
-# seth send -V "$(seth --to-wei 1 ether)"  "$TOKEN_ERC20_RING" "deposit()" 
+wad=$(seth --to-wei 1 ether)
+seth send -V "$wad"  "$TOKEN_ERC20_WCRAB" "deposit()"
+
+seth send "$TOKEN_ERC20_WCRAB" "withdraw(uint256)" $wad
 
 # TO=0x0000000000000000000000000000000000000015
 # 0x8cbf52d3e8a22ecf6a03a49ce77ebba46220262f4d0ee7566aa741e69ee23839(2rMRC7MACm9UhTr5k1qDx7LmkgXu158CCr619ZYZjXBgTXr2)
