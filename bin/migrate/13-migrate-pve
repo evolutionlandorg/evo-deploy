@@ -13,9 +13,9 @@ lib="pve"
 # dappUpgrade "$lib" src/Material.sol:Material "$MATERIAL_PROXY"
 # dappUpgrade "$lib" src/MaterialTakeBack.sol:MaterialTakeBack "$MATERIALTAKEBACK_PROXY"
 
-# dappUpgrade "$lib" src/CraftBase.sol:CraftBase "$CRAFTBASE_PROXY"
+dappUpgrade "$lib" src/CraftBase.sol:CraftBase "$CRAFTBASE_PROXY"
 
-dappUpgrade "apostle" contracts/ApostleBaseV5.sol:ApostleBaseV5 "$APOSTLEBASE_PROXY"
+# dappUpgrade "apostle" contracts/ApostleBaseV5.sol:ApostleBaseV5 "$APOSTLEBASE_PROXY"
 
 # CODEX_SWORD=$(dappCreate "pve" src/codex/codex-sword.sol:CodexSword)
 # register "addr" "CONTRACT_SWORD_CODEX" "$CODEX_SWORD"
