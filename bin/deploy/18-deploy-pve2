@@ -20,12 +20,12 @@ register "addr" "CONTRACT_SWORD_CODEX" "$CODEX_SWORD"
 CODEX_SHIELD=$(dappCreate "pve" src/codex/codex-shield.sol:CodexShield)
 register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
 
-# register "addr" "CONTRACT_LP_GOLD_ERC20_TOKEN" "$(loadConf ".furnace.lpGOLD")"
-# register "addr" "CONTRACT_LP_WOOD_ERC20_TOKEN" "$(loadConf ".furnace.lpWOOD")"
-# register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
-# register "addr" "CONTRACT_LP_FIRE_ERC20_TOKEN" "$(loadConf ".furnace.lpFIRE")"
-# register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$(loadConf ".furnace.lpSOIL")"
-CODEX_PREFER=$(dappCreate "pve" src/codex/codex-prefer.sol:CodexPrefer)
+register "addr" "CONTRACT_LP_GOLD_ERC20_TOKEN" "$(loadConf ".furnace.lpGOLD")"
+register "addr" "CONTRACT_LP_WOOD_ERC20_TOKEN" "$(loadConf ".furnace.lpWOOD")"
+register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
+register "addr" "CONTRACT_LP_FIRE_ERC20_TOKEN" "$(loadConf ".furnace.lpFIRE")"
+register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$(loadConf ".furnace.lpSOIL")"
+CODEX_PREFER=$(dappCreate "pve" src/codex/codex-prefer.sol:CodexPrefer $SETTINGSREGISTRY)
 register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"
 
 # apo
