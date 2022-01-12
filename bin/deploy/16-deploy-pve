@@ -6,38 +6,38 @@ set -e
 
 lib="pve"
 
-# sig="initialize(address)"
-# PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/PveTeamProxy.sol:PveTeamProxy src/PveTeam.sol:PveTeam "$sig" "$SETTINGSREGISTRY")
+sig="initialize(address)"
+PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/PveTeamProxy.sol:PveTeamProxy src/PveTeam.sol:PveTeam "$sig" "$SETTINGSREGISTRY")
 
-# wards=$(loadAuthConf ".pve.team.wards | .[]")
-# sigs=$(loadAuthConf ".pve.team.sigs | .[]")
-# PVETEAM_AUTHORITY=$(dappAuth "PveEntry" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
-# setAuth "$PVETEAM_PROXY" "$PVETEAM_AUTHORITY"
-# seth send "$TOKENUSE_AUTHORITY" "rely(address)" "$PVETEAM_PROXY"
+wards=$(loadAuthConf ".pve.team.wards | .[]")
+sigs=$(loadAuthConf ".pve.team.sigs | .[]")
+PVETEAM_AUTHORITY=$(dappAuth "PveEntry" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$PVETEAM_PROXY" "$PVETEAM_AUTHORITY"
+seth send "$TOKENUSE_AUTHORITY" "rely(address)" "$PVETEAM_PROXY"
 
-# register "addr" "CONTRACT_TEAM_ENTRY" "$PVETEAM_PROXY"
+register "addr" "CONTRACT_TEAM_ENTRY" "$PVETEAM_PROXY"
 
 # materail
-# CODEX=$(dappCreate "$lib" src/Codex.sol:Codex)
-# CODEX_PROXY=$(dappProxy "src/proxy/MaterialCodexProxy.sol:MaterialCodexProxy" "$CODEX" "${EVOPROXYADMIN?}" "0x")
-# register "addr" "CONTRACT_MATERIAL_CODEX" "$CODEX_PROXY"
+CODEX=$(dappCreate "$lib" src/Codex.sol:Codex)
+CODEX_PROXY=$(dappProxy "src/proxy/MaterialCodexProxy.sol:MaterialCodexProxy" "$CODEX" "${EVOPROXYADMIN?}" "0x")
+register "addr" "CONTRACT_MATERIAL_CODEX" "$CODEX_PROXY"
 
-# sig="initialize(address)"
-# MATERIAL_PROXY=$(deployProxy "$lib" src/proxy/MaterialProxy.sol:MaterialProxy src/Material.sol:Material "$sig" "$SETTINGSREGISTRY")
-# register "addr" "CONTRACT_MATERIAL" "$MATERIAL_PROXY"
+sig="initialize(address)"
+MATERIAL_PROXY=$(deployProxy "$lib" src/proxy/MaterialProxy.sol:MaterialProxy src/Material.sol:Material "$sig" "$SETTINGSREGISTRY")
+register "addr" "CONTRACT_MATERIAL" "$MATERIAL_PROXY"
 
-# seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $MATERIAL_PROXY $(seth --to-hex 11)
-# seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $CODEX_PROXY $(seth --to-hex 11)
+seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $MATERIAL_PROXY $(seth --to-hex 11)
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $CODEX_PROXY $(seth --to-hex 11)
 
-# sig="initialize(address,address,uint256)"
-# supervisor=$(loadConf ".pve.supervisor")
-# networkId=$(seth --to-uint256 $(seth rpc net_version))
-# MATERIALTAKEBACK_PROXY=$(deployProxy "$lib" src/proxy/MaterialTakeBackProxy.sol:MaterialTakeBackProxy src/MaterialTakeBack.sol:MaterialTakeBack "$sig" "$SETTINGSREGISTRY" "$supervisor" "$networkId")
+sig="initialize(address,address,uint256)"
+supervisor=$(loadConf ".pve.supervisor")
+networkId=$(seth --to-uint256 $(seth rpc net_version))
+MATERIALTAKEBACK_PROXY=$(deployProxy "$lib" src/proxy/MaterialTakeBackProxy.sol:MaterialTakeBackProxy src/MaterialTakeBack.sol:MaterialTakeBack "$sig" "$SETTINGSREGISTRY" "$supervisor" "$networkId")
 
-# wards=$(loadAuthConf ".pve.material.wards | .[]")
-# sigs=$(loadAuthConf ".pve.material.sigs | .[]")
-# MATERIAL_AUTHORITY=$(dappAuth "PveMaterial" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
-# setAuth "$MATERIAL_PROXY" "$MATERIAL_AUTHORITY"
-# seth send "$MATERIAL_AUTHORITY" "rely(address)" "$MATERIALTAKEBACK_PROXY"
+wards=$(loadAuthConf ".pve.material.wards | .[]")
+sigs=$(loadAuthConf ".pve.material.sigs | .[]")
+MATERIAL_AUTHORITY=$(dappAuth "PveMaterial" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+setAuth "$MATERIAL_PROXY" "$MATERIAL_AUTHORITY"
+seth send "$MATERIAL_AUTHORITY" "rely(address)" "$MATERIALTAKEBACK_PROXY"
 
-seth send $MATERIAL_PROXY "setURI(string)" '"https://www.evolution.land/api/nft/metadata/"'
+# seth send $MATERIAL_PROXY "setURI(string)" '"https://www.evolution.land/api/nft/metadata/"'
