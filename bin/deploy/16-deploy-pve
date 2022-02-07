@@ -32,7 +32,7 @@ seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $CODEX_
 sig="initialize(address,address,uint256)"
 supervisor=$(loadConf ".pve.supervisor")
 networkId=$(seth --to-uint256 $(seth rpc net_version))
-MATERIALTAKEBACK_PROXY=$(deployProxy "$lib" src/proxy/MaterialTakeBackProxy.sol:MaterialTakeBackProxy src/MaterialTakeBack.sol:MaterialTakeBack "$sig" "$SETTINGSREGISTRY" "$supervisor" "$networkId")
+export MATERIALTAKEBACK_PROXY=$(deployProxy "$lib" src/proxy/MaterialTakeBackProxy.sol:MaterialTakeBackProxy src/MaterialTakeBack.sol:MaterialTakeBack "$sig" "$SETTINGSREGISTRY" "$supervisor" "$networkId")
 
 wards=$(loadAuthConf ".pve.material.wards | .[]")
 sigs=$(loadAuthConf ".pve.material.sigs | .[]")
@@ -40,4 +40,4 @@ MATERIAL_AUTHORITY=$(dappAuth "PveMaterial" common-contracts contracts/Authority
 setAuth "$MATERIAL_PROXY" "$MATERIAL_AUTHORITY"
 seth send "$MATERIAL_AUTHORITY" "rely(address)" "$MATERIALTAKEBACK_PROXY"
 
-# seth send $MATERIAL_PROXY "setURI(string)" '"https://www.evolution.land/api/nft/metadata/"'
+seth send $MATERIAL_PROXY "setURI(string)" '"https://www.evolution.land/api/nft/metadata/"'

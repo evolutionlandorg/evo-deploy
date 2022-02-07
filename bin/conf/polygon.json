@@ -45,7 +45,8 @@
         "gen0Limit": 10000000,
         "birthFee": "50000000000000000000",
         "mixTalent": "5000000000000000000",
-        "bidWaitingTime": 600
+        "bidWaitingTime": 600,
+        "changeClassFee": "500000000000000000000"
     },
     "market": {
         "contributionPool": "@MULTISIGWALLETCONTRIBUTION",
@@ -72,5 +73,8 @@
     "staker": {
         "lpWETH": "0x610A9007FD86C960ccB717783f88347A2c154D4E",
         "lpKTON": "0x33D6683912457adE6137EC0c97c5864B2Cf3176C"
+    },
+    "pve": {
+        "supervisor": "0x536DeaCEdC6E972822b9e78571786B5a6dd10c8A"
     }
 }
