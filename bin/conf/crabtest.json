@@ -45,10 +45,10 @@
     "apostle": {
         "operator": "0x453Bf34bB36BF37483768bc273629d1ca367b2fB",
         "gen0Limit": 10000000,
-        "birthFee": "50000000000000000000",
-        "mixTalent": "5000000000000000000",
+        "birthFee": "50000000000",
+        "mixTalent": "5000000000",
         "bidWaitingTime": 600,
-        "changeClassFee": "500000000000000000000"
+        "changeClassFee": "500000000000"
     },
     "market": {
         "contributionPool": "@MULTISIGWALLETCONTRIBUTION",
@@ -57,8 +57,8 @@
         "auctionCut": 400,
         "bidWaitingTime": 1800,
         "refererCut": 2000,
-        "playSmallTicketFee": 10,
-        "playLargeTicketFee": 100
+        "playSmallTicketFee": 10000000000,
+        "playLargeTicketFee": 100000000000
     },
     "furnace": {
         "lpGOLD": "",
