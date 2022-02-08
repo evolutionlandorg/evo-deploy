@@ -14,6 +14,7 @@
 
 - [Ropsten](./doc/testnet/Ropsten.md)
 - [Shasta](./doc/testnet/Shasta.md)
+- [Crab Test](./doc/testnet/CrabTest.md)
 - [Pangolin](./doc/testnet/Pangolin.md)
 - [Heco Testnet](./doc/testnet/HecoTest.md)
 - [Polygon Mumbai](./doc/testnet/Mumbai.md)
