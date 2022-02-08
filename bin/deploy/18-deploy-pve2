@@ -26,8 +26,8 @@ register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
 # register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
 # register "addr" "CONTRACT_LP_FIRE_ERC20_TOKEN" "$(loadConf ".furnace.lpFIRE")"
 # register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$(loadConf ".furnace.lpSOIL")"
-# CODEX_PREFER=$(dappCreate "pve" src/codex/codex-prefer.sol:CodexPrefer $SETTINGSREGISTRY)
-# register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"
+CODEX_PREFER=$(dappCreate "pve" src/codex/codex-preferV0.sol:CodexPreferV0 $SETTINGSREGISTRY)
+register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"
 
 # apo
 # dappUpgrade "apostle" contracts/ApostleBaseV5.sol:ApostleBaseV5 "$APOSTLEBASE_PROXY"
