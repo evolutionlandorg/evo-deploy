@@ -39,7 +39,7 @@ toLower() {
 }
 
 addAddress() {
-    if [ -z "$1" ] || [ -z "$2" ] 
+    if [ -z "$1" ] || [ -z "$2" ]
       then
         echo "addAddress: No argument supplied"
         exit 1
@@ -63,9 +63,9 @@ if ! [[ $SETH_INIT ]]; then
   [[ $(pwd) != ~ && -e .sethrc ]] && . .sethrc
 fi
 
-if [[ "$SETH_CHAIN?" ]]; then  
+if [[ "$SETH_CHAIN?" ]]; then
   case "$SETH_CHAIN" in
-    ropsten|pangolin|crab|heco|hecotest|bsc|bsctest|polygon|mumbai)
+    ropsten|pangolin|crab|crabtest|heco|hecotest|bsc|bsctest|polygon|mumbai)
       config-init "${PWD}/bin/addr/${SETH_CHAIN}.json";
       config_file="${PWD}/bin/conf/${SETH_CHAIN}.json";
       ;;
@@ -126,7 +126,7 @@ dappAuth() {
   local g=$( IFS=$','; echo "${n[*]}")
   local m=($(echo ${wards} | tr " " "\n"))
   local s=()
-  for ward in "${m[@]}"; do 
+  for ward in "${m[@]}"; do
     s+=("$(seth lookup $ward)")
   done
   local l=$( IFS=$','; echo "${s[*]}")
@@ -159,11 +159,11 @@ dappUpgrade() {
   local class; class=$2
   local proxy; proxy=$3
   newImp=$(dappCreate "$lib" "$class" )
-  seth send "$EVOPROXYADMIN" "upgrade(address,address)" "$proxy" "$newImp" 
+  seth send "$EVOPROXYADMIN" "upgrade(address,address)" "$proxy" "$newImp"
   if test $(seth call "$EVOPROXYADMIN" "getProxyImplementation(address)(address)" "$proxy") != "$newImp"; then
     (info "${class#*:} check migration failed."; exit 1;)
   fi
-  info "${class#*:} migration finished." 
+  info "${class#*:} migration finished."
 }
 
 dappProxy() {
@@ -187,11 +187,11 @@ addressOf() {
 setAddress() {
   local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
   local addr="${2?}"
-  if [[ $addr = @* ]]; then 
+  if [[ $addr = @* ]]; then
     addr=$(seth lookup "$addr")
   fi
-  seth send "${SETTINGSREGISTRY?}" "setAddressProperty(bytes32,address)" "$id" "$addr" 
-  if test "$(seth --to-checksum-address $addr)" != "$(addressOf $1)"; then 
+  seth send "${SETTINGSREGISTRY?}" "setAddressProperty(bytes32,address)" "$id" "$addr"
+  if test "$(seth --to-checksum-address $addr)" != "$(addressOf $1)"; then
     (echo "registry $1 failed!"; exit 1;)
   fi
   info "$1 regisered."
@@ -206,8 +206,8 @@ setUint() {
   set -e
   local id=$(seth --to-bytes32 $(seth --from-ascii "${1?}"))
   local addr="${2?}"
-  seth send "${SETTINGSREGISTRY?}" "setUintProperty(bytes32,uint256)" "$id" "$addr" 
-  if test "$addr" != "$(uintOf $1)"; then 
+  seth send "${SETTINGSREGISTRY?}" "setUintProperty(bytes32,uint256)" "$id" "$addr"
+  if test "$addr" != "$(uintOf $1)"; then
     (echo "registry $1 failed!"; exit 1;)
   fi
   info "$1 regisered."
@@ -223,8 +223,8 @@ setAuth() {
   set -e
   local proxy="${1?}";
   local auth="${2?}";
-  seth send "$proxy" "setAuthority(address)" "$auth" 
-  if test "$(seth --to-checksum-address $auth)" != "$(authOf $proxy)"; then 
+  seth send "$proxy" "setAuthority(address)" "$auth"
+  if test "$(seth --to-checksum-address $auth)" != "$(authOf $proxy)"; then
     (echo "$proxy setAuthority ${auth} failed!"; exit 1;)
   fi
 }
@@ -242,7 +242,7 @@ register() {
 
 
 loadConf() {
-  if [ -z "$1" ]  
+  if [ -z "$1" ]
     then
       echo "conf: Invalid key"
       exit 1
@@ -252,7 +252,7 @@ loadConf() {
 }
 
 loadAuthConf() {
-  if [ -z "$1" ]  
+  if [ -z "$1" ]
     then
       echo "conf: Invalid key"
       exit 1
@@ -261,5 +261,5 @@ loadAuthConf() {
   jq -r "${key}" "$AUTH_CONFIG_FILE"
 }
 
-export CONFIG_FILE="${config_file-${PWD}/bin/conf/default.json}" 
-export AUTH_CONFIG_FILE="${auth_config_file-${PWD}/bin/conf/auth.json}" 
+export CONFIG_FILE="${config_file-${PWD}/bin/conf/default.json}"
+export AUTH_CONFIG_FILE="${auth_config_file-${PWD}/bin/conf/auth.json}"
