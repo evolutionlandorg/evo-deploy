@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+register "uint" "UINT_AUTOBIRTH_FEE" "$(loadConf ".apostle.birthFee")"
+register "uint" "UINT_MIX_TALENT" "$(loadConf ".apostle.mixTalent")"
+register "uint" "UINT_CHANGECLASS_FEE" "$(loadConf ".apostle.changeClassFee")"
+register "uint" "UINT_SMALL_TICKET_FEE" "$(loadConf ".market.playSmallTicketFee")"
+register "uint" "UINT_LARGE_TICKET_FEE" "$(loadConf ".market.playLargeTicketFee")"
