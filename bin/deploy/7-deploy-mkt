@@ -17,9 +17,9 @@ TAKEBACK_RING=$(dappCreate "$lib" contracts/id/TakeBack.sol:TakeBack $TOKEN_ERC2
 
 TAKEBAK_NFT=$(dappCreate "$lib" contracts/id/TakeBackNFT.sol:TakeBackNFT $SUPERVISOR $networkId)
 
-# ClockAuctionV3
+# ClockAuctionV4
 sig="initializeContract(address)"
-CLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/ClockAuctionProxy.sol:ClockAuctionProxy contracts/auction/ClockAuctionV3.sol:ClockAuctionV3 "$sig" "$SETTINGSREGISTRY")
+CLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/ClockAuctionProxy.sol:ClockAuctionProxy contracts/auction/ClockAuctionV4.sol:ClockAuctionV4 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_CLOCK_AUCTION" "$CLOCKAUCTION_PROXY"
 
 # GenesisHolderV2
@@ -29,14 +29,14 @@ GENESISHOLDER_PROXY=$(deployProxy "$lib" src/proxy/GenesisHolderProxy.sol:Genesi
 seth send $GENESISHOLDER_PROXY "setOperator(address)" $operator
 register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"
 
-# RevenuePoolV3
+# RevenuePoolV6
 sig="initializeContract(address)"
-REVENUEPOOL_PROXY=$(deployProxy "$lib" src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy contracts/auction/RevenuePoolV3.sol:RevenuePoolV3 "$sig" "$SETTINGSREGISTRY")
+REVENUEPOOL_PROXY=$(deployProxy "$lib" src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy contracts/auction/RevenuePoolV6.sol:RevenuePoolV6 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_REVENUE_POOL" "$REVENUEPOOL_PROXY"
 
-# PointsRewardPoolV2
+# PointsRewardPoolV3
 sig="initializeContract(address)"
-POINTSREWARDPOOL_PROXY=$(deployProxy "$lib" src/proxy/PointsRewardPoolProxy.sol:PointsRewardPoolProxy contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$sig" "$SETTINGSREGISTRY")
+POINTSREWARDPOOL_PROXY=$(deployProxy "$lib" src/proxy/PointsRewardPoolProxy.sol:PointsRewardPoolProxy contracts/auction/PointsRewardPoolV3.sol:PointsRewardPoolV3 "$sig" "$SETTINGSREGISTRY")
 info "PointsRewardPoolProxy created."
 register "addr" "CONTRACT_POINTS_REWARD_POOL" "$POINTSREWARDPOOL_PROXY"
 
@@ -49,6 +49,8 @@ register "addr" "CONTRACT_DEV_POOL" "$devPool"
 # LuckyBox
 
 # SettingIds
+register "uint" "UINT_SMALL_TICKET_FEE" "$(loadConf ".market.playSmallTicketFee")"
+register "uint" "UINT_LARGE_TICKET_FEE" "$(loadConf ".market.playLargeTicketFee")"
 # 4%
 register "uint" "UINT_AUCTION_CUT" "$(loadConf ".market.auctionCut")"
 

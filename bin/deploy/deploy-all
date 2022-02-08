@@ -14,8 +14,10 @@ set -e
 # . $(PWD)/bin/deploy/6-deploy-id
 . $(PWD)/bin/deploy/7-deploy-mkt
 . $(PWD)/bin/deploy/8-deploy-fnc
+. $(PWD)/bin/deploy/16-deploy-pve
+. $(PWD)/bin/deploy/18-deploy-pve2
 . $(PWD)/bin/deploy/9-deploy-auth
 # . $(PWD)/bin/deploy/10-deploy-registry
-. $(PWD)/bin/deploy/11-deploy-gov
+# . $(PWD)/bin/deploy/11-deploy-gov
 . $(PWD)/bin/deploy/13-deploy-stk
 . $(PWD)/bin/deploy/15-deploy-mtc

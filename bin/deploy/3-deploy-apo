@@ -5,15 +5,15 @@ set -e
 . $(PWD)/bin/init
 
 lib="apostle"
-# ApostleBaseV3
+# ApostleBaseV5
 sig="initializeContract(address)"
-APOSTLEBASE_PROXY=$(deployProxy "$lib" src/proxy/ApostleBaseProxy.sol:ApostleBaseProxy contracts/ApostleBaseV3.sol:ApostleBaseV3 "$sig" "$SETTINGSREGISTRY")
+APOSTLEBASE_PROXY=$(deployProxy "$lib" src/proxy/ApostleBaseProxy.sol:ApostleBaseProxy contracts/ApostleBaseV5.sol:ApostleBaseV5 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_APOSTLE_BASE" "$APOSTLEBASE_PROXY"
-seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $APOSTLEBASE_PROXY $(seth --to-hex 2) 
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $APOSTLEBASE_PROXY $(seth --to-hex 2)
 
-# ApostleClockAuction
+# ApostleClockAuctionV3
 sig="initializeContract(address)"
-APOSTLECLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/ApostleClockAuctionProxy.sol:ApostleClockAuctionProxy contracts/ApostleClockAuctionV2.sol:ApostleClockAuctionV2 "$sig" "$SETTINGSREGISTRY")
+APOSTLECLOCKAUCTION_PROXY=$(deployProxy "$lib" src/proxy/ApostleClockAuctionProxy.sol:ApostleClockAuctionProxy contracts/ApostleClockAuctionV3.sol:ApostleClockAuctionV3 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_APOSTLE_AUCTION" "$APOSTLECLOCKAUCTION_PROXY"
 
 # Gen0ApostleV3

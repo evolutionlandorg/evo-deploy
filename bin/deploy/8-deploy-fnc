@@ -10,7 +10,7 @@ lib="furnace"
 sig="initialize(address)"
 DRILLBASE_PROXY=$(deployProxy2 "$lib" src/DrillBaseProxy.sol:DrillBaseProxy src/DrillBase.sol:DrillBase "$sig" "$SETTINGSREGISTRY")
 
-seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $DRILLBASE_PROXY $(seth --to-hex 4) 
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $DRILLBASE_PROXY $(seth --to-hex 4)
 if test $(seth call $INTERSTELLARENCODERV4 "classAddress2Id(address)(uint8)" $DRILLBASE_PROXY) != 4; then
   (echo "check classAddress2Id failed."; exit 1;)
 fi
@@ -26,7 +26,7 @@ register "addr" "CONTRACT_FORMULA" "$FORMULA_PROXY"
 sig="initialize(address)"
 ITEMBASE_PROXY=$(deployProxy2 "$lib" src/ItemBaseProxy.sol:ItemBaseProxy src/ItemBase.sol:ItemBase "$sig" "$SETTINGSREGISTRY")
 
-seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $ITEMBASE_PROXY $(seth --to-hex 5) 
+seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $ITEMBASE_PROXY $(seth --to-hex 5)
 ITEM_ID=$(seth call $INTERSTELLARENCODERV4 "classAddress2Id(address)(uint8)" $ITEMBASE_PROXY)
 if test "$ITEM_ID"  != 5; then
   (echo "check classAddress2Id failed."; exit 1;)

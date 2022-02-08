@@ -56,7 +56,9 @@
         "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9",
         "auctionCut": 400,
         "bidWaitingTime": 1800,
-        "refererCut": 2000
+        "refererCut": 2000,
+        "playSmallTicketFee": 10,
+        "playLargeTicketFee": 100
     },
     "furnace": {
         "lpGOLD": "",
