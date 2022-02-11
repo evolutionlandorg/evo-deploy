@@ -46,7 +46,7 @@
         "operator": "0x453Bf34bB36BF37483768bc273629d1ca367b2fB",
         "gen0Limit": 10000000,
         "birthFee": "50000000000",
-        "mixTalent": "5000000000",
+        "mixTalent": "5000000000000000000",
         "bidWaitingTime": 600,
         "changeClassFee": "500000000000"
     },
