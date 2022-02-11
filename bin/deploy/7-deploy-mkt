@@ -30,8 +30,9 @@ seth send $GENESISHOLDER_PROXY "setOperator(address)" $operator
 register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"
 
 # RevenuePoolV6
+# crab special
 sig="initializeContract(address)"
-REVENUEPOOL_PROXY=$(deployProxy "$lib" src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy contracts/auction/RevenuePoolV6.sol:RevenuePoolV6 "$sig" "$SETTINGSREGISTRY")
+REVENUEPOOL_PROXY=$(deployProxy "$lib" src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy contracts/auction/RevenuePoolCrab.sol:RevenuePoolCrab "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_REVENUE_POOL" "$REVENUEPOOL_PROXY"
 
 # PointsRewardPoolV3

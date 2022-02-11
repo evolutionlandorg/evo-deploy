@@ -22,8 +22,9 @@ TOKENLOCATION_PROXY=$(deployProxy "$lib" src/proxy/TokenLocationProxy.sol:TokenL
 register "addr" "CONTRACT_TOKEN_LOCATION" "$TOKENLOCATION_PROXY"
 
 # TokenUse
+# crab special
 sig="initializeContract(address)"
-TOKENUSE_PROXY=$(deployProxy "$lib" src/proxy/TokenUseProxy.sol:TokenUseProxy contracts/TokenUseV2.sol:TokenUseV2 "$sig" "$SETTINGSREGISTRY")
+TOKENUSE_PROXY=$(deployProxy "$lib" src/proxy/TokenUseProxy.sol:TokenUseProxy contracts/TokenUseCrab.sol:TokenUseCrab "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_TOKEN_USE" "$TOKENUSE_PROXY"
 
 

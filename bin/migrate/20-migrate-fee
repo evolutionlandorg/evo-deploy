@@ -9,3 +9,6 @@ register "uint" "UINT_MIX_TALENT" "$(loadConf ".apostle.mixTalent")"
 register "uint" "UINT_CHANGECLASS_FEE" "$(loadConf ".apostle.changeClassFee")"
 register "uint" "UINT_SMALL_TICKET_FEE" "$(loadConf ".market.playSmallTicketFee")"
 register "uint" "UINT_LARGE_TICKET_FEE" "$(loadConf ".market.playLargeTicketFee")"
+
+lib="common-contracts"
+dappUpgrade "$lib" contracts/TokenUseCrab.sol:TokenUseCrab "$TOKENUSE_PROXY"

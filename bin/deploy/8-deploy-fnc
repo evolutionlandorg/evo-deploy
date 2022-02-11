@@ -80,4 +80,4 @@ DRILLTAKEBACK=$(dappCreate "$lib" src/DrillTakeBack.sol:DrillTakeBack $SETTINGSR
 
 # crab special
 timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
-DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxV3.sol:DrillLuckyBoxV3 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
+DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxCrab.sol:DrillLuckyBoxCrab $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
