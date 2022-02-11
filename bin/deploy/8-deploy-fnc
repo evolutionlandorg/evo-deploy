@@ -78,5 +78,6 @@ register "uint" "UINT_ITEMBAR_PROTECT_PERIOD" "$(loadConf ".furnace.itemProtectP
 supervisor=$(loadConf ".furnace.supervisor")
 DRILLTAKEBACK=$(dappCreate "$lib" src/DrillTakeBack.sol:DrillTakeBack $SETTINGSREGISTRY $supervisor $(seth --to-uint256 $(seth rpc net_version)))
 
+# crab special
 timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
-DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
+DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxV3.sol:DrillLuckyBoxV3 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))

@@ -4,7 +4,7 @@ set -e
 
 . $(PWD)/bin/init
 
-# lib="furnace"
+lib="furnace"
 # timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
 # DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
 
@@ -40,3 +40,7 @@ seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT
 # change drillLuckyBoxReleaseTime
 # timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
 # seth send "$DRILLLUCKYBOXV2" "setBeginTime(uint256)" $timestamp
+
+# crab special
+# timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
+# DRILLLUCKYBOX=$(dappCreate "$lib" src/DrillLuckyBoxV3.sol:DrillLuckyBoxV3 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
