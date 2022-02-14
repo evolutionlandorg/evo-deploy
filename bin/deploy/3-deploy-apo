@@ -5,9 +5,10 @@ set -e
 . $(PWD)/bin/init
 
 lib="apostle"
-# ApostleBaseV5
+# ApostleBaseV6
+# can skip mix talent
 sig="initializeContract(address)"
-APOSTLEBASE_PROXY=$(deployProxy "$lib" src/proxy/ApostleBaseProxy.sol:ApostleBaseProxy contracts/ApostleBaseV5.sol:ApostleBaseV5 "$sig" "$SETTINGSREGISTRY")
+APOSTLEBASE_PROXY=$(deployProxy "$lib" src/proxy/ApostleBaseProxy.sol:ApostleBaseProxy contracts/ApostleBaseV6.sol:ApostleBaseV6 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_APOSTLE_BASE" "$APOSTLEBASE_PROXY"
 seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $APOSTLEBASE_PROXY $(seth --to-hex 2)
 
