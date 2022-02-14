@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+CODEX_RANDOM=$(dappCreate "pve" src/codex/codex-random.sol:CodexRandom)
+register "addr" "CONTRACT_RANDOM_CODEX" "$CODEX_RANDOM"

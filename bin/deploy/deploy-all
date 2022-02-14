@@ -21,3 +21,4 @@ set -e
 # . $(PWD)/bin/deploy/11-deploy-gov
 . $(PWD)/bin/deploy/13-deploy-stk
 . $(PWD)/bin/deploy/15-deploy-mtc
+. $(PWD)/bin/deploy/x-deploy-rnd # no verify
