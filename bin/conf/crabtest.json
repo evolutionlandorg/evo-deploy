@@ -61,11 +61,11 @@
         "playLargeTicketFee": 100000000000
     },
     "furnace": {
-        "lpGOLD": "",
-        "lpWOOD": "",
-        "lpWATER": "",
-        "lpFIRE": "",
-        "lpSOIL": "",
+        "lpGOLD": "0x55Ca5B31C1883Be971f1B41e75cA8D98B939E9Ac",
+        "lpWOOD": "0x7f08bC6a84FfC8Fdc5C96FC641E643680018c071",
+        "lpWATER": "0xe25E06428aae51d5Af6D0417E55c901B15e9C34B",
+        "lpFIRE": "0xCD1C143E590f3b7a3a3f2C146B6D29074E13009f",
+        "lpSOIL": "0xe56e70F1a03646DDa368476D253059A33a4393e9",
         "supervisor": "0x00a1537d251a6a4c4effAb76948899061FeA47b9",
         "itemMineFee": 5000000,
         "itemProtectPeriod": 604800,

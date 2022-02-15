@@ -41,11 +41,9 @@ p() { printf "%-7s %-20s\n" "$1" "$2"; }
 
 # notify
 # rewardAmount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
-rewardAmount=$(seth --to-uint256 $(seth --to-wei 600000 ether))
-seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
-sleep 3s
-seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
-sleep 3s
+# rewardAmount=$(seth --to-uint256 $(seth --to-wei 100000 gwei))
+# seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $rewardAmount
+# seth send $STAKINGREWARDSFACTORY "notifyRewardAmounts(uint256)" $rewardAmount
 
 # external notify
 # externalReward=$(seth --to-uint256 $(seth --to-wei 100000 ether))
