@@ -31,9 +31,9 @@ set -e
 # register "addr" "CONTRACT_DIVIDENDS_POOL" "$STAKINGREWARDSFACTORY"
 
 # give revenue auth
-wards=$(loadAuthConf ".staker.factory.wards | .[]")
-sigs=$(loadAuthConf ".staker.factory.sigs | .[]")
-STAKINGREWARDSFACTORY_AUTHORITY=$(dappAuth "STAKINGREWARDSFACTORY" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
-setAuth "$STAKINGREWARDSFACTORY" "$STAKINGREWARDSFACTORY_AUTHORITY"
+# wards=$(loadAuthConf ".staker.factory.wards | .[]")
+# sigs=$(loadAuthConf ".staker.factory.sigs | .[]")
+# STAKINGREWARDSFACTORY_AUTHORITY=$(dappAuth "STAKINGREWARDSFACTORY" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
+# setAuth "$STAKINGREWARDSFACTORY" "$STAKINGREWARDSFACTORY_AUTHORITY"
 
-seth send "$STAKINGREWARDSFACTORY_AUTHORITY" "rely(address)" "$REVENUEPOOL_PROXY"
+# seth send "$STAKINGREWARDSFACTORY_AUTHORITY" "rely(address)" "$REVENUEPOOL_PROXY"

@@ -26,18 +26,18 @@ p() { printf "%-7s %-20s\n" "$1" "$2"; }
 # seth send $STAKINGREWARDSFACTORY "recover(address)" $TOKEN_ERC20_RING
 
 # print staking reward contracts
-# for i in {0..6}; do
-#   st=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" $i)
-#   p "staking" "$st"
-#   rw=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $st)
-#   p "reward" "$rw"
-#   # stake
-#   seth send $st "approve(address,uint256)" $rw $(seth --to-int256 -1)
-#   sleep 3s
-#   amount=$(seth --to-uint256 $(seth --to-wei 0.00001 ether))
-#   seth send $rw "stake(uint256)" $amount
-#   sleep 3s
-# done
+for i in {0..6}; do
+  st=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" $i)
+  p "staking" "$st"
+  rw=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $st)
+  p "reward" "$rw"
+  # stake
+  # seth send $st "approve(address,uint256)" $rw $(seth --to-int256 -1)
+  # sleep 3s
+  # amount=$(seth --to-uint256 $(seth --to-wei 0.00001 ether))
+  # seth send $rw "stake(uint256)" $amount
+  # sleep 3s
+done
 
 # notify
 # rewardAmount=$(seth --to-uint256 $(seth --to-wei 648000 ether))
