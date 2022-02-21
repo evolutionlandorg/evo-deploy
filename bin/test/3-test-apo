@@ -10,4 +10,6 @@ seth estimate $apostlebase "createApostle(uint256,uint256,uint256,uint256,uint25
 
 # seth send $apostlebase "createApostle(uint256,uint256,uint256,uint256,uint256,address)(uint256)" $(seth --to-uint256 0)  $(seth --to-uint256 0) $(seth --to-uint256 0) $(seth --to-uint256 511454053041611982708864420168291763551500459624059621882020887047539874) $(seth --to-uint256 5832929390214414995996) $owner
 
-# apostleId=0x2a01000301000302000000000000000100000000000000000000000000000001
+evo apo bas oid --chain crabtest
+apostleId=0x2a03000103000102000000000000000300000000000000000000000000000001
+evo sts apo $apostleId --chain crabtest

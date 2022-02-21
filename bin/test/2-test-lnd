@@ -17,12 +17,12 @@ set -e
 
 # seth call "$landbase" "owner()(address)"
 
-landId=0x2a04000104000101000000000000000400000000000000000000000000000279
+landId=0x2a030001030001010000000000000003000000000000000000000000000007e9
 seth call "$LANDRESOURCE_PROXY" "registry()(address)"
 seth call "$LANDRESOURCE_PROXY" "authority()(address)"
 seth call "$LANDRESOURCE_PROXY" "owner()(address)"
 seth call "$LANDRESOURCE_PROXY" "maxMiners()(uint256)"
 seth call "$LANDRESOURCE_PROXY" "resourceReleaseStartTime()(uint256)"
 
-evo sts lnd $landId --chain hecotest
-
+evo lnd bas oid --chain crabtest
+evo sts lnd $landId --chain crabtest

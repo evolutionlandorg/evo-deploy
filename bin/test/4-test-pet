@@ -15,7 +15,7 @@ p() { printf "%-7s %-20s\n" "$1" "$2"; }
 # done
 
 # for i in {1..2}; do
-#   seth send -F "$owner" "$CK" "transfer(address,uint256)" "$to" "$(($gene+$i))" 
+#   seth send -F "$owner" "$CK" "transfer(address,uint256)" "$to" "$(($gene+$i))"
 # done
 
 # tie old ck pet
@@ -84,13 +84,13 @@ else
 fi
 
 # tie pet
-p "Before" "$(strength)" 
+p "Before" "$(strength)"
 
 seth send $PETBASE_PROXY "tiePetTokenToApostle(uint256,uint256)" "$mirrorTokenId" "$apostle1"
-p "Mid" "$(strength)" 
+p "Mid" "$(strength)"
 
 seth send $PETBASE_PROXY "untiePetToken(uint256)" "$mirrorTokenId"
-p "After" "$(strength)" 
+p "After" "$(strength)"
 
 ## bridge out
 seth send $ERC721BRIDGE_PROXY "swapOut721(uint256)" $mirrorTokenId
