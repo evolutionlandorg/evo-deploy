@@ -14,6 +14,7 @@ fi
 # seth send "$OBJECTOWNERSHIP_AUTHORITY" "rely(address)" $CRAFTBASE_PROXY
 register "addr" "CONTRACT_CRAFT_BASE" "$CRAFTBASE_PROXY"
 
+# crab special
 CODEX_SWORD=$(dappCreate "pve" src/codex/codex-sword-crab.sol:CodexSwordCrab)
 register "addr" "CONTRACT_SWORD_CODEX" "$CODEX_SWORD"
 
