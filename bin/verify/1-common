@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+. $(PWD)/bin/init
+
+cd "lib/common-contracts"
+
+dapp verify-contract-subscan contracts/SettingsRegistry.sol:SettingsRegistry $SETTINGSREGISTRY
+dapp verify-contract-subscan contracts/InterstellarEncoderV4.sol:InterstellarEncoderV4 $INTERSTELLARENCODERV4
+dapp verify-contract-subscan contracts/MultiSigWalletContribution.sol:MultiSigWalletContribution $MULTISIGWALLETCONTRIBUTION
+dapp verify-contract-subscan contracts/MultiSigWalletDev.sol:MultiSigWalletDev $MULTISIGWALLETDEV
+dapp verify-contract-subscan contracts/ObjectOwnershipV2.sol:ObjectOwnershipV2 $OBJECTOWNERSHIPV2
+dapp verify-contract-subscan contracts/TokenLocation.sol:TokenLocation $TOKENLOCATION
+dapp verify-contract-subscan contracts/TokenUseCrab.sol:TokenUseCrab $TOKENUSECRAB
+dapp verify-contract-subscan contracts/UserPoints.sol:UserPoints $USERPOINTS
