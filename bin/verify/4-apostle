@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+. $(PWD)/bin/init
+
+cd "lib/apostle"
+
+dapp verify-contract-subscan contracts/ApostleBaseV6.sol:ApostleBaseV6 $APOSTLEBASEV6
+dapp verify-contract-subscan contracts/ApostleClockAuctionV3.sol:ApostleClockAuctionV3 $APOSTLECLOCKAUCTIONV3
+dapp verify-contract-subscan contracts/Gen0ApostleV3.sol:Gen0ApostleV3 $GEN0APOSTLEV3
+dapp verify-contract-subscan contracts/SiringClockAuctionV3.sol:SiringClockAuctionV3 $SIRINGCLOCKAUCTIONV3
