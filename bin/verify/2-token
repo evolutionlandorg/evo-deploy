@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+. $(PWD)/bin/init
+
+cd "lib/token-contracts"
+
+dapp verify-contract-subscan src/GOLD.sol:GOLD $GOLD
+dapp verify-contract-subscan src/WOOD.sol:WOOD $WOOD
+dapp verify-contract-subscan src/HHO.sol:HHO $HHO
+dapp verify-contract-subscan src/FIRE.sol:FIRE $FIRE
+dapp verify-contract-subscan src/SIOO.sol:SIOO $SIOO

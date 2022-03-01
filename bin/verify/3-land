@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+. $(PWD)/bin/init
+
+cd "lib/land"
+
+dapp verify-contract-subscan contracts/LandBaseV2.sol:LandBaseV2 $LANDBASEV2
+dapp verify-contract-subscan contracts/LandResourceV6.sol:LandResourceV6 $LANDRESOURCEV6
+dapp verify-contract-subscan contracts/MysteriousTreasure.sol:MysteriousTreasure $MYSTERIOUSTREASURE
