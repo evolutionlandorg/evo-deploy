@@ -2,4 +2,4 @@
 
 . $(PWD)/bin/init
 
-dapp verify-contract-subscan src/admin/EVOProxyAdmin.sol:EVOProxyAdmin $EVOPROXYADMIN
+. $(PWD)/bin/verify/0-proxy

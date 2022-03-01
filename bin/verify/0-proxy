@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+. $(PWD)/bin/init
+
+# dapp verify-contract-subscan src/admin/EVOProxyAdmin.sol:EVOProxyAdmin $EVOPROXYADMIN
+# dapp verify-contract-subscan src/proxy/ApostleBaseProxy.sol:ApostleBaseProxy $APOSTLEBASE_PROXY
+# dapp verify-contract-subscan src/proxy/ApostleClockAuctionProxy.sol:ApostleClockAuctionProxy $APOSTLECLOCKAUCTION_PROXY
+# dapp verify-contract-subscan src/proxy/ClockAuctionProxy.sol:ClockAuctionProxy $CLOCKAUCTION_PROXY
+# dapp verify-contract-subscan src/proxy/CraftBaseProxy.sol:CraftBaseProxy $CRAFTBASE_PROXY
+dapp verify-contract-subscan src/proxy/Gen0ApostleProxy.sol:Gen0ApostleProxy $GEN0APOSTLE_PROXY
+dapp verify-contract-subscan src/proxy/GenesisHolderProxy.sol:GenesisHolderProxy $GENESISHOLDER_PROXY
+dapp verify-contract-subscan src/proxy/LandBaseProxy.sol:LandBaseProxy $LANDBASE_PROXY
+dapp verify-contract-subscan src/proxy/LandResourceProxy.sol:LandResourceProxy $LANDRESOURCE_PROXY
+dapp verify-contract-subscan src/proxy/MaterialCodexProxy.sol:MaterialCodexProxy $MATERIALCODEX_PROXY
+dapp verify-contract-subscan src/proxy/MaterialProxy.sol:MaterialProxy $MATERIAL_PROXY
+dapp verify-contract-subscan src/proxy/MaterialTakeBackProxy.sol:MaterialTakeBackProxy $MATERIALTAKEBACK_PROXY
+dapp verify-contract-subscan src/proxy/MysteriousTreasureProxy.sol:MysteriousTreasureProxy $MYSTERIOUSTREASURE_PROXY
+dapp verify-contract-subscan src/proxy/ObjectOwnerShipProxy.sol:ObjectOwnerShipProxy $OBJECTOWNERSHIP_PROXY
+dapp verify-contract-subscan src/proxy/PointsRewardPoolProxy.sol:PointsRewardPoolProxy $POINTSREWARDPOOL_PROXY
+dapp verify-contract-subscan src/proxy/PveTeamProxy.sol:PveTeamProxy $PVETEAM_PROXY
+dapp verify-contract-subscan src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy $REVENUEPOOL_PROXY
+dapp verify-contract-subscan src/proxy/SiringClockAuctionProxy.sol:SiringClockAuctionProxy $SIRINGCLOCKAUCTION_PROXY
+dapp verify-contract-subscan src/proxy/TokenLocationProxy.sol:TokenLocationProxy $TOKENLOCATION_PROXY
+dapp verify-contract-subscan src/proxy/TokenUseProxy.sol:TokenUseProxy $TOKENUSE_PROXY
+dapp verify-contract-subscan src/proxy/UserPointsProxy.sol:UserPointsProxy $USERPOINTS_PROXY
