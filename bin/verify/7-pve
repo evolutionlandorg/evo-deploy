@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+. $(PWD)/bin/init
+
+cd "lib/pve"
+
+dapp verify-contract-subscan src/PveTeam.sol:PveTeam $PVETEAM
+dapp verify-contract-subscan src/Codex.sol:Codex $CODEX
+dapp verify-contract-subscan src/Material.sol:Material $MATERIAL
+dapp verify-contract-subscan src/MaterialTakeBack.sol:MaterialTakeBack $MATERIALTAKEBACK
+
+dapp verify-contract-subscan src/CraftBase.sol:CraftBase $CRAFTBASE
+dapp verify-contract-subscan src/codex/codex-sword-crab.sol:CodexSwordCrab $CODEXSWORDCRAB
+dapp verify-contract-subscan src/codex/codex-shield-crab.sol:CodexShieldCrab $CODEXSHIELDCRAB
+dapp verify-contract-subscan src/codex/codex-preferV0.sol:CodexPreferV0 $CODEXPREFERV0
+
+cd -

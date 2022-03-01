@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
-. $(PWD)/bin/init
-
 . $(PWD)/bin/verify/0-proxy
+. $(PWD)/bin/verify/1-common
+. $(PWD)/bin/verify/2-token
+. $(PWD)/bin/verify/3-land
+. $(PWD)/bin/verify/4-apostle
+. $(PWD)/bin/verify/5-market
+. $(PWD)/bin/verify/6-furnace
+. $(PWD)/bin/verify/7-pve
+. $(PWD)/bin/verify/8-staker
+. $(PWD)/bin/verify/9-auth

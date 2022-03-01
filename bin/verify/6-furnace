@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+. $(PWD)/bin/init
+
+cd "lib/furnace"
+
+dapp verify-contract-subscan src/DrillBase.sol:DrillBase $DRILLBASE
+dapp verify-contract-subscan src/Formula.sol:Formula $FORMULA
+dapp verify-contract-subscan src/ItemBase.sol:ItemBase $ITEMBASE
+dapp verify-contract-subscan src/MetaDataTeller.sol:MetaDataTeller $METADATATELLER
+dapp verify-contract-subscan src/DrillLuckyBoxCrab.sol:DrillLuckyBoxCrab $DRILLLUCKYBOXCRAB
+
+cd -

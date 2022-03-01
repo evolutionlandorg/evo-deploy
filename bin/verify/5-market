@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+. $(PWD)/bin/init
+
+cd "lib/market-contracts"
+
+dapp verify-contract-subscan contracts/id/TakeBack.sol:TakeBack $TAKEBACK
+dapp verify-contract-subscan contracts/id/TakeBackNFT.sol:TakeBackNFT $TAKEBACKNFT
+dapp verify-contract-subscan contracts/auction/ClockAuctionV4.sol:ClockAuctionV4 $CLOCKAUCTIONV4
+dapp verify-contract-subscan contracts/auction/GenesisHolderV2.sol:GenesisHolderV2 $GENESISHOLDERV2
+dapp verify-contract-subscan contracts/auction/GenesisHolderV2.sol:GenesisHolderV2 $GENESISHOLDERV2
+dapp verify-contract-subscan contracts/auction/RevenuePoolCrab.sol:RevenuePoolCrab $REVENUEPOOLCRAB
+dapp verify-contract-subscan contracts/auction/PointsRewardPoolV3.sol:PointsRewardPoolV3 $POINTSREWARDPOOLV3
+
+cd -

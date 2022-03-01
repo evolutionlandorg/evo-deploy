@@ -12,3 +12,5 @@ dapp verify-contract-subscan contracts/ObjectOwnershipV2.sol:ObjectOwnershipV2 $
 dapp verify-contract-subscan contracts/TokenLocation.sol:TokenLocation $TOKENLOCATION
 dapp verify-contract-subscan contracts/TokenUseCrab.sol:TokenUseCrab $TOKENUSECRAB
 dapp verify-contract-subscan contracts/UserPoints.sol:UserPoints $USERPOINTS
+
+cd -

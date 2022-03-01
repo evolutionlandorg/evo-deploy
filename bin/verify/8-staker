@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+. $(PWD)/bin/init
+
+cd "lib/staker"
+
+dapp verify-contract-subscan src/StakingRewardsFactory.sol:StakingRewardsFactory $STAKINGREWARDSFACTORY
+
+cd -

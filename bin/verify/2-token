@@ -9,3 +9,5 @@ dapp verify-contract-subscan src/WOOD.sol:WOOD $WOOD
 dapp verify-contract-subscan src/HHO.sol:HHO $HHO
 dapp verify-contract-subscan src/FIRE.sol:FIRE $FIRE
 dapp verify-contract-subscan src/SIOO.sol:SIOO $SIOO
+
+cd -
