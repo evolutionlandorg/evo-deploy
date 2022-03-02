@@ -67,7 +67,7 @@
         "supervisor": "0x536DeaCEdC6E972822b9e78571786B5a6dd10c8A",
         "itemMineFee": 5000000,
         "itemProtectPeriod": 604800,
-        "drillLuckyBoxReleaseTime": 1646100000
+        "drillLuckyBoxReleaseTime": 1648893600
     },
     "raffle": {
         "supervisor": "0x536DeaCEdC6E972822b9e78571786B5a6dd10c8A"
