@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+set -x
+
+# chain=heco
+# seth send $DRILLTAKEBACK "claimTokens(address)" $TOKEN_ERC20_RING --chain $chain
+
+# seth send $TOKEN_ERC20_RING "transfer(address,uint)" $MULTISIGWALLET_DEV $(seth --to-wei 1200000 ether) --chain $chain
+# seth send $TOKEN_ERC20_RING "transfer(address,uint)" $DRILLTAKEBACK $(seth --to-wei 75285.5 ether) --chain $chain
+
+chain=polygon
+seth send $DRILLTAKEBACK "claimTokens(address)" $TOKEN_ERC20_RING --chain $chain
+
+seth send $TOKEN_ERC20_RING "transfer(address,uint)" $MULTISIGWALLETDEV $(seth --to-wei 2000000 ether) --chain $chain
+seth send $TOKEN_ERC20_RING "transfer(address,uint)" $DRILLTAKEBACK $(seth --to-wei 24295.5 ether) --chain $chain
