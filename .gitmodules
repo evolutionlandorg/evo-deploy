@@ -40,3 +40,6 @@
 [submodule "lib/landrs"]
 	path = lib/landrs
 	url = https://github.com/evolutionlandorg/landrs
+[submodule "lib/claims"]
+	path = lib/claims
+	url = https://github.com/evolutionlandorg/claims
