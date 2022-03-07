@@ -1,9 +1,10 @@
 .PHONY: all clean test deploy proxy flat
-.PHONY: pre-4 solc-4 pre-5 solc-5 pre-6 solc-6 pre-7 solc-7
+.PHONY: pre-4 solc-4 pre-5 solc-5 pre-6 solc-6 pre-7 solc-7 solc-8
 .PHONY:	build-apostle build-common build-land build-market build-token
 .PHONY: build-staker build-multicall build-zapper
 .PHONY: build-furnace build-raffle build-pve build-landrs
 .PHONY: build-governance
+.PHONY: build-claims
 
 SUBDIRS = apostle common-contracts furnace governance land market-contracts token-contracts
 DAPP_LIB = lib/
@@ -22,6 +23,9 @@ pre-6:
 pre-7:
 	@nix-env -f https://github.com/dapphub/dapptools/archive/master.tar.gz -iA solc-static-versions.solc_0_7_6
 
+pre-8:
+	@nix-env -f https://github.com/dapphub/dapptools/archive/master.tar.gz -iA solc-static-versions.solc_0_8_11
+
 solc-4: build-apostle build-common build-land build-market build-token
 
 solc-5: build-staker build-multicall build-zapper
@@ -29,6 +33,8 @@ solc-5: build-staker build-multicall build-zapper
 solc-6: build-furnace build-raffle build-pve build-landrs proxy
 
 solc-7: build-governance
+
+solc-8: build-claims
 
 proxy:
 	@source .env && dapp --use solc:0.6.7 build
@@ -53,6 +59,9 @@ build-furnace:
 
 build-governance:
 	@cd lib/governance && (MAKE)
+
+build-claims:
+	@cd lib/claims && (MAKE)
 
 build-raffle:
 	@cd lib/raffle && (MAKE)
