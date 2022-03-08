@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="claims"
+sig="initialize()"
+CRAFTBASE_PROXY=$(deployProxy "$lib" src/proxy/ClaimsProxy.sol:ClaimsProxy src/Claims.sol:Claims "$sig")

@@ -23,7 +23,6 @@ p() { printf "%-7s %-20s\n" "$1" "$2"; }
 # seth send $STAKINGREWARDSFACTORY "recoverERC20(address)" $TOKEN_ERC20_SOIL
 
 # seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $(seth --to-wei 0.01 ether)
-# seth send 0x273B2B8F45961c82D6749c5f7A4faa571E229A0C "recover(address)" $TOKEN_ERC20_RING
 
 # print staking reward contracts
 for i in {0..5}; do
@@ -32,6 +31,7 @@ for i in {0..5}; do
   rw=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $st)
   p "reward" "$rw"
 
+  (cd "lib/staker" && dapp --use solc:0.5.16 verify-contract-subscan src/StakingRewards.sol:StakingRewards $rw)
   # stake
   # seth send $st "approve(address,uint256)" $rw $(seth --to-int256 -1)
   # sleep 3s
