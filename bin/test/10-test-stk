@@ -23,14 +23,15 @@ p() { printf "%-7s %-20s\n" "$1" "$2"; }
 # seth send $STAKINGREWARDSFACTORY "recoverERC20(address)" $TOKEN_ERC20_SOIL
 
 # seth send $TOKEN_ERC20_RING "transfer(address,uint256)" $STAKINGREWARDSFACTORY $(seth --to-wei 0.01 ether)
-# seth send $STAKINGREWARDSFACTORY "recover(address)" $TOKEN_ERC20_RING
+# seth send 0x273B2B8F45961c82D6749c5f7A4faa571E229A0C "recover(address)" $TOKEN_ERC20_RING
 
 # print staking reward contracts
-for i in {0..6}; do
+for i in {0..5}; do
   st=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" $i)
   p "staking" "$st"
   rw=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $st)
   p "reward" "$rw"
+
   # stake
   # seth send $st "approve(address,uint256)" $rw $(seth --to-int256 -1)
   # sleep 3s

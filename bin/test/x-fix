@@ -57,4 +57,3 @@ set -e
 # seth send $LANDRESOURCE_PROXY "equip(uint256,address,uint256,address,uint256)" $landId $TOKEN_ERC20_GOLD $index $token 0x2a04000104000104000000000000000400020000000000000000000000000183
 
 # seth send $LANDRESOURCE_PROXY "divest(uint256,uint256)" $landId $index
-
