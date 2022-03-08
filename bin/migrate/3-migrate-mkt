@@ -23,7 +23,8 @@ lib="market-contracts"
 
 # seth send "$STAKINGREWARDSFACTORY_AUTHORITY" "rely(address)" "$REVENUEPOOL_PROXY"
 
-dappUpgrade "$lib" contracts/auction/RevenuePoolCrab.sol:RevenuePoolCrab "$REVENUEPOOL_PROXY"
+# dappUpgrade "$lib" contracts/auction/RevenuePoolCrab.sol:RevenuePoolCrab "$REVENUEPOOL_PROXY"
+dappUpgrade "$lib" contracts/auction/RevenuePoolV6.sol:RevenuePoolV6 "$REVENUEPOOL_PROXY"
 
 
 # # test
