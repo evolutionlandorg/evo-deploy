@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+wallet=$MULTISIGWALLETDEV
+calldata=$(seth calldata "transfer(address,uint256)" $TAKEBACK (seth --to-wei 11000 gwei))
+
+seth send $wallet "submitTransaction(address,uint,bytes)" $TOKEN_ERC20_RING 0 $calldata
+
+count=$(seth call $wallet "transactionCount()(uint)" 1)
+
+seth call $wallet "transactions(uint)(address,uint,bytes,bool)" $count
