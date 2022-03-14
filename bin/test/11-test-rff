@@ -2,7 +2,7 @@
 
 set -e
 
-# . $(PWD)/bin/init
+. $(PWD)/bin/init
 
 # eventId=$(loadConf ".raffle.events.1.eventId")
 # toLandId=$(loadConf ".raffle.events.1.toLandId")
@@ -11,9 +11,18 @@ set -e
 # finalTime=$(loadConf ".raffle.events.1.finalTime")
 # expireTime=$(loadConf ".raffle.events.1.expireTime")
 
-# event 2
-eventId=2
-toLandId=5
+# event 2 polygon
+# eventId=2
+# toLandId=5
+# startTime=1631246400
+# endTime=1631851200
+# finalTime=1631937600
+# expireTime=1637208000
+# seth send $RAFFLE_PROXY "setEvent(uint256,uint256,uint256,uint256,uint256,uint256)" "$eventId" "$toLandId" "$startTime" "$endTime" "$finalTime" "$expireTime"
+
+# event 3 crab
+eventId=3
+toLandId=3
 startTime=1631246400
 endTime=1631851200
 finalTime=1631937600
