@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="claims"
+
+dappUpgrade "$lib" src/Claims.sol:Claims "$CLAIMS_PROXY"
+
