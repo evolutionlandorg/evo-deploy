@@ -12,9 +12,11 @@ for id in $ids;do
   to=$(jq -r '.["'${id}'"] | values' "$path")
   echo "sending land [$id] to [$to]"
   tokenId=$(evo cmn-enc enc "$class" "$id" --chain "${SETH_CHAIN?}")
-  evo mkt-gen claim "${tokenId?}"
+  # evo mkt-gen claim "${tokenId?}"
   echo "claimed $id"
   evo cmn-tkn transferFrom "${ETH_FROM?}" "${to?}" "${tokenId?}"
   echo "sent land [$id] to [$to]"
 done
+
+# https://www.evolution.land/land/3/land/detail?tokenId=2a03000103000101000000000000000300000000000000000000000000000096
 
