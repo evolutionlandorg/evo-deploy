@@ -6,5 +6,5 @@ set -e
 
 lib="claims"
 
-dappUpgrade "$lib" src/Claims.sol:Claims "$CLAIMS_PROXY"
+dappUpgrade "$lib" src/EVOClaims.sol:EVOClaims "$EVOCLAIMS_PROXY"
 
