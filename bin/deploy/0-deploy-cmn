@@ -12,7 +12,7 @@ sig="initializeContract(address)"
 OBJECTOWNERSHIP_PROXY=$(deployProxy "$lib" src/proxy/ObjectOwnerShipProxy.sol:ObjectOwnerShipProxy contracts/ObjectOwnershipV2.sol:ObjectOwnershipV2 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_OBJECT_OWNERSHIP" "$OBJECTOWNERSHIP_PROXY"
 
-seth send $OBJECTOWNERSHIP_PROXY "setBaseTokenURI(string)" '"https://www.evolution.land/api/nft/metadata/"'
+seth send $OBJECTOWNERSHIP_PROXY "setBaseTokenURI(string)" '"https://backend.evolution.land/api/nft/metadata/"'
 
 seth send $INTERSTELLARENCODERV4 "registerNewOwnershipContract(address,uint8)" $OBJECTOWNERSHIP_PROXY $(seth --to-hex 1)
 

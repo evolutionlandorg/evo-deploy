@@ -4,7 +4,12 @@ set -e
 
 . $(PWD)/bin/init
 
-lib="common-contracts"
+# lib="common-contracts"
 
-dappUpgrade "$lib" contracts/ObjectOwnershipV3.sol:ObjectOwnershipV3 "$OBJECTOWNERSHIP_PROXY"
+# dappUpgrade "$lib" contracts/ObjectOwnershipV3.sol:ObjectOwnershipV3 "$OBJECTOWNERSHIP_PROXY"
 
+# testnet
+# seth send $OBJECTOWNERSHIP_PROXY "setBaseTokenURI(string)" '"https://backend-staging.evolution.land/api/nft/metadata/"'
+
+# mainnet
+seth send $OBJECTOWNERSHIP_PROXY "setBaseTokenURI(string)" '"https://backend.evolution.land/api/nft/metadata/"'
