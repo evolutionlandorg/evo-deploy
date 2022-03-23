@@ -23,8 +23,8 @@ set -e
 # event 3 crab
 eventId=3
 toLandId=3
-startTime=1631246400
-endTime=1631851200
-finalTime=1631937600
-expireTime=1637208000
-# seth send $RAFFLE_PROXY "setEvent(uint256,uint256,uint256,uint256,uint256,uint256)" "$eventId" "$toLandId" "$startTime" "$endTime" "$finalTime" "$expireTime"
+startTime=1648008256
+endTime=1648022400
+finalTime=1648023000
+expireTime=1648030200
+seth send $RAFFLE_PROXY "setEvent(uint256,uint256,uint256,uint256,uint256,uint256)" "$eventId" "$toLandId" "$startTime" "$endTime" "$finalTime" "$expireTime"
