@@ -5,7 +5,7 @@ set -e
 . $(PWD)/bin/init
 
 bone_id=1
-to=$CLAIMS_PROXY
+to=$EVOCLAIMS_PROXY
 seth send "$MATERIAL_PROXY" "mintObject(address,uint128,uint256,bytes)" $to $bone_id 10000 0x
 
 spirit_id=4
