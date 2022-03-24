@@ -24,7 +24,7 @@ set -e
 eventId=3
 toLandId=3
 startTime=1648008256
-endTime=1648022400
-finalTime=1648023000
-expireTime=1648030200
+endTime=1648101600
+finalTime=1648102200
+expireTime=1648108800
 seth send $RAFFLE_PROXY "setEvent(uint256,uint256,uint256,uint256,uint256,uint256)" "$eventId" "$toLandId" "$startTime" "$endTime" "$finalTime" "$expireTime"
