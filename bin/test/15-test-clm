@@ -5,7 +5,7 @@ set -e
 . $(PWD)/bin/init
 
 bone_id=1
-to=$EVOCLAIMS_PROXY
+to=$CLAIMS_PROXY
 seth send "$MATERIAL_PROXY" "mintObject(address,uint128,uint256,bytes)" $to $bone_id 10000 0x
 
 spirit_id=4
@@ -17,6 +17,6 @@ for token in "${tokens[@]}"; do
 done
 
 for i in {0..10}; do
-  evo apo bas oid --chain mumbai
+  evo apo bas oid --chain $SETH_CHAIN
   seth send $APOSTLEBASE_PROXY "createApostle(uint256,uint256,uint256,uint256,uint256,address)(uint256)" $(seth --to-uint256 0)  $(seth --to-uint256 0) $(seth --to-uint256 0) $(seth --to-uint256 511454053041611982708864420168291763551500459624059621882020887047539874) $(seth --to-uint256 5832929390214414995996) $to
 done

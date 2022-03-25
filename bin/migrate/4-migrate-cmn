@@ -6,3 +6,9 @@ set -e
 
 lib="common-contracts"
 dappUpgrade "$lib" contracts/TokenUseV2.sol:TokenUseV2 "$TOKENUSE_PROXY"
+
+# testnet
+seth send $OBJECTOWNERSHIP_PROXY "setBaseTokenURI(string)" '"https://backend-staging.evolution.land/api/nft/metadata/"'
+
+# mainnet
+# seth send $OBJECTOWNERSHIP_PROXY "setBaseTokenURI(string)" '"https://backend.evolution.land/api/nft/metadata/"'

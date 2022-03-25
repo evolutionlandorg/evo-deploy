@@ -4,6 +4,8 @@ set -e
 
 . $(PWD)/bin/init
 
+##### Note: 100-migrate-cmn need be done!!!
+
 lib="claims"
 
 sig="initialize(address)"
