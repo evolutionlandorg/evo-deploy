@@ -6,12 +6,12 @@ set -e
 
 set -x
 
-# wallet=$MULTISIGWALLETDEV
-# to=$TAKEBACK
-wallet=$MULTISIGWALLETCONTRIBUTION
-to=0x0680e8788548D1F6287F6084bA1C4DaBeB38eb84
+wallet=$MULTISIGWALLETDEV
+to=$TAKEBACK
+# wallet=$MULTISIGWALLETCONTRIBUTION
+# to=0x0680e8788548D1F6287F6084bA1C4DaBeB38eb84
 
-calldata=$(seth calldata "transfer(address,uint256)" $to $(seth --to-wei 2000 gwei))
+calldata=$(seth calldata "transfer(address,uint256)" $to $(seth --to-wei 50000 gwei))
 
 seth send $wallet "submitTransaction(address,uint,bytes)" $TOKEN_ERC20_RING 0 $calldata
 

@@ -6,10 +6,10 @@ set -e
 
 lib="claims"
 
-sig="initialize()"
-EVOCLAIMS_PROXY=$(deployProxy "$lib" src/proxy/ClaimsProxy.sol:ClaimsProxy src/EVOClaims.sol:EVOClaims "$sig")
+sig="initialize(address)"
+EVOCLAIMS_PROXY=$(deployProxy "$lib" src/proxy/ClaimsProxy.sol:ClaimsProxy src/EVOClaims.sol:EVOClaims "$sig" "$ETH_FROM")
 
-CLAIMSFACTORY=$(dappCreate "$lib" src/ClaimsFactory.sol:ClaimsFactory)
+# CLAIMSFACTORY=$(dappCreate "$lib" src/ClaimsFactory.sol:ClaimsFactory)
 
-org=$(seth --to-bytes32 $(seth --from-ascii "Evolution Land"))
-seth send $CLAIMSFACTORY "register(bytes32,address)" $org $EVOCLAIMS_PROXY
+# org=$(seth --to-bytes32 $(seth --from-ascii "Evolution Land"))
+# seth send $CLAIMSFACTORY "register(bytes32,address)" $org $EVOCLAIMS_PROXY
