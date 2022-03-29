@@ -65,7 +65,7 @@ fi
 
 if [[ "$SETH_CHAIN?" ]]; then
   case "$SETH_CHAIN" in
-    ropsten|pangolin|crab|crabtest|heco|hecotest|bsc|bsctest|polygon|mumbai)
+    mainnet|ropsten|pangolin|crab|crabtest|heco|hecotest|bsc|bsctest|polygon|mumbai)
       config-init "${PWD}/bin/addr/${SETH_CHAIN}.json";
       config_file="${PWD}/bin/conf/${SETH_CHAIN}.json";
       ;;
