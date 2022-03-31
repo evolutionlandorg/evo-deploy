@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+for i in {1..5}; do
+  seth send "$MEDAL" "safeMint(address)" "$DARWINIA_CLAIMS"
+done

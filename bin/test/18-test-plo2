@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+claims_name=$1
+salt=$2
+
+set -x
+
+path="${PWD}/lib/claims/data/${SETH_CHAIN}/root/${1}_${2}.json"
+root=$(cat $path)
+expiry=0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+seth send $DARWINIA_CLAIMS "addNewGiveaway(bytes32,uint)" $root $expiry

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="claims"
+
+MEDAL=$(dappCreate "$lib" src/plo/Medal.sol:Medal)
+
+DARWINIA_CLAIMS=$(dappCreate "$lib" src/Claims.sol:Claims)
+
+# seth send $MEDAL "setBaseTokenURI(string)" '"https://backend.evolution.land/api/nft/metadata/"'

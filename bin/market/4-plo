@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+claims_name=$1
+salt=$2
+
+path="${PWD}/lib/claims/data/${SETH_CHAIN}/verify/${1}_${2}.json"
+
+tos=$(jq -r ". | keys_unsorted[]" "$path")
+for to in $tos;do
+  calldata=$(jq -r '.["'${to}'"] | values' "$path")
+  echo "verify [$to] claim proof"
+  seth call $DARWINIA_CLAIMS $calldata --chain $SETH_CHAIN
+done
