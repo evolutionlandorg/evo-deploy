@@ -4,6 +4,12 @@ set -e
 
 . $(PWD)/bin/init
 
-for i in {1..5}; do
-  seth send "$MEDAL" "safeMint(address)" "$DARWINIA_CLAIMS"
+
+export SETH_ASYNC=yes
+nonce=$(seth nonce $ETH_FROM)
+echo "nonce: ${nonce}"
+for i in {1..157}; do
+  seth send -N "$nonce" "$MEDAL" "safeMint(address,string)" "$CLAIMS_PROXY" '"Qma2jDH9gHvvmmEy5scDpJbn81rAHG9zaeQHFXB8XHiXwy"'
+  nonce=$(( ${nonce} + 1 ))
 done
+echo "nonce: ${nonce}"
