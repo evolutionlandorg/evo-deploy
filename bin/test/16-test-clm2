@@ -12,6 +12,7 @@ set -x
 path="${PWD}/lib/claims/data/${SETH_CHAIN}/root/${1}_${2}.json"
 root=$(cat $path)
 expiry=0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+# expiry=0x0000000000000000000000000000000000000000000000000000000000000000
 seth send $CLAIMS_PROXY "addNewGiveaway(bytes32,uint)" $root $expiry
 
 # 0x25839ca7

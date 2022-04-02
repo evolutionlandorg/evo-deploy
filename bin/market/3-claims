@@ -8,6 +8,7 @@ claims_name=$1
 salt=$2
 
 path="${PWD}/lib/claims/data/${SETH_CHAIN}/verify/${1}_${2}.json"
+echo "path: $path"
 
 tos=$(jq -r ". | keys_unsorted[]" "$path")
 for to in $tos;do
