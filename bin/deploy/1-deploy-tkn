@@ -4,8 +4,9 @@ set -e
 
 . $(PWD)/bin/init
 
-tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO")
+# tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO")
 # tokens=("GOLD" "WOOD" "HHO" "FIRE" "SIOO" "xRING" "KTON")
+tokens=("KTON")
 
 for token in "${tokens[@]}"; do
     address=$(dappCreate token-contracts "src/${token}.sol:${token}")
@@ -21,10 +22,10 @@ for token in "${tokens[@]}"; do
     fi
     addAddress "TOKEN_ERC20_$setting" "$address"
     id="CONTRACT_${setting}_ERC20_TOKEN"
-    register "addr" "$id" "$address"
+    # register "addr" "$id" "$address"
 done
 
-register "addr" "CONTRACT_RING_ERC20_TOKEN" "$TOKEN_ERC20_RING"
+# register "addr" "CONTRACT_RING_ERC20_TOKEN" "$TOKEN_ERC20_RING"
 # register "addr" "CONTRACT_KTON_ERC20_TOKEN" "$TOKEN_ERC20_KTON"
 
 # wring=$(dappCreate token-contracts src/WCRAB.sol:WCRAB)
