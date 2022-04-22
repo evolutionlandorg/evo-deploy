@@ -13,15 +13,15 @@ amount=$(seth --to-uint256 $(seth --to-wei 30000 ether))
 # xuelei=0x245B4775082C144C22a4874B0fBa8c70c510c5AE
 # jay=0xf422673CB7a673f595852f7B00906408A0b073db
 # tiny=0xa1511E5C683A007056CAa1d9A8D6A37464826280
-perror=0x5a91fe74aB3788FF58187ACAf3fB0A039534428E
+# perror=0x5a91fe74aB3788FF58187ACAf3fB0A039534428E
+mess=0xAfFb6A90135B416C2DFE6e790185B42B445296EA
 tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL" "RING" "KTON")
 # tokens=("RING" "KTON")
-to=$perror
+to=$mess
 for token in "${tokens[@]}"; do
   seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(address,uint256)" "$to" "$amount"
 done
 
-bone_id=1
 for id in {1..6}
 do
   seth send "$MATERIAL_PROXY" "mintObject(address,uint128,uint256,bytes)" $to $id 100000 0x
