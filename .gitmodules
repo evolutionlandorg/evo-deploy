@@ -34,9 +34,6 @@
 [submodule "lib/multicall"]
 	path = lib/multicall
 	url = https://github.com/evolutionlandorg/multicall
-[submodule "lib/pve"]
-	path = lib/pve
-	url = https://github.com/evolutionlandorg/pve
 [submodule "lib/landrs"]
 	path = lib/landrs
 	url = https://github.com/evolutionlandorg/landrs
