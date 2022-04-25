@@ -23,8 +23,8 @@ lib="raffle"
 
 
 sig="initialize(address,address)"
-# PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/GoldRafflePool.sol:GoldRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_GOLD")
-# PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/WoodRafflePool.sol:WoodRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_WOOD")
-# PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/WaterRafflePool.sol:WaterRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_WATER")
+PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/GoldRafflePool.sol:GoldRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_GOLD")
+PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/WoodRafflePool.sol:WoodRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_WOOD")
+PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/WaterRafflePool.sol:WaterRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_WATER")
 PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/FireRafflePool.sol:FireRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_FIRE")
 PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/SoilRafflePool.sol:SoilRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_SOIL")
