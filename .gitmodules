@@ -40,3 +40,6 @@
 [submodule "lib/claims"]
 	path = lib/claims
 	url = https://github.com/evolutionlandorg/claims
+[submodule "lib/pvx"]
+	path = lib/pvx
+	url = https://github.com/evolutionlandorg/pvx
