@@ -2,7 +2,7 @@ pragma solidity ^0.6.7;
 
 import "zeppelin-solidity/proxy/TransparentUpgradeableProxy.sol";
 
-contract PvpTicketProxy is TransparentUpgradeableProxy {
+contract PvpShopProxy is TransparentUpgradeableProxy {
 	constructor(
 		address _logic,
 		address _admin,
