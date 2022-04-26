@@ -5,8 +5,9 @@ set -e
 . $(PWD)/bin/init
 
 # pve
+lib="pvx"
 sig="initialize(address)"
-CRAFTBASE_PROXY=$(deployProxy "pve" src/proxy/CraftBaseProxy.sol:CraftBaseProxy src/CraftBase.sol:CraftBase "$sig" "$SETTINGSREGISTRY")
+CRAFTBASE_PROXY=$(deployProxy "$lib" src/proxy/CraftBaseProxy.sol:CraftBaseProxy src/CraftBase.sol:CraftBase "$sig" "$SETTINGSREGISTRY")
 seth send $INTERSTELLARENCODERV4 "registerNewObjectClass(address,uint8)" $CRAFTBASE_PROXY $(seth --to-hex 6)
 if test $(seth call $INTERSTELLARENCODERV4 "classAddress2Id(address)(uint8)" $CRAFTBASE_PROXY) != 6; then
   (echo "check classAddress2Id failed."; exit 1;)
@@ -15,10 +16,10 @@ fi
 register "addr" "CONTRACT_CRAFT_BASE" "$CRAFTBASE_PROXY"
 
 # crab special
-CODEX_SWORD=$(dappCreate "pve" src/codex/codex-sword-crab.sol:CodexSwordCrab)
+CODEX_SWORD=$(dappCreate "$lib" src/codex/codex-sword-crab.sol:CodexSwordCrab)
 register "addr" "CONTRACT_SWORD_CODEX" "$CODEX_SWORD"
 
-CODEX_SHIELD=$(dappCreate "pve" src/codex/codex-shield-crab.sol:CodexShieldCrab)
+CODEX_SHIELD=$(dappCreate "$lib" src/codex/codex-shield-crab.sol:CodexShieldCrab)
 register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
 
 ## register after farm
@@ -27,7 +28,7 @@ register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
 # register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
 # register "addr" "CONTRACT_LP_FIRE_ERC20_TOKEN" "$(loadConf ".furnace.lpFIRE")"
 # register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$(loadConf ".furnace.lpSOIL")"
-CODEX_PREFER=$(dappCreate "pve" src/codex/codex-preferV0.sol:CodexPreferV0 $SETTINGSREGISTRY)
+CODEX_PREFER=$(dappCreate "$lib" src/codex/codex-preferV0.sol:CodexPreferV0 $SETTINGSREGISTRY)
 register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"
 
 # apo

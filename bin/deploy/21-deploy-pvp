@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="pvx"
+
+sig="initialize(address)"
+PVPTICKET_PROXY=$(deployProxy "$lib" src/proxy/PvpTicketProxy.sol:PvpTicketProxy src/PvpTicket.sol:PvpTicket "$sig" "$SETTINGSREGISTRY")
+
+register "addr" "CONTRACT_BOX_BASE" "$BOXBASE_PROXY"
+register "addr" "CONTRACT_USDT_ERC20_TOKEN" "$TOKEN_ERC20_USDT"

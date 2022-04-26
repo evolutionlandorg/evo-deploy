@@ -4,7 +4,7 @@ set -e
 
 . $(PWD)/bin/init
 
-lib="pve"
+lib="pvx"
 
 sig="initialize(address)"
 PVETEAM_PROXY=$(deployProxy "$lib" src/proxy/PveTeamProxy.sol:PveTeamProxy src/PveTeam.sol:PveTeam "$sig" "$SETTINGSREGISTRY")

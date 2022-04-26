@@ -2,7 +2,7 @@
 .PHONY: pre-4 solc-4 pre-5 solc-5 pre-6 solc-6 pre-7 solc-7 solc-8
 .PHONY:	build-apostle build-common build-land build-market build-token
 .PHONY: build-staker build-multicall build-zapper
-.PHONY: build-furnace build-raffle build-pve build-landrs build-proxy
+.PHONY: build-furnace build-raffle build-pvx build-landrs build-proxy
 .PHONY: build-governance
 .PHONY: build-claims
 
@@ -30,7 +30,7 @@ solc-4: build-apostle build-common build-land build-market build-token
 
 solc-5: build-staker build-multicall build-zapper
 
-solc-6: build-furnace build-raffle build-pve build-landrs build-proxy
+solc-6: build-furnace build-raffle build-pvx build-landrs build-proxy
 
 solc-7: build-governance
 
@@ -75,8 +75,8 @@ build-multicall:
 build-zapper:
 	@cd lib/zapper && (MAKE)
 
-build-pve:
-	@cd lib/pve && (MAKE)
+build-pvx:
+	@cd lib/pvx && (MAKE)
 
 build-landrs:
 	@cd lib/landrs && (MAKE)
