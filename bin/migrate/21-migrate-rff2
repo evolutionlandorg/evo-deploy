@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+lib="raffle"
+
+dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$GOLDRAFFLEPOOL_PROXY"
+dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$WOODRAFFLEPOOL_PROXY"
+dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$WATERRAFFLEPOOL_PROXY"
+dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$FIRERAFFLEPOOL_PROXY"
+dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$SOILRAFFLEPOOL_PROXY"
