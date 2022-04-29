@@ -6,8 +6,8 @@ set -e
 
 lib="raffle"
 
-dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$GOLDRAFFLEPOOL_PROXY"
-dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$WOODRAFFLEPOOL_PROXY"
-dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$WATERRAFFLEPOOL_PROXY"
-dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$FIRERAFFLEPOOL_PROXY"
-dappUpgrade "$lib" src/Raffle.sol:ElementRafflePool "$SOILRAFFLEPOOL_PROXY"
+dappUpgrade "$lib" src/ElementRafflePool.sol:ElementRafflePool "$GOLDRAFFLEPOOL_PROXY"
+dappUpgrade "$lib" src/ElementRafflePool.sol:ElementRafflePool "$WOODRAFFLEPOOL_PROXY"
+dappUpgrade "$lib" src/ElementRafflePool.sol:ElementRafflePool "$WATERRAFFLEPOOL_PROXY"
+dappUpgrade "$lib" src/ElementRafflePool.sol:ElementRafflePool "$FIRERAFFLEPOOL_PROXY"
+dappUpgrade "$lib" src/ElementRafflePool.sol:ElementRafflePool "$SOILRAFFLEPOOL_PROXY"

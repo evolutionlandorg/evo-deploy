@@ -4,8 +4,16 @@ set -e
 
 . $(PWD)/bin/init
 
-to=GOLDRAFFLEPOOL_PROXY
-for i in {0..50}; do
-  evo apo bas oid --chain $SETH_CHAIN
-  seth send $APOSTLEBASE_PROXY "createApostle(uint256,uint256,uint256,uint256,uint256,address)(uint256)" $(seth --to-uint256 0)  $(seth --to-uint256 0) $(seth --to-uint256 0) $(seth --to-uint256 511454053041611982708864420168291763551500459624059621882020887047539874) $(seth --to-uint256 5832929390214414995996) $to
-done
+# to=GOLDRAFFLEPOOL_PROXY
+# for i in {0..50}; do
+#   evo apo bas oid --chain $SETH_CHAIN
+#   seth send $APOSTLEBASE_PROXY "createApostle(uint256,uint256,uint256,uint256,uint256,address)(uint256)" $(seth --to-uint256 0)  $(seth --to-uint256 0) $(seth --to-uint256 0) $(seth --to-uint256 511454053041611982708864420168291763551500459624059621882020887047539874) $(seth --to-uint256 5832929390214414995996) $to
+# done
+
+smallFee=$(seth --to-wei 10 ether)
+largeFee=$(seth --to-wei 100 ether)
+seth send $GOLDRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
+seth send $WOODRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
+seth send $WATERRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
+seth send $FIRERAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
+seth send $SOILRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
