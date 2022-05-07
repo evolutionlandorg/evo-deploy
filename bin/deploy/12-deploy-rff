@@ -29,10 +29,10 @@ WATERRAFFLEPOOL_PROXY=$(deployProxy "$lib" src/proxy/WaterRafflePool.sol:WaterRa
 FIRERAFFLEPOOL_PROXY=$(deployProxy "$lib" src/proxy/FireRafflePool.sol:FireRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_FIRE")
 SOILRAFFLEPOOL_PROXY=$(deployProxy "$lib" src/proxy/SoilRafflePool.sol:SoilRafflePool src/ElementRafflePool.sol:ElementRafflePool "$sig" "$SETTINGSREGISTRY" "$TOKEN_ERC20_SOIL")
 
-smallFee=$(seth --to-wei 10 ether)
-largeFee=$(seth --to-wei 100 ether)
-seth send $GOLDRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
-seth send $WOODRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
-seth send $WATERRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
-seth send $FIRERAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
-seth send $SOILRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
+# smallFee=$(seth --to-wei 10 ether)
+# largeFee=$(seth --to-wei 100 ether)
+# seth send $GOLDRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
+# seth send $WOODRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
+# seth send $WATERRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
+# seth send $FIRERAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee
+# seth send $SOILRAFFLEPOOL_PROXY "setFee(uint,uint)" $smallFee $largeFee

@@ -4,5 +4,5 @@ set -e
 
 . $(PWD)/bin/init
 
-CODEX_RANDOM=$(dappCreate "pve" src/codex/codex-random.sol:CodexRandom)
+CODEX_RANDOM=$(DAPP_VERIFY_CONTRACT= dappCreate "pvx" src/codex/codex-random.sol:CodexRandom)
 register "addr" "CONTRACT_RANDOM_CODEX" "$CODEX_RANDOM"
