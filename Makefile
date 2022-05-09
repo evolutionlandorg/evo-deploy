@@ -4,7 +4,7 @@
 .PHONY: build-staker build-multicall build-zapper
 .PHONY: build-furnace build-raffle build-pvx build-landrs build-proxy
 .PHONY: build-governance
-.PHONY: build-claims
+.PHONY: build-claims build-arena
 
 SUBDIRS = apostle common-contracts furnace governance land market-contracts token-contracts
 DAPP_LIB = lib/
@@ -24,7 +24,7 @@ pre-7:
 	@nix-env -f https://github.com/dapphub/dapptools/archive/master.tar.gz -iA solc-static-versions.solc_0_7_6
 
 pre-8:
-	@nix-env -f https://github.com/dapphub/dapptools/archive/master.tar.gz -iA solc-static-versions.solc_0_8_11
+	@nix-env -f https://github.com/dapphub/dapptools/archive/master.tar.gz -iA solc-static-versions.solc_0_8_13
 
 solc-4: build-apostle build-common build-land build-market build-token
 
@@ -34,7 +34,7 @@ solc-6: build-furnace build-raffle build-pvx build-landrs build-proxy
 
 solc-7: build-governance
 
-solc-8: build-claims
+solc-8: build-claims build-arena
 
 build-proxy:
 	@source .env && dapp --use solc:0.6.7 build
@@ -80,6 +80,9 @@ build-pvx:
 
 build-landrs:
 	@cd lib/landrs && (MAKE)
+
+build-arena:
+	@cd lib/arena && (MAKE)
 
 clean   :
 	source .env && dapp clean
