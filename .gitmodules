@@ -43,3 +43,6 @@
 [submodule "lib/pvx"]
 	path = lib/pvx
 	url = https://github.com/evolutionlandorg/pvx
+[submodule "lib/arena"]
+	path = lib/arena
+	url = https://github.com/evolutionlandorg/arena
