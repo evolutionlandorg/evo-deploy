@@ -5,28 +5,33 @@ set -e
 p() { printf "%-66s %-66s\n" "$1" "$2"; }
 
 locs=(
-66,-20
-39,7
-65,-10
+2,62
+14,59
+-6,59
+-8,58
+-19,62
   )
 
 addrs=(
-0xb861f3ba538cea2774b09f043d55d31224262199
-0xb861f3ba538cea2774b09f043d55d31224262199
-0xd8125d0f1e44468a3ede84648db579df3fd4cc64
+0xB8aea9B7A57b82243B74B043905362F4402f2995
+0x12aC25Cc6D2cCe3a89aBC344C8350aCA491a1e42
+0xEa69387AB586Ab01d363bfE44405E0437f229e6C
+0x9B6F13184B49d2237B190cb8Bd28373F8DE7258A
+0xCac0864330aC97bF8924005dbC2884638C839734
   )
 
 export SETH_ASYNC=yes
-chain=polygon
+chain=crab
 from=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
 nonce=$(seth nonce $from --chain $chain)
 # echo "nonce: ${nonce}"
-# claim land from genesis holder
+# # claim land from genesis holder
 # for loc in "${locs[@]}"; do
 #   locarray=(`echo $loc | tr ',' ' '`)
 #   x="${locarray[0]}"
 #   y="${locarray[1]}"
 #   echo $x $y
+#   unset ETH_NONCE
 #   landId=$(evo lnd-bas loc $(seth --to-int256 $x) $(seth --to-int256 $y) --chain $chain)
 #   echo $landId
 #   export ETH_NONCE=$nonce
@@ -48,6 +53,7 @@ do
   x="${locarray[0]}"
   y="${locarray[1]}"
   echo $x $y
+  unset ETH_NONCE
   landId=$(evo lnd-bas loc $(seth --to-int256 $x) $(seth --to-int256 $y) --chain $chain)
   p "$landId" "$to"
   export ETH_NONCE=$nonce
