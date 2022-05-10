@@ -7,7 +7,7 @@ set -e
 lib="arena"
 
 # USDT=$(dappCreate "$lib" src/USDT.sol:USDT)
-# TICKET=$(dappCreate "$lib" src/Ticket.sol:Ticket)
+TICKET=$(dappCreate "$lib" src/Ticket.sol:Ticket)
 SEASON=$(dappCreate "$lib" src/Season.sol:Season)
 SHOP=$(dappCreate "$lib" src/Shop.sol:Shop $USDT $TICKET $SEASON)
 
