@@ -15,6 +15,7 @@ RING=$TOKEN_ERC20_RING
 # token balance $RING $SNAPSHOTPROXY
 
 seth send $REVENUEPOOL_PROXY "settleToken(address)" $RING
+# seth send $STAKINGREWARDSFACTORY "recover(address)" $RING
 
 # seth call $USERPOINTS_PROXY "pointsSupply()(uint256)"
 # seth call $POINTSREWARDPOOL_PROXY "totalRewardInPool(address)(uint256)" $RING
