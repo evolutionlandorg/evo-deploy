@@ -4,8 +4,8 @@ set -e
 
 . $(PWD)/bin/init
 
-# rewardsToken=$TOKEN_ERC20_RING
-# STAKINGREWARDSFACTORY=$(dappCreate staker src/StakingRewardsFactory.sol:StakingRewardsFactory "$rewardsToken" )
+rewardsToken=$TOKEN_ERC20_RING
+STAKINGREWARDSFACTORY=$(dappCreate staker src/StakingRewardsFactory.sol:StakingRewardsFactory "$rewardsToken" )
 
 # TOKEN_LP_FIRE_RING="$(loadConf ".furnace.lpFIRE")"
 # TOKEN_LP_GOLD_RING="$(loadConf ".furnace.lpGOLD")"
