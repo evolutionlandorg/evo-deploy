@@ -9,7 +9,7 @@ lib="arena"
 # USDT=$(dappCreate "$lib" src/USDT.sol:USDT)
 # TICKET=$(dappCreate "$lib" src/Ticket.sol:Ticket)
 # SEASON=$(dappCreate "$lib" src/Season.sol:Season)
-# SHOP=$(dappCreate "$lib" src/Shop.sol:Shop $USDT $TICKET $SEASON)
+# SHOP=$(dappCreate "$lib" src/Shop.sol:Shop $USDT $TICKET $SEASON $MULTISIGWALLETDEV)
 
 wards=$(loadAuthConf ".arena.ticket.wards | .[]")
 sigs=$(loadAuthConf ".arena.ticket.sigs | .[]")

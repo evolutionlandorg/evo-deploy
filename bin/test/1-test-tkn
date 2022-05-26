@@ -8,7 +8,7 @@ set -e
 # seth send "$TOKEN_ERC20_RING" "changeCap(uint256)" "$cap"
 
 # test mint
-amount=$(seth --to-uint256 $(seth --to-wei 1000 gwei))
+amount=$(seth --to-uint256 $(seth --to-wei 100000 ether))
 shell1=0x735182c782CB8e7806F8903dE7913e6880CbF82E
 # xuelei=0x245B4775082C144C22a4874B0fBa8c70c510c5AE
 # jay=0xf422673CB7a673f595852f7B00906408A0b073db
@@ -17,10 +17,10 @@ perror=0x5a91fe74aB3788FF58187ACAf3fB0A039534428E
 mess=0xAfFb6A90135B416C2DFE6e790185B42B445296EA
 jony=0x77A46C4B2863b65417d547E4E5AA0aFD701972f2
 # tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL" "RING" "KTON")
-# tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
-tokens=("USDT")
-tos=("$shell1" "$tiny" "$perror" "$mess" "$jony")
-# to=$mess
+tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL")
+# tokens=("USDT")
+# tos=("$shell1" "$tiny" "$perror" "$mess" "$jony")
+tos=("$mess")
 for token in "${tokens[@]}"; do
   for to in "${tos[@]}"; do
     seth send "$(eval echo "\$TOKEN_ERC20_${token}")" "mint(address,uint256)" "$to" "$amount"
