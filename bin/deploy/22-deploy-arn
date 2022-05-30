@@ -8,8 +8,8 @@ lib="arena"
 
 # USDT=$(dappCreate "$lib" src/USDT.sol:USDT)
 TICKET=$(dappCreate "$lib" src/Ticket.sol:Ticket)
-# SEASON=$(dappCreate "$lib" src/Season.sol:Season)
-# SHOP=$(dappCreate "$lib" src/Shop.sol:Shop $USDT $TICKET $SEASON $MULTISIGWALLETDEV)
+SEASON=$(dappCreate "$lib" src/Season.sol:Season)
+SHOP=$(dappCreate "$lib" src/Shop.sol:Shop $USDT $TICKET $SEASON $MULTISIGWALLETDEV)
 
 # wards=$(loadAuthConf ".arena.ticket.wards | .[]")
 # sigs=$(loadAuthConf ".arena.ticket.sigs | .[]")
@@ -18,7 +18,7 @@ TICKET=$(dappCreate "$lib" src/Ticket.sol:Ticket)
 
 seth send $TICKET "setMedadataHash(uint256,bytes32)" 1 0x03E21EE082873088264AF3BD48709BF6EF578FA2778C663891A5812DEC5FE898
 
-# seth send $SEASON "addTicket(address,uint256)" $TICKET 1
-# seth send $SEASON "setTicketSeason(address,uint256,uint256)" $TICKET 1 1
+seth send $SEASON "addTicket(address,uint256)" $TICKET 1
+seth send $SEASON "setTicketSeason(address,uint256,uint256)" $TICKET 1 1
 
 # seth send $SEASON "startNewSeason()"
