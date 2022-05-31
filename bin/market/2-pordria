@@ -6,13 +6,13 @@ set -e
 
 set -x
 
-wallet=$MULTISIGWALLETDEV
+wallet=$MULTISIGWALLETCONTRIBUTION
+# wallet=$MULTISIGWALLETDEV
 to=$CLAIMS_PROXY
-# wallet=$MULTISIGWALLETCONTRIBUTION
 # to=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
 
 # rint_amount=$(seth --to-wei 2000000 ether)
-xring_amount=$(seth --to-wei 3000 gwei)
+xring_amount=$(seth --to-wei 40000 gwei)
 
 calldata=$(seth calldata "transfer(address,uint256)" $to $xring_amount)
 
