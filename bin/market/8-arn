@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+to=$CLAIMS_PROXY
+
+seth send $TICKET "create(address,uint,uint)" $to 1 5
