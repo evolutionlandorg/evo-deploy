@@ -4,9 +4,9 @@ set -e
 
 . $(PWD)/bin/init
 
-lib="pve"
+lib="pvx"
 
-# dappUpgrade "$lib" src/PveTeam.sol:PveTeam "$PVETEAM_PROXY"
+dappUpgrade "$lib" src/PveTeam.sol:PveTeam "$PVETEAM_PROXY"
 # seth send $PVETEAM_PROXY "setLock(uint256)" 86400
 # seth call $PVETEAM_PROXY "lock()(uint256)"
 
@@ -39,5 +39,5 @@ lib="pve"
 # CODEX_SHIELD=$(dappCreate "pve" src/codex/codex-shield-crab.sol:CodexShieldCrab)
 # register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
 
-CODEX_PREFER=$(dappCreate "pve" src/codex/codex-prefer.sol:CodexPrefer $SETTINGSREGISTRY)
-register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"
+# CODEX_PREFER=$(dappCreate "pve" src/codex/codex-prefer.sol:CodexPrefer $SETTINGSREGISTRY)
+# register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"
