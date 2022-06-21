@@ -6,15 +6,15 @@ set -e
 
 set -x
 
-wallet=$MULTISIGWALLETCONTRIBUTION
-# wallet=$MULTISIGWALLETDEV
+# wallet=$MULTISIGWALLETCONTRIBUTION
+wallet=$MULTISIGWALLETDEV
 to=$CLAIMS_PROXY
 # to=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
 
-# rint_amount=$(seth --to-wei 2000000 ether)
-xring_amount=$(seth --to-wei 40000 gwei)
+ring_amount=$(seth --to-wei 6500 ether)
+# ring_amount=$(seth --to-wei 40000 gwei)
 
-calldata=$(seth calldata "transfer(address,uint256)" $to $xring_amount)
+calldata=$(seth calldata "transfer(address,uint256)" $to $ring_amount)
 
 seth send $wallet "submitTransaction(address,uint,bytes)" $TOKEN_ERC20_RING 0 $calldata
 
