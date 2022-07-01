@@ -11,7 +11,7 @@ wallet=$MULTISIGWALLETDEV
 to=$CLAIMS_PROXY
 # to=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
 
-ring_amount=$(seth --to-wei 6500 ether)
+ring_amount=$(seth --to-wei 200 ether)
 # ring_amount=$(seth --to-wei 40000 gwei)
 
 calldata=$(seth calldata "transfer(address,uint256)" $to $ring_amount)
