@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+set -e
+
+p() { printf "%-66s %-66s\n" "$1" "$2"; }
+
+locs=(
+-2,62
+-22,51
+12,34
+-9,65
+7,36
+16,62
+20,33
+20,50
+  )
+
+addrs=(
+0x0D6F9bdF7aDB1FC13654a1281DCe12F212068076
+0x0D6F9bdF7aDB1FC13654a1281DCe12F212068076
+0x0D6F9bdF7aDB1FC13654a1281DCe12F212068076
+0x0D6F9bdF7aDB1FC13654a1281DCe12F212068076
+0x0D6F9bdF7aDB1FC13654a1281DCe12F212068076
+0x0D6F9bdF7aDB1FC13654a1281DCe12F212068076
+0x0D6F9bdF7aDB1FC13654a1281DCe12F212068076
+0x0D6F9bdF7aDB1FC13654a1281DCe12F212068076
+  )
+
+export SETH_ASYNC=yes
+chain=crab
+from=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
+nonce=$(seth nonce $from --chain $chain)
+echo "nonce: ${nonce}"
+# claim land from genesis holder
+for loc in "${locs[@]}"; do
+  locarray=(`echo $loc | tr ',' ' '`)
+  x="${locarray[0]}"
+  y="${locarray[1]}"
+  echo $x $y
+  unset ETH_NONCE
+  landId=$(evo lnd-bas loc $(seth --to-int256 $x) $(seth --to-int256 $y) --chain $chain)
+  echo $landId
+  export ETH_NONCE=$nonce
+  evo mkt-gen claim $landId --chain $chain
+  nonce=$(( ${nonce} + 1 ))
+  # evo cmn-tkn owner $landId --chain $chain
+  # evo lnd-mst unbox $landId --chain $chain
+done
+echo "nonce: ${nonce}"
+
+echo "------------------------------------------------------------------"
+
+echo "nonce: ${nonce}"
+for (( i=0; i<${#locs[@]}; i++ ));
+do
+  loc="${locs[$i]}"
+  to="${addrs[$i]}"
+  locarray=(`echo $loc | tr ',' ' '`)
+  x="${locarray[0]}"
+  y="${locarray[1]}"
+  echo $x $y
+  unset ETH_NONCE
+  landId=$(evo lnd-bas loc $(seth --to-int256 $x) $(seth --to-int256 $y) --chain $chain)
+  p "$landId" "$to"
+  export ETH_NONCE=$nonce
+  evo cmn-tkn transferFrom "$from" "$to" "$landId" --chain $chain
+  nonce=$(( ${nonce} + 1 ))
+done
+echo "nonce: ${nonce}"
