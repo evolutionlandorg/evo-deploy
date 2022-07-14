@@ -23,3 +23,5 @@ lib="arena"
 # seth send $SEASON "setTicketSeason(address,uint256,uint256)" $TICKET 1 1
 
 # seth send $SEASON "startNewSeason()"
+
+PROFESSION=$(dappCreate "$lib" src/Profession.sol:Profession $USDT $MULTISIGWALLETDEV)
