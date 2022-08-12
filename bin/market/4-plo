@@ -4,7 +4,6 @@ set -e
 
 . $(PWD)/bin/init
 
-
 export SETH_ASYNC=yes
 nonce=$(seth nonce $ETH_FROM)
 echo "nonce: ${nonce}"

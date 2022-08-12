@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+to=$ARENA_CLAIMS
+
+export SETH_ASYNC=yes
+nonce=$(seth nonce $ETH_FROM)
+echo "nonce: ${nonce}"
+for i in {1..18}; do
+  seth send -N "$nonce" "$SEASONMEDAL" "safeMint(address,string)" "$CLAIMS_PROXY" '"QmPWRgTzrwTEpHb3CyPytABE8WX58WsGVurz4do126yp2c/'${i}'.json"'
+  nonce=$(( ${nonce} + 1 ))
+done
+echo "nonce: ${nonce}"
