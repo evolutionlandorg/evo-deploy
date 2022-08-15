@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+claims_name=$1
+salt=$2
+
+set -x
+
+path="${PWD}/lib/arena/data/${SETH_CHAIN}/root/${1}_${2}.json"
+echo "path: $path"
+
+root=$(cat $path)
+expiry=0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+# expiry=0x0000000000000000000000000000000000000000000000000000000000000000
+seth send $ARENA_CLAIMS "addNewGiveaway(bytes32,uint)" $root $expiry
+
+path="${PWD}/lib/arena/data/${SETH_CHAIN}/verify/${1}_${2}.json"
+echo "path: $path"
+tos=$(jq -r ". | keys_unsorted[]" "$path")
+for to in $tos;do
+  calldata=$(jq -r '.["'${to}'"] | values' "$path")
+  echo "verify [$to] claim proof"
+  seth call $ARENA_CLAIMS $calldata --chain $SETH_CHAIN
+done
