@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+set -x
+
+to=$ARENA_CLAIMS
+total=$(seth call $USDT "balanceOf(address)(uint)" $SHOP)
+seth send $SHOP "claimTokens(address)" $USDT
+seth send $USDT "transfer(address,uint)" $ARENA_CLAIMS $total

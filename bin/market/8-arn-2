@@ -14,8 +14,9 @@ echo "path: $path"
 
 root=$(cat $path)
 expiry=0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-# expiry=0x0000000000000000000000000000000000000000000000000000000000000000
 seth send $ARENA_CLAIMS "addNewGiveaway(bytes32,uint)" $root $expiry
+
+set +x
 
 path="${PWD}/lib/arena/data/${SETH_CHAIN}/verify/${1}_${2}.json"
 echo "path: $path"
