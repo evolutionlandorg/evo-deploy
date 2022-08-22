@@ -30,8 +30,8 @@ lib="arena"
 
 # seth send $SEASONMEDAL "setBaseURI(string)" '"ipfs://"'
 
-ARENA_ORG=$(seth --to-bytes32 $(seth --from-ascii "Arena"))
+# ARENA_ORG=$(seth --to-bytes32 $(seth --from-ascii "Arena"))
 
 # seth send $CLAIMSFACTORY "create(bytes32,address)" $ARENA_ORG $ETH_FROM
 
-seth call $CLAIMSFACTORY "orgOf(bytes32)(address)" $ARENA_ORG
+# seth call $CLAIMSFACTORY "orgOf(bytes32)(address)" $ARENA_ORG

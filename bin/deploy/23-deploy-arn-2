@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -ex
+
+. $(PWD)/bin/init
+
+lib="arena"
+
+hash=$(ipfs cid format -v 1 -b base16 QmYvV9SsUzqLEdyQpnU6iAkS163qbE9q5WmzmG2KjKomAJ)
+hash=${hash:9}
+seth send $TICKET "setMedadataHash(uint256,bytes32)" 2 0x$hash
+
+seth send $SEASON "addTicket(address,uint256)" $TICKET 2
+
+seth send $SEASON "setTicketSeason(address,uint256,uint256)" $TICKET 2 2
+
+seth send $SEASON "startNewSeason()"
