@@ -1,4 +1,4 @@
-pragma solidity ^0.6.7;
+pragma solidity 0.7.6;
 
 import "zeppelin-solidity/proxy/TransparentUpgradeableProxy.sol";
 
@@ -7,5 +7,5 @@ contract WaterRafflePool is TransparentUpgradeableProxy {
 		address _logic,
 		address _admin,
 		bytes memory _data
-	) public payable TransparentUpgradeableProxy(_logic, _admin, _data) {}
+	) payable TransparentUpgradeableProxy(_logic, _admin, _data) {}
 }

@@ -1,4 +1,4 @@
-pragma solidity ^0.6.7;
+pragma solidity 0.7.6;
 
 import "zeppelin-solidity/proxy/ProxyAdmin.sol";
 

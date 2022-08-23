@@ -37,7 +37,7 @@ solc-7: build-governance
 solc-8: build-claims build-arena
 
 build-proxy:
-	@source .env && dapp --use solc:0.6.7 build
+	@source .env && dapp --use solc:0.7.6 build
 
 build-apostle:
 	@cd lib/apostle && (MAKE)
