@@ -13,11 +13,11 @@ lib="claims"
 
 CLAIMSFACTORY=$(dappCreate "$lib" src/ClaimsFactory.sol:ClaimsFactory)
 
-# org=$(seth --to-bytes32 $(seth --from-ascii "Evolution Land"))
-# seth send $CLAIMSFACTORY "register(bytes32,address)" $org $EVOCLAIMS_PROXY
+org=$(seth --to-bytes32 $(seth --from-ascii "Evolution Land"))
+seth send $CLAIMSFACTORY "register(bytes32,address)" $org $CLAIMS_PROXY
 
-set -x
-org=$(seth --to-bytes32 $(seth --from-ascii "Darwinia Network"))
-admin=0x0085a7739de16716b5dd5a07d42d08708769c988
-seth send $CLAIMSFACTORY "create(bytes32,address)" $org $admin
-seth call $CLAIMSFACTORY "orgOf(bytes32)(address)" $org
+# set -x
+# org=$(seth --to-bytes32 $(seth --from-ascii "Darwinia Network"))
+# admin=0x0085a7739de16716b5dd5a07d42d08708769c988
+# seth send $CLAIMSFACTORY "create(bytes32,address)" $org $admin
+# seth call $CLAIMSFACTORY "orgOf(bytes32)(address)" $org
