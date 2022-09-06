@@ -6,7 +6,10 @@ set -e
 
 set -x
 
-to=$ARENA_CLAIMS
 total=$(seth call $USDT "balanceOf(address)(uint)" $SHOP)
+reward=$(( "$total * 7 / 10" ))
+surplus=$(( $total - $reward))
+
 seth send $SHOP "claimTokens(address)" $USDT
-seth send $USDT "transfer(address,uint)" $ARENA_CLAIMS $total
+seth send $USDT "transfer(address,uint)" $ARENA_CLAIMS $reward
+seth send $USDT "transfer(address,uint)" $MULTISIGWALLETDEV $surplus
