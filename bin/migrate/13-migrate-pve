@@ -6,7 +6,7 @@ set -e
 
 lib="pvx"
 
-dappUpgrade "$lib" src/PveTeam.sol:PveTeam "$PVETEAM_PROXY"
+# dappUpgrade "$lib" src/PveTeam.sol:PveTeam "$PVETEAM_PROXY"
 # seth send $PVETEAM_PROXY "setLock(uint256)" 86400
 # seth call $PVETEAM_PROXY "lock()(uint256)"
 
@@ -41,3 +41,5 @@ dappUpgrade "$lib" src/PveTeam.sol:PveTeam "$PVETEAM_PROXY"
 
 # CODEX_PREFER=$(dappCreate "pve" src/codex/codex-prefer.sol:CodexPrefer $SETTINGSREGISTRY)
 # register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"
+
+seth send $MATERIAL_PROXY "setURI(string)" '"https://backend.evolution.land/api/nft/metadata/{id}"'

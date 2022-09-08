@@ -39,4 +39,4 @@ MATERIALTAKEBACK_PROXY=$(deployProxy "$lib" src/proxy/MaterialTakeBackProxy.sol:
 # MATERIAL_AUTHORITY=$(dappAuth "PveMaterial" common-contracts contracts/Authority.sol:Authority "$wards" "$sigs")
 # setAuth "$MATERIAL_PROXY" "$MATERIAL_AUTHORITY"
 
-seth send $MATERIAL_PROXY "setURI(string)" '"https://www.evolution.land/api/nft/metadata/"'
+seth send $MATERIAL_PROXY "setURI(string)" '"https://backend.evolution.land/api/nft/metadata/{id}"'
