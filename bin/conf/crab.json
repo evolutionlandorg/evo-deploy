@@ -65,7 +65,7 @@
         "lpFIRE": "0x15f2fBD98a0657e2afcAB08922632e58B1cC9FdD",
         "lpSOIL": "0x1E4b46582bbA7E5Ddb107d3a640e441774980525",
         "supervisor": "0x536DeaCEdC6E972822b9e78571786B5a6dd10c8A",
-        "itemMineFee": 5000000,
+        "itemMineFee": 30000000,
         "itemProtectPeriod": 604800,
         "drillLuckyBoxReleaseTime": 1648893600
     },

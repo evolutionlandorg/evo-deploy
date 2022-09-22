@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+register "uint" "FURNACE_ITEM_MINE_FEE" "$(loadConf ".furnace.itemMineFee")"
