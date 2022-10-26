@@ -8,10 +8,11 @@ set -x
 
 # wallet=$MULTISIGWALLETCONTRIBUTION
 wallet=$MULTISIGWALLETDEV
-to=$CLAIMS_PROXY
+# to=$CLAIMS_PROXY
+to=0x0EDE4EA66984F8110C1e065412c6fa8297e75E17
 # to=0x7aE77149ed38c5dD313e9069d790Ce7085caf0A6
 
-ring_amount=$(seth --to-wei 2400 ether)
+ring_amount=$(seth --to-wei 800 ether)
 # ring_amount=$(seth --to-wei 2600 gwei)
 
 calldata=$(seth calldata "transfer(address,uint256)" $to $ring_amount)
