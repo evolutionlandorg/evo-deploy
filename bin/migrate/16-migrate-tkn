@@ -14,7 +14,7 @@ register "uint" "UINT_AUTOBIRTH_FEE" "$(loadConf ".apostle.birthFee")"
 register "uint" "UINT_CHANGECLASS_FEE" "$(loadConf ".apostle.changeClassFee")"
 
 timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
-DRILLLUCKYBOX=$(dappCreate "furnace" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
+dappCreate "furnace" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp)
 
 dappUpgrade "common-contracts" contracts/TokenUseV2.sol:TokenUseV2 "$TOKENUSE_PROXY"
 dappUpgrade "market-contracts" contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$POINTSREWARDPOOL_PROXY"
