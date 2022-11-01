@@ -15,11 +15,10 @@ fi
 # seth send "$OBJECTOWNERSHIP_AUTHORITY" "rely(address)" $CRAFTBASE_PROXY
 register "addr" "CONTRACT_CRAFT_BASE" "$CRAFTBASE_PROXY"
 
-# crab special
-CODEX_SWORD=$(dappCreate "$lib" src/codex/codex-sword-crab.sol:CodexSwordCrab)
+CODEX_SWORD=$(dappCreate "$lib" src/codex/codex-sword.sol:CodexSword)
 register "addr" "CONTRACT_SWORD_CODEX" "$CODEX_SWORD"
 
-CODEX_SHIELD=$(dappCreate "$lib" src/codex/codex-shield-crab.sol:CodexShieldCrab)
+CODEX_SHIELD=$(dappCreate "$lib" src/codex/codex-shield.sol:CodexShield)
 register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
 
 ## register after farm

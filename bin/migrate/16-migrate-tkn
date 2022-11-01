@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+xWRING=$(dappCreate "token-contracts" "src/xWRING.sol:xWRING")
+register "addr" "CONTRACT_RING_ERC20_TOKEN" "$xWRING"
+addAddress "TOKEN_ERC20_RING" "$xWRING"
+
+register "uint" "UINT_AUTOBIRTH_FEE" "$(loadConf ".apostle.birthFee")"
+register "uint" "UINT_CHANGECLASS_FEE" "$(loadConf ".apostle.changeClassFee")"
+
+timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
+DRILLLUCKYBOX=$(dappCreate "furnace" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
+
+dappUpgrade "common-contracts" contracts/TokenUseV2.sol:TokenUseV2 "$TOKENUSE_PROXY"
+dappUpgrade "market-contracts" contracts/aution/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$POINTSREWARDPOOL_PROXY"
+register "uint" "UINT_SMALL_TICKET_FEE" 0
+register "uint" "UINT_LARGE_TICKET_FEE" 0
+
+register "addr" "CONTRACT_DIVIDENDS_POOL" "0x0000000000000000000000000000000000000000"
+dappUpgrade "$lib" contracts/auction/RevenuePoolCrab.sol:RevenuePoolCrab "$REVENUEPOOL_PROXY"
+
+# teller
+register "addr" "CONTRACT_LP_GOLD_ERC20_TOKEN" "$(loadConf ".furnace.lpGOLD")"
+register "addr" "CONTRACT_LP_WOOD_ERC20_TOKEN" "$(loadConf ".furnace.lpWOOD")"
+register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
+register "addr" "CONTRACT_LP_FIRE_ERC20_TOKEN" "$(loadConf ".furnace.lpFIRE")"
+register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$(loadConf ".furnace.lpSOIL")"
+
+# 2 class
+CONTRACT_LP_ELEMENT_TOKEN=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_LP_ELEMENT_TOKEN"))
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0x55Ca5B31C1883Be971f1B41e75cA8D98B939E9Ac"
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0x7f08bC6a84FfC8Fdc5C96FC641E643680018c071"
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0xe25E06428aae51d5Af6D0417E55c901B15e9C34B"
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0xCD1C143E590f3b7a3a3f2C146B6D29074E13009f"
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0xe56e70F1a03646DDa368476D253059A33a4393e9"
+
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpGOLD")" 1
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWOOD")" 2
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWATER")" 3
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpFIRE")" 4
+seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpSOIL")" 5
+
+seth send "$FORMULA_PROXY" "setAmount(uint256,uint256)" 3 $(seth --to-wei 450 ether)
+seth send "$FORMULA_PROXY" "setAmount(uint256,uint256)" 4 $(seth --to-wei 450 ether)
+seth send "$FORMULA_PROXY" "setAmount(uint256,uint256)" 5 $(seth --to-wei 450 ether)
+
+for i in {0..5}; do
+  echo "----------------------------------------------------------------"
+  seth call "$FORMULA_PROXY" "getMinor(uint256)(bytes32,uint256)" $i
+done
+
+## TODO
+# migrate PointsRewardPool, ContributionPool, DevPool xRING
+# migrate CraftBaseProxy lp
+
+# CODEX_SWORD=$(dappCreate "pvx" src/codex/codex-sword.sol:CodexSword)
+# register "addr" "CONTRACT_SWORD_CODEX" "$CODEX_SWORD"
+
+# CODEX_SHIELD=$(dappCreate "pvx" src/codex/codex-shield.sol:CodexShield)
+# register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
+
+# CODEX_PREFER=$(dappCreate "pvx" src/codex/codex-prefer.sol:CodexPrefer $SETTINGSREGISTRY)
+# register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"

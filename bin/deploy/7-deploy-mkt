@@ -29,15 +29,14 @@ GENESISHOLDER_PROXY=$(deployProxy "$lib" src/proxy/GenesisHolderProxy.sol:Genesi
 seth send $GENESISHOLDER_PROXY "setOperator(address)" $operator
 register "addr" "CONTRACT_GENESIS_HOLDER" "$GENESISHOLDER_PROXY"
 
-# RevenuePoolV6
-# crab special
+# RevenuePoolV7
 sig="initializeContract(address)"
-REVENUEPOOL_PROXY=$(deployProxy "$lib" src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy contracts/auction/RevenuePoolCrab.sol:RevenuePoolCrab "$sig" "$SETTINGSREGISTRY")
+REVENUEPOOL_PROXY=$(deployProxy "$lib" src/proxy/RevenuePoolProxy.sol:RevenuePoolProxy contracts/auction/RevenuePoolV7.sol:RevenuePoolV7 "$sig" "$SETTINGSREGISTRY")
 register "addr" "CONTRACT_REVENUE_POOL" "$REVENUEPOOL_PROXY"
 
-# PointsRewardPoolV3
+# PointsRewardPoolV2
 sig="initializeContract(address)"
-POINTSREWARDPOOL_PROXY=$(deployProxy "$lib" src/proxy/PointsRewardPoolProxy.sol:PointsRewardPoolProxy contracts/auction/PointsRewardPoolV3.sol:PointsRewardPoolV3 "$sig" "$SETTINGSREGISTRY")
+POINTSREWARDPOOL_PROXY=$(deployProxy "$lib" src/proxy/PointsRewardPoolProxy.sol:PointsRewardPoolProxy contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$sig" "$SETTINGSREGISTRY")
 info "PointsRewardPoolProxy created."
 register "addr" "CONTRACT_POINTS_REWARD_POOL" "$POINTSREWARDPOOL_PROXY"
 
@@ -50,8 +49,6 @@ register "addr" "CONTRACT_DEV_POOL" "$devPool"
 # LuckyBox
 
 # SettingIds
-register "uint" "UINT_SMALL_TICKET_FEE" "$(loadConf ".market.playSmallTicketFee")"
-register "uint" "UINT_LARGE_TICKET_FEE" "$(loadConf ".market.playLargeTicketFee")"
 # 4%
 register "uint" "UINT_AUCTION_CUT" "$(loadConf ".market.auctionCut")"
 
