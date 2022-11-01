@@ -4,10 +4,12 @@ set -e
 
 . $(PWD)/bin/init
 
-xWRING=$(dappCreate "token-contracts" "src/xWRING.sol:xWRING")
-register "addr" "CONTRACT_RING_ERC20_TOKEN" "$xWRING"
-addAddress "TOKEN_ERC20_RING" "$xWRING"
+# step 1
+# XWRING=$(dappCreate "token-contracts" "src/xWRING.sol:xWRING")
+# addAddress "TOKEN_ERC20_RING" "$XWRING"
 
+# step 2
+# prepare addr for xWRING, lps
 register "uint" "UINT_AUTOBIRTH_FEE" "$(loadConf ".apostle.birthFee")"
 register "uint" "UINT_CHANGECLASS_FEE" "$(loadConf ".apostle.changeClassFee")"
 
@@ -15,14 +17,16 @@ timestamp="$(loadConf ".furnace.drillLuckyBoxReleaseTime")"
 DRILLLUCKYBOX=$(dappCreate "furnace" src/DrillLuckyBoxV2.sol:DrillLuckyBoxV2 $SETTINGSREGISTRY $DRILLTAKEBACK $(seth --to-uint256 $timestamp))
 
 dappUpgrade "common-contracts" contracts/TokenUseV2.sol:TokenUseV2 "$TOKENUSE_PROXY"
-dappUpgrade "market-contracts" contracts/aution/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$POINTSREWARDPOOL_PROXY"
+dappUpgrade "market-contracts" contracts/auction/PointsRewardPoolV2.sol:PointsRewardPoolV2 "$POINTSREWARDPOOL_PROXY"
 register "uint" "UINT_SMALL_TICKET_FEE" 0
 register "uint" "UINT_LARGE_TICKET_FEE" 0
 
 register "addr" "CONTRACT_DIVIDENDS_POOL" "0x0000000000000000000000000000000000000000"
-dappUpgrade "$lib" contracts/auction/RevenuePoolCrab.sol:RevenuePoolCrab "$REVENUEPOOL_PROXY"
+dappUpgrade "market-contracts" contracts/auction/RevenuePoolCrab.sol:RevenuePoolCrab "$REVENUEPOOL_PROXY"
 
-# teller
+register "addr" "CONTRACT_RING_ERC20_TOKEN" "$XWRING"
+
+teller
 register "addr" "CONTRACT_LP_GOLD_ERC20_TOKEN" "$(loadConf ".furnace.lpGOLD")"
 register "addr" "CONTRACT_LP_WOOD_ERC20_TOKEN" "$(loadConf ".furnace.lpWOOD")"
 register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
