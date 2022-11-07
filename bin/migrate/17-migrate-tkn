@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+# old_ring=0x7399Ea6C9d35124d893B8d9808930e9d3F211501
+# migrator=0xdED6Edd731f5F59fEB2555Ec3f1b6C085Dc6E42E
+
+# step 3
+# migrate PointsRewardPool
+# seth send $POINTSREWARDPOOL_PROXY "claimTokens(address)" $old_ring
+# balance0=$(seth call $old_ring "balanceOf(address)(uint)" $ETH_FROM)
+# seth send $old_ring "approve(address,uint)" $migrator $balance0
+# seth send $migrator "migrateAll()"
+# balance1=$(seth call $TOKEN_ERC20_RING "balanceOf(address)(uint)" $ETH_FROM)
+# seth send $TOKEN_ERC20_RING "transfer(address,uint)" $POINTSREWARDPOOL_PROXY $balance1
+
+# migrate MULTISIGWALLETCONTRIBUTION, MULTISIGWALLETDEV xRING
+# wallet=$MULTISIGWALLETDEV
+# balance2=$(seth call $old_ring "balanceOf(address)(uint)" $wallet)
+# calldata=$(seth calldata "approve(address,uint)" $migrator $balance2)
+
+# seth send $wallet "submitTransaction(address,uint,bytes)" $old_ring 0 $calldata
+# count=$(seth call $wallet "transactionCount()(uint)")
+# seth call $wallet "transactions(uint)(address,uint,bytes,bool)" $(( $count - 1 ))
+
+# calldata=$(seth calldata "migrateAll()")
+# seth send $wallet "submitTransaction(address,uint,bytes)" $migrator 0 $calldata
+# count=$(seth call $wallet "transactionCount()(uint)")
+# seth call $wallet "transactions(uint)(address,uint,bytes,bool)" $(( $count - 1 ))
+
+# migrate CraftBaseProxy lp
+# dappUpgrade "pvx" src/CraftBase.sol:CraftBase "$CRAFTBASE_PROXY"
+# tokens=("0x8e97f45bD127E7af3034d82a34d665746d348841" "0x3710F045307d7e0906F1Fbd0B0dF12c0Bc787382" "0xdb279D65225162280fACae2F3Ca8A3D2F63ea9BF" "0x15f2fBD98a0657e2afcAB08922632e58B1cC9FdD")
+# 75000000000000000
+# 187500000000000000
+# 187500000000000000
+# 137500000000000000
+# 0
+# for token in "${tokens[@]}"; do
+#   seth call $token "balanceOf(address)(uint)" $CRAFTBASE_PROXY
+#   seth send $CRAFTBASE_PROXY "claimTokens(address)" $token
+# done
+
+# tokens=(
+# "0x701A7d67B824D1Bc713FC5E77bE1C475Ec93106d"
+# "0xbA91F2d6d78953881A912f3DF71a541cD30eb980"
+# "0x54Eb408696E6b3Cc1795Caaf53B22F38F24200Fa"
+# "0xEd969c03e8881371754231FE1C8f1D4fE4AF2082"
+# "0x506C391b6c1eb4911241A918de5c3984A603E112"
+# "0x2Eb5b4A0624d6E646Ba2aD919411072476FA1568"
+# "0xd4b2b19a62500bb32a731a0889eF0b5147A963E4"
+# "0xA946116131932f2a6B5f2A2A52007418d706168A"
+# )
+# for token in "${tokens[@]}"; do
+#   wad=$(seth call $token "balanceOf(address)(uint)" $ETH_FROM)
+#   seth send $token "transfer(address,uint)" $CRAFTBASE_PROXY $wad
+# done
+
+# CODEX_SWORD=$(dappCreate "pvx" src/codex/codex-sword.sol:CodexSword)
+# register "addr" "CONTRACT_SWORD_CODEX" "$CODEX_SWORD"
+
+# CODEX_SHIELD=$(dappCreate "pvx" src/codex/codex-shield.sol:CodexShield)
+# register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
+
+CODEX_PREFER=$(dappCreate "pvx" src/codex/codex-prefer.sol:CodexPrefer $SETTINGSREGISTRY)
+register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"

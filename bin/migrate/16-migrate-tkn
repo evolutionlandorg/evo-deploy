@@ -55,16 +55,3 @@ for i in {0..5}; do
   echo "----------------------------------------------------------------"
   seth call "$FORMULA_PROXY" "getMinor(uint256)(bytes32,uint256)" $i
 done
-
-## TODO
-# migrate PointsRewardPool, ContributionPool, DevPool xRING
-# migrate CraftBaseProxy lp
-
-# CODEX_SWORD=$(dappCreate "pvx" src/codex/codex-sword.sol:CodexSword)
-# register "addr" "CONTRACT_SWORD_CODEX" "$CODEX_SWORD"
-
-# CODEX_SHIELD=$(dappCreate "pvx" src/codex/codex-shield.sol:CodexShield)
-# register "addr" "CONTRACT_SHIELD_CODEX" "$CODEX_SHIELD"
-
-# CODEX_PREFER=$(dappCreate "pvx" src/codex/codex-prefer.sol:CodexPrefer $SETTINGSREGISTRY)
-# register "addr" "CONTRACT_PREFER_CODEX" "$CODEX_PREFER"
