@@ -24,9 +24,9 @@ register "uint" "UINT_LARGE_TICKET_FEE" 0
 register "addr" "CONTRACT_DIVIDENDS_POOL" "0x0000000000000000000000000000000000000000"
 dappUpgrade "market-contracts" contracts/auction/RevenuePoolCrab.sol:RevenuePoolCrab "$REVENUEPOOL_PROXY"
 
-register "addr" "CONTRACT_RING_ERC20_TOKEN" "$XWRING"
+register "addr" "CONTRACT_RING_ERC20_TOKEN" "$TOKEN_ERC20_RING"
 
-teller
+# teller
 register "addr" "CONTRACT_LP_GOLD_ERC20_TOKEN" "$(loadConf ".furnace.lpGOLD")"
 register "addr" "CONTRACT_LP_WOOD_ERC20_TOKEN" "$(loadConf ".furnace.lpWOOD")"
 register "addr" "CONTRACT_LP_WATER_ERC20_TOKEN" "$(loadConf ".furnace.lpWATER")"
@@ -35,11 +35,11 @@ register "addr" "CONTRACT_LP_SOIL_ERC20_TOKEN" "$(loadConf ".furnace.lpSOIL")"
 
 # 2 class
 CONTRACT_LP_ELEMENT_TOKEN=$(seth --to-bytes32 $(seth --from-ascii "CONTRACT_LP_ELEMENT_TOKEN"))
-seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0x55Ca5B31C1883Be971f1B41e75cA8D98B939E9Ac"
-seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0x7f08bC6a84FfC8Fdc5C96FC641E643680018c071"
-seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0xe25E06428aae51d5Af6D0417E55c901B15e9C34B"
-seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0xCD1C143E590f3b7a3a3f2C146B6D29074E13009f"
-seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0xe56e70F1a03646DDa368476D253059A33a4393e9"
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0x8e97f45bD127E7af3034d82a34d665746d348841"
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0x3710F045307d7e0906F1Fbd0B0dF12c0Bc787382"
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0xdb279D65225162280fACae2F3Ca8A3D2F63ea9BF"
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0x15f2fBD98a0657e2afcAB08922632e58B1cC9FdD"
+seth send "$METADATATELLER_PROXY" "removeLPToken(bytes32,address)" "$CONTRACT_LP_ELEMENT_TOKEN" "0x1E4b46582bbA7E5Ddb107d3a640e441774980525"
 
 seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpGOLD")" 1
 seth send "$METADATATELLER_PROXY" "addLPToken(bytes32,address,uint8)" "$CONTRACT_LP_ELEMENT_TOKEN" "$(loadConf ".furnace.lpWOOD")" 2

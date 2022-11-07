@@ -43,10 +43,10 @@
     "apostle": {
         "operator": "0x01D95D2Ba934245FE9bd4088181701Cc0e621D20",
         "gen0Limit": 10000000,
-        "birthFee": "50000000000",
+        "birthFee": "50000000000000000000",
         "mixTalent": "5000000000000000000",
         "bidWaitingTime": 600,
-        "changeClassFee": "500000000000"
+        "changeClassFee": "500000000000000000000"
     },
     "market": {
         "contributionPool": "@MULTISIGWALLETCONTRIBUTION",
@@ -59,11 +59,11 @@
         "playLargeTicketFee": 100000000000
     },
     "furnace": {
-        "lpGOLD": "0x8e97f45bD127E7af3034d82a34d665746d348841",
-        "lpWOOD": "0x3710F045307d7e0906F1Fbd0B0dF12c0Bc787382",
-        "lpWATER": "0xdb279D65225162280fACae2F3Ca8A3D2F63ea9BF",
-        "lpFIRE": "0x15f2fBD98a0657e2afcAB08922632e58B1cC9FdD",
-        "lpSOIL": "0x1E4b46582bbA7E5Ddb107d3a640e441774980525",
+        "lpGOLD": "0x506C391b6c1eb4911241A918de5c3984A603E112",
+        "lpWOOD": "0x2Eb5b4A0624d6E646Ba2aD919411072476FA1568",
+        "lpWATER": "0xd4b2b19a62500bb32a731a0889eF0b5147A963E4",
+        "lpFIRE": "0xA946116131932f2a6B5f2A2A52007418d706168A",
+        "lpSOIL": "0x76F6877Ac6b03BF80AB911DE4580C51dcb358927",
         "supervisor": "0x536DeaCEdC6E972822b9e78571786B5a6dd10c8A",
         "itemMineFee": 30000000,
         "itemProtectPeriod": 604800,
