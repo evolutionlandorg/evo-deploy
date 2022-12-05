@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/init
+
+p() { printf "%-7s %-20s\n" "$1" "$2"; }
+
+# print staking reward contracts
+for i in {0..5}; do
+  st=$(seth call $STAKINGREWARDSFACTORY "stakingTokens(uint256)(address)" $i)
+  p "staking" "$st"
+  rw=$(seth call $STAKINGREWARDSFACTORY "stakingRewardsInfoByStakingToken(address)(address)" $st)
+  p "reward" "$rw"
+  end=$(seth call $rw "periodFinish()(uint)")
+  p "end" "$(date -r $end '+%Y-%m-%d %H:%M:%S')"
+done
