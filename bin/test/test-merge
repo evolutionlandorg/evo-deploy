@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+set -e
+
+p() { printf "%-44s %-10s\n" "$1" "$2"; }
+apo_attr() {
+    sig="tokenId2Apostle(uint256)(uint256,uint256,uint256,uint256,uint256,uint16,uint16,uint48,uint48,uint48,uint48,uint256)"
+    keys=("genes" "talents" "matronId" "sireId" "siringWithId" "cooldownIndex" "generation" "birthTime" "activeTime" "deadTime" "cooldownEndTime" "class")
+    apostle=$(seth call "$APOSTLEBASE_PROXY" "$sig" "${1?}")
+    for i in "${!keys[@]}"; do
+      ((idx="$i"+1))
+      value=$(echo $apostle | cut -d' ' -f "$idx")
+      p "${keys[i]}" "$value"
+    done
+}
+
+. $(PWD)/bin/init
+
+chain=$SETH_CHAIN
+RING=$TOKEN_ERC20_RING
+
+echo77=$ETH_FROM
+perror=0x5a91fe74aB3788FF58187ACAf3fB0A039534428E
+shell1=0x735182c782CB8e7806F8903dE7913e6880CbF82E
+
+ tokens=("GOLD" "WOOD" "WATER" "FIRE" "SOIL" "RING" "KTON")
+ whoes=("$shell1" "$perror" "$echo77")
+
+ for who in "${whoes[@]}"; do
+   p $who $(seth nonce $who)
+ done
+
+ for token in "${tokens[@]}"; do
+   token_addr="$(eval echo "\$TOKEN_ERC20_${token}")"
+   seth call $token_addr "symbol()(string)"
+   for who in "${whoes[@]}"; do
+     token balance $token_addr  $who
+   done
+ done
+
+ seth call "$LANDRESOURCE_PROXY" "registry()(address)"
+ seth call "$LANDRESOURCE_PROXY" "authority()(address)"
+ seth call "$LANDRESOURCE_PROXY" "owner()(address)"
+ seth call "$LANDRESOURCE_PROXY" "maxMiners()(uint256)"
+ seth call "$LANDRESOURCE_PROXY" "resourceReleaseStartTime()(uint256)"
+
+ evo obj ls --chain $chain --from $echo77
+
+ lane_id=0x2a03000103000101000000000000000300000000000000000000000000000001
+ evo lnd bas oid --chain $chain
+ evo sts lnd $lane_id --chain $chain
+
+apo_id=0x2a03000103000102000000000000000300000000000000000000000000000001
+evo apo bas oid --chain $chain
+evo sts apo $apo_id --chain $chain
+apo_attr $apo_id
+
+seth call $REVENUEPOOL_PROXY "settleToken(address)" $RING
+
+seth call $USERPOINTS_PROXY "pointsSupply()(uint256)"
+seth call $POINTSREWARDPOOL_PROXY "totalRewardInPool(address)(uint256)" $RING
+token balance $RING $REVENUEPOOL_PROXY
+devPool=$(loadConf ".market.devPool")
+token balance $RING $devPool
+token balance $RING $POINTSREWARDPOOL_PROXY
