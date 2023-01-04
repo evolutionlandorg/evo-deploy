@@ -4,25 +4,25 @@ set -e
 
 . $(PWD)/bin/init
 
-# owner=0x6E40A3621614B12821A0F184A03798ad505E4758
-# landbase="$LANDBASE_PROXY"
-# x=$(seth --to-int256 $(loadConf ".land.base.xLow"))
-# y=$(seth --to-int256 $(loadConf ".land.base.yLow"))
-# attr=0x0000000000000000000000000000000000000000000000010f0400850102005f
-# mask=0x0000000000000000000000000000000000000000000000000000000000000000
-# seth estimate "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask
-# seth send "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask
+owner=$ETH_FROM
+landbase="$LANDBASE_PROXY"
+x=$(seth --to-int256 $(loadConf ".land.base.xLow"))
+y=$(seth --to-int256 $(loadConf ".land.base.yLow"))
+attr=0x0000000000000000000000000000000000000000000000010f0400850102005f
+mask=0x0000000000000000000000000000000000000000000000000000000000000000
+seth estimate "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask
+seth send "$landbase" "assignNewLand(int256,int256,address,uint256,uint256)" $x $y $owner $attr $mask
 
-# seth send "$landbase" "setOwner(address)" 0x6540CE4d6F6D5F49AeE3F5F97feB6B13CfEAeA40
+seth send "$landbase" "setOwner(address)" $owner
 
-# seth call "$landbase" "owner()(address)"
+seth call "$landbase" "owner()(address)"
 
-landId=0x2a030001030001010000000000000003000000000000000000000000000007e9
-seth call "$LANDRESOURCE_PROXY" "registry()(address)"
-seth call "$LANDRESOURCE_PROXY" "authority()(address)"
-seth call "$LANDRESOURCE_PROXY" "owner()(address)"
-seth call "$LANDRESOURCE_PROXY" "maxMiners()(uint256)"
-seth call "$LANDRESOURCE_PROXY" "resourceReleaseStartTime()(uint256)"
+# landId=0x2a030001030001010000000000000003000000000000000000000000000007e9
+# seth call "$LANDRESOURCE_PROXY" "registry()(address)"
+# seth call "$LANDRESOURCE_PROXY" "authority()(address)"
+# seth call "$LANDRESOURCE_PROXY" "owner()(address)"
+# seth call "$LANDRESOURCE_PROXY" "maxMiners()(uint256)"
+# seth call "$LANDRESOURCE_PROXY" "resourceReleaseStartTime()(uint256)"
 
-evo lnd bas oid --chain crabtest
-evo sts lnd $landId --chain crabtest
+# evo lnd bas oid --chain crabtest
+# evo sts lnd $landId --chain crabtest

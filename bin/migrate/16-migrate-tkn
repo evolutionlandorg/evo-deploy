@@ -5,8 +5,8 @@ set -e
 . $(PWD)/bin/init
 
 # step 1
-# XWRING=$(dappCreate "token-contracts" "src/xWRING.sol:xWRING")
-# addAddress "TOKEN_ERC20_RING" "$XWRING"
+XWRING=$(dappCreate "token-contracts" "src/xWRING.sol:xWRING")
+addAddress "TOKEN_ERC20_RING" "$XWRING"
 
 # step 2
 # prepare addr for xWRING, lps

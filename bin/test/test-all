@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+. $(PWD)/bin/test/1-test-tkn
+. $(PWD)/bin/test/2-test-lnd
+. $(PWD)/bin/test/3-test-apo
+. $(PWD)/bin/test/7-test-mkt
+. $(PWD)/bin/test/15-test-clm

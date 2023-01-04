@@ -4,12 +4,12 @@ set -e
 
 . $(PWD)/bin/init
 
-owner=0x0f14341A7f464320319025540E8Fe48Ad0fe5aec
+owner=$ETH_FROM
 apostlebase="$APOSTLEBASE_PROXY"
-seth estimate $apostlebase "createApostle(uint256,uint256,uint256,uint256,uint256,address)(uint256)" $(seth --to-uint256 0)  $(seth --to-uint256 0) $(seth --to-uint256 0) $(seth --to-uint256 511454053041611982708864420168291763551500459624059621882020887047539874) $(seth --to-uint256 5832929390214414995996) $owner
+# seth estimate $apostlebase "createApostle(uint256,uint256,uint256,uint256,uint256,address)(uint256)" $(seth --to-uint256 0)  $(seth --to-uint256 0) $(seth --to-uint256 0) $(seth --to-uint256 511454053041611982708864420168291763551500459624059621882020887047539874) $(seth --to-uint256 5832929390214414995996) $owner
 
-# seth send $apostlebase "createApostle(uint256,uint256,uint256,uint256,uint256,address)(uint256)" $(seth --to-uint256 0)  $(seth --to-uint256 0) $(seth --to-uint256 0) $(seth --to-uint256 511454053041611982708864420168291763551500459624059621882020887047539874) $(seth --to-uint256 5832929390214414995996) $owner
+seth send $apostlebase "createApostle(uint256,uint256,uint256,uint256,uint256,address)(uint256)" $(seth --to-uint256 0)  $(seth --to-uint256 0) $(seth --to-uint256 0) $(seth --to-uint256 511454053041611982708864420168291763551500459624059621882020887047539874) $(seth --to-uint256 5832929390214414995996) $owner
 
-evo apo bas oid --chain crabtest
-apostleId=0x2a03000103000102000000000000000300000000000000000000000000000001
-evo sts apo $apostleId --chain crabtest
+# evo apo bas oid --chain crabtest
+# apostleId=0x2a03000103000102000000000000000300000000000000000000000000000001
+# evo sts apo $apostleId --chain crabtest

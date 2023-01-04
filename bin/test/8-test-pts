@@ -9,4 +9,4 @@ set -e
 # seth send $TOKEN_ERC20_RING "approve(address,uint256)" $REVENUEPOOL_PROXY $(seth --to-int256 -1)
 # seth send $REVENUEPOOL_PROXY "reward(address,uint256,address)" $TOKEN_ERC20_RING $value $shell1
 
-seth send $POINTSREWARDPOOL_PROXY "playWithSmallTicket()"
+seth call $POINTSREWARDPOOL_PROXY "playWithSmallTicket()"
