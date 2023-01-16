@@ -5,6 +5,9 @@ set -e
 . $(PWD)/bin/init
 
 set -x
+cal() {
+  python3 -c "print(int($1))"
+}
 
 # chain=heco
 # seth send $DRILLTAKEBACK "claimTokens(address)" $TOKEN_ERC20_RING --chain $chain
@@ -12,8 +15,25 @@ set -x
 # seth send $TOKEN_ERC20_RING "transfer(address,uint)" $MULTISIGWALLET_DEV $(seth --to-wei 1200000 ether) --chain $chain
 # seth send $TOKEN_ERC20_RING "transfer(address,uint)" $DRILLTAKEBACK $(seth --to-wei 75285.5 ether) --chain $chain
 
-chain=polygon
-seth send $DRILLTAKEBACK "claimTokens(address)" $TOKEN_ERC20_RING --chain $chain
+# chain=polygon
+# seth send $DRILLTAKEBACK "claimTokens(address)" $TOKEN_ERC20_RING --chain $chain
 
-seth send $TOKEN_ERC20_RING "transfer(address,uint)" $MULTISIGWALLETDEV $(seth --to-wei 2000000 ether) --chain $chain
-seth send $TOKEN_ERC20_RING "transfer(address,uint)" $DRILLTAKEBACK $(seth --to-wei 24295.5 ether) --chain $chain
+# seth send $TOKEN_ERC20_RING "transfer(address,uint)" $MULTISIGWALLETDEV $(seth --to-wei 2000000 ether) --chain $chain
+# seth send $TOKEN_ERC20_RING "transfer(address,uint)" $DRILLTAKEBACK $(seth --to-wei 24295.5 ether) --chain $chain
+
+chain=crab
+old_ring=0x7399Ea6C9d35124d893B8d9808930e9d3F211501
+xRINGMigrator=0xdED6Edd731f5F59fEB2555Ec3f1b6C085Dc6E42E
+tiny=0x466a8c62eA9Eb6f49c718A0244B095AB05519DEa
+
+# seth send $DRILLTAKEBACK "claimTokens(address)" $old_ring --chain $chain
+
+# amount=$(seth call $old_ring "balanceOf(address)(uint)" $ETH_FROM)
+# seth send $old_ring "approve(address,uint)" $xRINGMigrator $amount
+# seth send $xRINGMigrator "migrateAll()"
+
+wad=$(seth call $TOKEN_ERC20_RING "balanceOf(address)(uint)" $ETH_FROM)
+reward=$(seth --to-wei 75000 ether)
+remain=$(cal "$wad - $reward")
+seth send $TOKEN_ERC20_RING "transfer(address,uint)" $tiny $reward --chain $chain
+seth send $TOKEN_ERC20_RING "transfer(address,uint)" $DRILLTAKEBACK $remain --chain $chain
